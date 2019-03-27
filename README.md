@@ -1,7 +1,9 @@
-## Welcome to GitHub Pages
+## Welcome to org.ASUX Organization on GitHub.com (GitHub Pages)
 
-You can use the [editor on GitHub](https://github.com/org-asux/org.ASUX/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Quick and dirty home page created to demonstrate that i own the ASUX.org DNS domain.
+More edits via [editor on GitHub](https://github.com/org-asux/org.ASUX/edit/master/README.md) comeing soon.
 
+_____________________________
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
 ### Markdown
