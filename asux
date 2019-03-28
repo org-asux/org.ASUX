@@ -1,18 +1,35 @@
 #!/bin/sh
 
+CMD="${BASH_SOURCE[0]}"
+# echo $CMD
+CMDDIR="$(DIRNAME "$CMD")"
+# echo ${CMDDIR}
+
+###-------------------
+if [ "${CMDDIR}" != "." ]; then
+        # printf "you were in the directory: "; pwd
+        cd "${CMDDIR}"
+        ### COMMENT: Must switch to root of org.ASUX project working folder - to fetch sub-projects
+        # printf "switching to directory: "; pwd
+fi
+
+###-------------------
 ORGNAME=org-asux
 PROJNAME=org.ASUX.cmdline
 OUTPFILE=/tmp/org.ASUX-setup-output-$$.txt
 
-git clone https://github.com/${ORGNAME}/${PROJNAME}  >${OUTPFILE} 2>&1
-if [ $? -ne 0 ]; then
-        >&2 echo "Internal error: Please contact the project owner, by sending them the file '$OUTPFILE'"
-        exit 9
+###--------------------
+if [ ! -d "cmdline" ]; then
+        git clone https://github.com/${ORGNAME}/${PROJNAME}  >${OUTPFILE} 2>&1
+        if [ $? -ne 0 ]; then
+                >&2 echo "Internal error: Please contact the project owner, by sending them the file '$OUTPFILE'"
+                exit 9
+        fi
+
+        mv ${PROJNAME} cmdline
 fi
 
-##--------------------
-mv ${PROJNAME} cmdline
-
-cmdline/asux.csh $*
+###--------------------
+./cmdline/asux.csh $*
 
 #EoScript
