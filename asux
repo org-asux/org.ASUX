@@ -30,6 +30,7 @@ if [ ! -d "cmdline" ]; then
 fi
 
 ###--------------------
-./cmdline/asux.csh $*
+### If there are spaces inside the variables, then "$@" retains the spaces, while "$*" does not
+./cmdline/asux.csh $@
 
 #EoScript
