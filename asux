@@ -1,0 +1,18 @@
+#!/bin/sh
+
+ORGNAME=org-asux
+PROJNAME=org.ASUX.cmdline
+OUTPFILE=/tmp/org.ASUX-setup-output-$$.txt
+
+git clone https://github.com/${ORGNAME}/${PROJNAME}  >${OUTPFILE} 2>&1
+if [ $? -ne 0 ]; then
+        >&2 echo "Internal error: Please contact the project owner, by sending them the file '$OUTPFILE'"
+        exit 9
+fi
+
+##--------------------
+mv ${PROJNAME} cmdline
+
+cmdline/asux.csh $*
+
+#EoScript
