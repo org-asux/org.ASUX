@@ -1,6 +1,8 @@
 #!/bin/sh
 
-CMD="${BASH_SOURCE[0]}"
+### The following line did NOT work on Windows
+# CMD="${BASH_SOURCE[0]}"
+CMD="$[0]"
 # echo $CMD
 CMDDIR="$(DIRNAME "$CMD")"
 # echo ${CMDDIR}
@@ -20,6 +22,8 @@ OUTPFILE=/tmp/org.ASUX-setup-output-$$.txt
 
 ###--------------------
 if [ ! -d "cmdline" ]; then
+        echo \
+        git clone https://github.com/${ORGNAME}/${PROJNAME}
         git clone https://github.com/${ORGNAME}/${PROJNAME}  >${OUTPFILE} 2>&1
         if [ $? -ne 0 ]; then
                 >&2 echo "Internal error: Please contact the project owner, by sending them the file '$OUTPFILE'"
@@ -31,6 +35,7 @@ fi
 
 ###--------------------
 ### If there are spaces inside the variables, then "$@" retains the spaces, while "$*" does not
-./cmdline/asux.csh $@
+
+exec   ./cmdline/asux $@
 
 #EoScript
