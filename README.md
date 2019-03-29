@@ -1,5 +1,9 @@
 ## Welcome to org.ASUX Organization on GitHub.com (GitHub Pages)
 
+GitHub link:   https://github.com/org-asux/org.ASUX
+
+GitHub WIKI PAGES:  https://github.com/org-asux/org.ASUX/wiki
+
 # org.ASUX
 <p>The top-level command line for ASUX family. Currently supports:-</p>
 <ul><li><code>yaml</code> -- for YAML file processing</li></ul>
