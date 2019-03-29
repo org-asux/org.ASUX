@@ -2,7 +2,7 @@
 
 ### The following line did NOT work on Windows
 # CMD="${BASH_SOURCE[0]}"
-CMD="$[0]"
+CMD="$0"
 # echo $CMD
 CMDDIR="$(DIRNAME "$CMD")"
 # echo ${CMDDIR}
@@ -36,6 +36,9 @@ fi
 ###--------------------
 ### If there are spaces inside the variables, then "$@" retains the spaces, while "$*" does not
 
-exec   ./cmdline/asux $@
+./cmdline/asux $@
+### Do NOT use "exec" for above line, as it will NOT work on WINDOWS shells
+
+exit $?
 
 #EoScript
