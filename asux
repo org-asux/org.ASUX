@@ -4,7 +4,7 @@
 # CMD="${BASH_SOURCE[0]}"
 CMD="$0"
 # echo $CMD
-CMDDIR="$(DIRNAME "$CMD")"
+CMDDIR="$(dirname "$CMD")"
 # echo ${CMDDIR}
 
 ###-------------------
