@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 
 var CmdLine = require('commander');
-var colors = require('colors');
 var os = require('os');
 var PATH = require('path'); // to help process the script-file details.
 var fs = require("fs");
+
+// This is the Node.JS script within the same directory - to make it simple to run an external command
 var EXECUTESHELLCMD = require( __dirname + "/ExecShellCommand.js");
 
 //==========================
@@ -53,11 +54,12 @@ CmdLine.on('option:verbose', function () {
 
 CmdLine.on('command:yaml', function () {
 	if (process.env.VERBOSE) console.log("Yeah.  processing YAML command");
-	sendArgs2CmdlineModule();
+	sendArgs2SubModule_Cmdline();
 });
 
 CmdLine.on('command:aws', function () {
 	if (process.env.VERBOSE) console.log("Yeah.  processing Amazon-AWS command");
+	// sendArgs2SubModule_AWS();
 });
 
 // Like the 'default' in a switch statement.. .. After all of the above "on" callbacks **FAIL** to trigger, we'll end up here.
@@ -70,9 +72,11 @@ CmdLine.on('command:*', function () {
 //==========================
 CmdLine.parse(process.argv);
 
-//==========================
+//============================================================
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//============================================================
 
-function sendArgs2CmdlineModule() {
+function sendArgs2SubModule_Cmdline() {
 //-------------------
 if ( __dirname != process.cwd()  ) {
 	if (process.env.VERBOSE) console.log("you **WERE** in the directory: '%s'", process.cwd() );
@@ -83,7 +87,6 @@ if ( __dirname != process.cwd()  ) {
 	if (process.env.VERBOSE) console.log("You are running from where this Node.JS Script is.  Nice! %s", __dirname );
 }
 
-
 //-------------------
 var ORGNAME="org-asux";
 var PROJNAME="org.ASUX.cmdline";
@@ -93,10 +96,7 @@ if (process.env.VERBOSE) console.log( 'OUTPFILE="'+OUTPFILE+'"' );
 // Dont care if this command fails
 // git pull  >/dev/null 2>&1
 if (process.env.VERBOSE) console.log( ` OLD Working Directory was: ${process.cwd()}` );
-EXECUTESHELLCMD.execution ( __dirname, 'git', ['pull'], ( err1, response ) => {
-	console.log(response); console.err(err1);
-	if(!err1){ console.log(response); }else { console.err(err1); }
-});
+EXECUTESHELLCMD.execution ( __dirname, 'git', ['pull'], false, process.env.VERBOSE, true, null);
 
 //--------------------
 if (process.env.VERBOSE) console.log( 'about to process sub-projects of org.ASUX' );
@@ -105,20 +105,18 @@ fs.access( './cmdline', function(err2) {
 	if (process.env.VERBOSE) console.log( "checking if ./cmdline exists or not.. .. " );
 	if (err2 && err2.code === 'ENOENT') {
 		if (process.env.VERBOSE) console.log( "./cmdline does Not exist. So.. pulling from remote Git repo. " );
-		fs.mkdir(myDir); //Create dir in case not found
-    console.log( 'Hmmmm.   1st time ever!?   Let me complete initial-setup (1min)...\n\n');
+		fs.mkdir(myDir); //Create dir in case not found.  Hope mkdir() wont fail.
+    console.error( 'Hmmmm.   1st time ever!?   Let me complete initial-setup (1min)...\n\n');
 	  var gitpullcmdArgs = ['clone', '--quiet', `https://github.com/${ORGNAME}/${PROJNAME}`];
-	  console.log( 'git '+ gitpullcmd.join(' ') );
+		console.log( 'git '+ gitpullcmd.join(' ') );
 
-		EXECUTESHELLCMD.execution ( __dirname, 'git', gitpullcmdArgs, function( err3, response ) {
+		// use git to get the code for the ./cmdline sub-folder/sub-project
+		EXECUTESHELLCMD.execution ( __dirname, 'git', gitpullcmdArgs, false, process.env.VERBOSE, true, function( err3, response ) {
 			if(!err3){ console.log(response);
-			}else {
+			}else { // git pull FAILED. Now try to write to an ERROR file, so user can use it to report an issue/bug
 				fs.writeFile( OUTPFILE,  err4, (err5) => {
-					if (err5) {
-					    console.error(`Internal error: Please contact the project owner, that: Unable to write to '$OUTPFILE'`);
-					} else {
-					    /* console.log("Successfully wrote 2 File."); */
-					    console.error(`Internal error: Please contact the project owner, by uploading the contents of the file '$OUTPFILE'`);
+					if (err5) { console.error(`Internal error: Please contact the project owner, that: Unable to write to '$OUTPFILE'`);
+					} else { console.error(`Internal error: Please contact the project owner, by uploading the contents of the file '$OUTPFILE'`);
 					} // if err5
 			  } // callback within fs.writeFile
 				); // fs.writeFile
@@ -141,10 +139,9 @@ fs.access( './cmdline', function(err2) {
 			console.error( 'Internal error: Please contact the project owner, with this detail about "./cmdline" :%s', $err2);
 			process.exit(21);
 		} else { // No issues accessing the folder
-			EXECUTESHELLCMD.execution(  "./cmdline", 'git', ['pull', '--quiet'], function( err8, response ) {
-				console.log(response); console.err(err8);
-			   if(!err8){ if (process.env.VERBOSE) console.log(response); } else { console.err(err8);  process.exit(21); }
-			});
+			// Let's refresh the .cmdline subfolder - by passing ./cmdline as 1st parameter, so git pull happens inside it.
+			// I'd rather do it here,  instead of having each sub-project/sub-folder do it by itself.
+			EXECUTESHELLCMD.execution(  "./cmdline", 'git', ['pull', '--quiet'], false, process.env.VERBOSE, true, null );
 		} // INNER-if-else err2 & err2.code
 	} // OUTER-if-else err2 & err2.code
 }); // fs.access
@@ -163,7 +160,11 @@ fs.access( './cmdline', function(err2) {
 
 } // end function sendArgs2CmdlineModule
 
-sendArgs2CmdlineModule();
+// sendArgs2CmdlineModule();
+
+//============================================================
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//============================================================
 
 process.exitCode = 0;
 
