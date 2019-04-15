@@ -3,58 +3,70 @@
 const { execFile } = require('child_process');
 
 //==========================
-/*	Switch to the FOLDER "cwd" (param #1)
+/** Switch to the FOLDER "cwd" (param #1)
  *	Exec "command" (param #2)
- *	On completion whether zero/non-zero exit-code.. callback "cb" (param #3)
+ *	cmdline arguments to pass to the "command" (param #3 is an array)
+ *	true/false whether the OUTPUT of the "command" is dumped to console. (param #4)
+ *	true/false whether THIS function is verbose.  Do NOT use the global process.env.VERBOSE. (param #5)
+ *	true/false whether any failure should lead to an actual call to Process.EXIT(...) (param #6)
+ *	On completion callback "mycallback99" (param #5)
  */
-var execution = function( _newWorkingDir, _command, _cmdArgs, mycallback ) {
+// This allows other modules to invoke the above function
+exports.execution =
+function( _newWorkingDir, _command, _cmdArgs, _quietlyRunCmd, _bVerbose2, _bExitOnFail, mycallback99 ) {
 
 	var originalCWD = process.cwd();
 	var bChangedWorkingDir = false;
 
 	if ( _newWorkingDir != originalCWD ) {
 		try {
-			if (process.env.VERBOSE) console.log( ` ${__filename} : OLD Working Directory was: ${process.cwd()}` );
+			if (_bVerbose2) console.log( ` ${__filename} : OLD Working Directory was: ${process.cwd()}` );
 			process.chdir( _newWorkingDir );
 			// ATTENTION: Backquote in log string - It's a template-literal per ECMAScript new standard
-			if (process.env.VERBOSE) console.log( ` ${__filename} :NEW Working Directory is: ${process.cwd()}` );
+			if (_bVerbose2) console.log( ` ${__filename} :NEW Working Directory is: ${process.cwd()}` );
 			bChangedWorkingDir = true;
 		} catch (errMsg2) {
 			console.error(`process.chdir: ${errMsg2}`);
-			process.exit(99);
+			process.exit(99); // too fatal an error.  So, ignoring the value of _bExitOnFail
 		}
 	};
 
-	// if (process.env.VERBOSE) console.log( `${__filename} : about to run command.  ${_command}` );
+	// console.log( `${__filename} : verbose = ${_bVerbose2}`);
+	if (_bVerbose2) console.log( `${__filename} : about to run command.  ${_command} with cmdline arguments ` + _cmdArgs.join(' ') );
 
 	//----------------------
-	// const child1 = execFile("/bin/ls", ["/tmp"], { cwd: "/tmp", shell: false, timeout: 50 }, 
-	// 		(error, stdout, stderr) => { console.log(stdout); console.log(stderr); } );
-
-	const child2 = execFile( _command, _cmdArgs, ( errObj1, outStr1, errStr1) => {
-				console.log( `${__filename} : verbose = ${process.env.VERBOSE}`);
-				console.log( `${__filename} : outStr1 = ${outStr1}  errStr1 = ${errStr1}`);
-				if (process.env.VERBOSE) console.log( `${__filename} : in callback after running command.  ${errObj1}` );
+	const child99 = execFile( _command, _cmdArgs, ( errObj1, outStr1, errStr1) => {
+				if (_bVerbose2) console.log( `${__filename} : in callback of execFile(...).  ${errObj1}` );
 				if ( bChangedWorkingDir) process.chdir( originalCWD ); // why on earth would this throw?
 				if(errObj1 != null) {
-					return mycallback1 (new Error(errObj1), null);
+					console.log( `${__filename} : outStr1 = ${outStr1}  errStr1 = ${errStr1}`);
+					if ( _bExitOnFail ) {
+						console.error("\nPlease report issue with above output.\n");
+						process.exit(91); // else fall-thru below.
+					// if ( typeof(errObj1) != "string" )
+					//		return mycallback99 (new Error(errObj1), null);
+				   	// else
+					if ( mycallback99 ) return mycallback99 (new Error(errObj1), null);
+					else return errObj1.code;
 				} else {
-					if ( typeof(errObj1) != "string" ) {
-						return mycallback1 (new Error(errObj1), null);
-				   	}else{
-						return mycallback1 (null, outStr1);
+					if ( ! _quietlyRunCmd ) { // ok dump the output from command - onto the console
+						outStr1WPrefix = outStr1+'\n'; // add a blank line for visual effect (after prefixing  '> ' chars to each line of output)
+						// prefix a '> ' for each line in outStr1.  Note, newlines are considered WHITESPACE
+						function replStrFunc (match, p1, offset, string) { return '> ' + match; }
+						outStr1WPrefix = outStr1WPrefix.replace(/^[^\n][^\n]*\n/g, replStrFunc); // insert the prefix '> ' for each line in outStr1
+						console.log( outStr1WPrefix );
+					}
+					if ( mycallback99 ) return mycallback99 (null, outStr1);
+					else return errObj1.code;
 		    		}
 				} // outer IF-ELSE
-	    } // function _errObj _outStr _errStr
-	); // EXECCMD
+	}); // EXECCMD
 
-
-	if (process.env.VERBOSE) console.log( `${__filename} : DONE FINISHED command.  ${_command}` );
+	if (_bVerbose2) console.log( `${__filename} : DONE FINISHED command.  ${_command}` );
 
 	// to be safe.. let's repeat 'chdir()' again here...
 	if ( bChangedWorkingDir ) process.chdir( originalCWD ); // why on earth would this throw?
+
 }
-
-exports.execution = execution;
-
+// DO NOT put anything below this line (basically, below the close-parenthesis in the previous line above)
 //EoScript
