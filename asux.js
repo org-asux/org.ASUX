@@ -77,8 +77,8 @@ CmdLine.parse(process.argv);
 //============================================================
 
 function sendArgs2SubModule_Cmdline() {
-//-------------------
-if ( __dirname != process.cwd()  ) {
+
+	if ( __dirname != process.cwd()  ) {
 	if (process.env.VERBOSE) console.log("you **WERE** in the directory: '%s'", process.cwd() );
 	process.chdir(  __dirname );
 	// COMMENT: Must switch to root of org.ASUX project working folder - to fetch sub-projects
@@ -96,7 +96,7 @@ if (process.env.VERBOSE) console.log( 'OUTPFILE="'+OUTPFILE+'"' );
 // Dont care if this command fails
 // git pull  >/dev/null 2>&1
 if (process.env.VERBOSE) console.log( ` OLD Working Directory was: ${process.cwd()}` );
-EXECUTESHELLCMD.execution ( __dirname, 'git', ['pull'], true, process.env.VERBOSE, true, null);
+EXECUTESHELLCMD.execution ( __dirname, 'git', ['pull', '--quiet'], true, process.env.VERBOSE, true, null);
 
 //--------------------
 if (process.env.VERBOSE) console.log( 'about to process sub-projects of org.ASUX' );
@@ -148,24 +148,23 @@ fs.access( subdir, function(err2) {
 
 	//--------------------
 
-
-
-	
 	//decison made: Each subfolder of org.ASUX (like org.ASUX.cmdline) will be a standalone project ..
 	// .. as in: subfolder/asux.js is EXPECTING to see cmdline-arguments **as if** it were entered by user on shell-prompt
 
-
-
+	//--------------------
 	// In Unix shell, If there are spaces inside the variables, then "$@" retains the spaces, while "$*" does not
-	// equivalent of    ./cmdline/asux $@
-	var prms = process.argv.slice(3); // get rid of 'node' '--verbose' and 'asux.js'.
-	prms.splice(0,0, './asux.js' );
-	if ( process.env.VERBOSE ) prms.splice(0,0, '--verbose' );
-	EXECUTESHELLCMD.execution(  subdir, 'node', prms, false, process.env.VERBOSE, false, null );
+	// The following lines of code are the JS-quivalent of shell's      ./cmdline/asux $@
+	// Get rid of 'node' (optionally)'--verbose' and 'asux.js'.. .. and finally the 'yaml/asux'
+	var prms = process.argv.slice( process.env.VERBOSE ? 4 : 3 );
+	prms.splice(0,0, './asux.js' ); // insert ./asux.js as the 1st cmdline parameter
+	if (process.env.VERBOSE) prms.splice( 1, 0, '--verbose' ); // optionally, insert '--verbose' as the 2nd cmdline parameter
+	if (process.env.VERBOSE) { console.log( `${__filename} : in ${subdir} running 'node' with cmdline-arguments:` + prms.join(' ') ); }
+	EXECUTESHELLCMD.executeSubModule(  subdir, 'node', prms, false, process.env.VERBOSE, false, null );
 
+			// Keeping code around .. .. In case I wanted to run the submodule via JS require
 			// var runOrgASUXCmdLine = require( __dirname +"/"+ subdir + "/asux.js");
 			// runOrgASUXCmdLine.functionName( prms, callBackFn( __dirname, err11, response ) {
-			// 	if(!err11){ console.log(response); }else { console.err(err11); process.exit(err11.code); }
+			//		if(!err11){ console.log(response); }else { console.err(err11); process.exit(err11.code); }
 			// });
 
 }); // fs.access
