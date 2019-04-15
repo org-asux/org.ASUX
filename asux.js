@@ -96,19 +96,22 @@ if (process.env.VERBOSE) console.log( 'OUTPFILE="'+OUTPFILE+'"' );
 // Dont care if this command fails
 // git pull  >/dev/null 2>&1
 if (process.env.VERBOSE) console.log( ` OLD Working Directory was: ${process.cwd()}` );
-EXECUTESHELLCMD.execution ( __dirname, 'git', ['pull'], false, process.env.VERBOSE, true, null);
+EXECUTESHELLCMD.execution ( __dirname, 'git', ['pull'], true, process.env.VERBOSE, true, null);
 
 //--------------------
 if (process.env.VERBOSE) console.log( 'about to process sub-projects of org.ASUX' );
 
-fs.access( './cmdline', function(err2) {
-	if (process.env.VERBOSE) console.log( "checking if ./cmdline exists or not.. .. " );
+const subdir = 'cmdline';
+fs.access( subdir, function(err2) {
+	if (process.env.VERBOSE) console.log( `checking if ${subdir} exists or not.. .. ` );
 	if (err2 && err2.code === 'ENOENT') {
-		if (process.env.VERBOSE) console.log( "./cmdline does Not exist. So.. pulling from remote Git repo. " );
-		fs.mkdir(myDir); //Create dir in case not found.  Hope mkdir() wont fail.
-    console.error( 'Hmmmm.   1st time ever!?   Let me complete initial-setup (1min)...\n\n');
-	  var gitpullcmdArgs = ['clone', '--quiet', `https://github.com/${ORGNAME}/${PROJNAME}`];
-		console.log( 'git '+ gitpullcmd.join(' ') );
+		if (process.env.VERBOSE) console.log( `${subdir} does Not exist. So.. pulling from remote Git repo. ` );
+		fs.mkdir(subdir,  //Create dir in case not found.
+				{recursive: true}, (err8)=>{ if(err8) { console.err(err8.toString()); process.exit(31); } } ); 
+    console.error( 'Hmmmm.   1st time ever!?   Let me complete initial-setup (1min)...\n');
+//	  var gitpullcmdArgs = ['clone', '--quiet', `https://github.com/${ORGNAME}/${PROJNAME}`];
+	  var gitpullcmdArgs = ['clone', `https://github.com/${ORGNAME}/${PROJNAME}`];
+		console.log( 'git '+ gitpullcmdArgs.join(' ') );
 
 		// use git to get the code for the ./cmdline sub-folder/sub-project
 		EXECUTESHELLCMD.execution ( __dirname, 'git', gitpullcmdArgs, false, process.env.VERBOSE, true, function( err3, response ) {
@@ -124,43 +127,53 @@ fs.access( './cmdline', function(err2) {
     });
 //!!!!!!!!!!!!!!!!!!!!!!!!! Make a function that allows EVERY EXEC-CMD to benefit
 
-		if (process.env.VERBOSE) console.log( "about to RENAME org.ASUX.cmdline to just cmdline " );
+		// about to RENAME org.ASUX.cmdline to just cmdline
+		if (process.env.VERBOSE) console.log( `about to RENAME folder ${PROJNAME} to just ${subdir} ` );
 
-	  fs.rename( oldFN, newFN, function (err6) {
-			if(!err6){ if (process.env.VERBOSE) console.log( `successfully renamed $oldFN --> $newFN` ); }else { console.err(err6); }
+	  fs.rename( PROJNAME, subdir, function (err6) {
+			if(!err6){ console.log( `renamed ${PROJNAME} --> ${subdir}` ); }else { console.err(err6); }
 	  });
-	  // EXECUTESHELLCMD.result( __dirname, `mv ${PROJNAME} cmdline`, function( err6, response ) {
-	  //	if(!err6){ if (process.env.VERBOSE) console.log(response); }else { console.err(err6); }
-	  // });
 
 	}else{ // ok!  ./cmdline folder exists
-		if (process.env.VERBOSE) console.log( "./cmdline ALREADY Exists" );
+		if (process.env.VERBOSE) console.log( `${subdir} ALREADY Exists` );
 		if (err2 && err2.code != 'ENOENT') { // well it exist and we have an error code!
-			console.error( 'Internal error: Please contact the project owner, with this detail about "./cmdline" :%s', $err2);
+			console.error( 'Internal error: Please contact the project owner, with this detail about "${subdir}" :%s', $err2.toString());
 			process.exit(21);
 		} else { // No issues accessing the folder
 			// Let's refresh the .cmdline subfolder - by passing ./cmdline as 1st parameter, so git pull happens inside it.
 			// I'd rather do it here,  instead of having each sub-project/sub-folder do it by itself.
-			EXECUTESHELLCMD.execution(  "./cmdline", 'git', ['pull', '--quiet'], false, process.env.VERBOSE, true, null );
+			EXECUTESHELLCMD.execution(  subdir, 'git', ['pull', '--quiet'], false, process.env.VERBOSE, true, null );
 		} // INNER-if-else err2 & err2.code
 	} // OUTER-if-else err2 & err2.code
+
+	//--------------------
+
+
+
+	
+	//decison made: Each subfolder of org.ASUX (like org.ASUX.cmdline) will be a standalone project ..
+	// .. as in: subfolder/asux.js is EXPECTING to see cmdline-arguments **as if** it were entered by user on shell-prompt
+
+
+
+	// In Unix shell, If there are spaces inside the variables, then "$@" retains the spaces, while "$*" does not
+	// equivalent of    ./cmdline/asux $@
+	var prms = process.argv.slice(3); // get rid of 'node' '--verbose' and 'asux.js'.
+	prms.splice(0,0, './asux.js' );
+	if ( process.env.VERBOSE ) prms.splice(0,0, '--verbose' );
+	EXECUTESHELLCMD.execution(  subdir, 'node', prms, false, process.env.VERBOSE, false, null );
+
+			// var runOrgASUXCmdLine = require( __dirname +"/"+ subdir + "/asux.js");
+			// runOrgASUXCmdLine.functionName( prms, callBackFn( __dirname, err11, response ) {
+			// 	if(!err11){ console.log(response); }else { console.err(err11); process.exit(err11.code); }
+			// });
+
 }); // fs.access
-
-//--------------------
-// If there are spaces inside the variables, then "$@" retains the spaces, while "$*" does not
-
-// ./cmdline/asux $@
-// var runOrgASUXCmdLine = require( __dirname + "/cmdline/asux.js");
-// runOrgASUXCmdLine.functionName( params, callBackFn( __dirname, err11, response ) {
-//	if(!err11){ console.log(response); }else { console.err(err11); process.exit(err11.code); }
-//});
 
 // The Node.js process will exit on its own if there is no additional work pending in the event loop.
 // The process.exitCode property can be set to tell the process which exit code to use when the process exits gracefully.
 
 } // end function sendArgs2CmdlineModule
-
-// sendArgs2CmdlineModule();
 
 //============================================================
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
