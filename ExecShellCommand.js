@@ -18,7 +18,7 @@ const { spawnSync } = require('child_process');
  *	true/false whether any failure should lead to an actual call to Process.EXIT(...) (param #6)
  */
 // This allows other modules to invoke the above function
-exports.execution =
+exports.executionPiped =
 function( _newWorkingDir, _command, _cmdArgs, _quietlyRunCmd, _bVerbose2, _bExitOnFail ) {
 
 	// console.log( `${__filename} : verbose = ${_bVerbose2}`);
@@ -26,7 +26,7 @@ function( _newWorkingDir, _command, _cmdArgs, _quietlyRunCmd, _bVerbose2, _bExit
 
 	//----------------------
 	try { // synchornous version of Javascript's child_process.execFile(...)
-		const cpObj = spawnSync( _command, _cmdArgs, {'cwd': _newWorkingDir, stdio: 'inherit', 'timeout': 10000} );
+		const cpObj = spawnSync( _command, _cmdArgs, {'cwd': _newWorkingDir, 'timeout': 10000} );
 		if ( ! _quietlyRunCmd ) {
 			if (_bVerbose2) console.log( `${__filename} : about to dump output from command (code=${cpObj.status}))\n${cpObj.stdout}\n`+ cpObj.stderr +"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" );
 			// ok! dump the output from command - onto the console .. (after prefixing  '> ' chars to each line of output)
@@ -42,6 +42,7 @@ function( _newWorkingDir, _command, _cmdArgs, _quietlyRunCmd, _bVerbose2, _bExit
 	} catch (errObj4) {
 		console.error("Error running command ["+ _command + "].  Exit code = "+ errObj4.code +"\n" + errObj4.toString());
 		if ( _bExitOnFail ) process.exit( errObj4.code );
+		else return(errObj4.code);
 	}
 
 	if (_bVerbose2) console.log( `${__filename} : DONE FINISHED command.  ${_command}` );
@@ -60,7 +61,7 @@ function( _newWorkingDir, _command, _cmdArgs, _quietlyRunCmd, _bVerbose2, _bExit
  *	true/false whether any failure should lead to an actual call to Process.EXIT(...) (param #6)
  */
 // This allows other modules to invoke the above function
-exports.executeSubModule =
+exports.executeSharingSTDOUT =
 function( _newWorkingDir, _command, _cmdArgs, _quietlyRunCmd, _bVerbose2, _bExitOnFail ) {
 
 	if (_bVerbose2) { console.log( `${__filename} : about to run command.  "${_command}" with cmdline arguments: ` + _cmdArgs.join(' ') ); }
@@ -72,14 +73,22 @@ function( _newWorkingDir, _command, _cmdArgs, _quietlyRunCmd, _bVerbose2, _bExit
 			if (_bVerbose2) console.log( `${__filename} : about to dump output from command (code=${cpObj.status}))` +"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
 			if ( cpObj.stdout ) console.log(cpObj.stdout);
 			if ( cpObj.stderr ) console.log(cpObj.stderr);
+			return(0);
 		}
 	} catch (errObj5) {
 		console.error("Error running command ["+ _command + "].  Exit code = "+ errObj5.code +"\n" + errObj5.toString());
 		if ( _bExitOnFail ) process.exit( errObj5.code );
+		else return(errObj5.code);
 	}
 
 	if (_bVerbose2) console.log( `${__filename} : DONE FINISHED command.  ${_command}` );
 }
+
+//==========================================================
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//==========================================================
+
+exports.executeSubModule = exports.executeSharingSTDOUT
 
 //==========================================================
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -129,8 +138,7 @@ function myChdir(_newWorkingDir, originalCWD, _bVerbose2) {
 			if (_bVerbose2)
 				console.log(` ${__filename} :NEW Working Directory is: ${process.cwd()}`);
 			bChangedWorkingDir = true;
-		}
-		catch (errObj2) {
+		} catch (errObj2) {
 			console.error(`process.chdir: ${errObj2}`);
 			process.exit(99); // too fatal an error.  So, ignoring the value of _bExitOnFail
 		}
