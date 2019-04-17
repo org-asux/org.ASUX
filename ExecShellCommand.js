@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-const { spawnSync } = require('child_process');
+var fs = require("fs");  // https://nodejs.org/api/fs.html#fs_fs_accesssync_path_mode
+const { spawnSync } = require('child_process'); // https://nodejs.org/api/child_process.html#child_process_class_childprocess
 
 // child_process exec() & execFile() - offer a callback, that is invoked when the child process terminates.
 // Spawn() typically is used to fire-n-forget processes.
@@ -37,8 +38,8 @@ function( _newWorkingDir, _command, _cmdArgs, _quietlyRunCmd, _bVerbose2, _bExit
 			function replStrFunc (match, p1, offset, string) { return '> ' + match; }
 			outStr1WPrefix = outStr1WPrefix.replace(/^[^\n][^\n]*\n/mg, replStrFunc); // insert the prefix '> ' for each line in outStr1
 			console.log( outStr1WPrefix );
-			return(0);
-		}
+		};
+		return(cpObj.status);
 	} catch (errObj4) {
 		console.error("Error running command ["+ _command + "].  Exit code = "+ errObj4.code +"\n" + errObj4.toString());
 		if ( _bExitOnFail ) process.exit( errObj4.code );
@@ -73,8 +74,8 @@ function( _newWorkingDir, _command, _cmdArgs, _quietlyRunCmd, _bVerbose2, _bExit
 			if (_bVerbose2) console.log( `${__filename} : about to dump output from command (code=${cpObj.status}))` +"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
 			if ( cpObj.stdout ) console.log(cpObj.stdout);
 			if ( cpObj.stderr ) console.log(cpObj.stderr);
-			return(0);
-		}
+		};
+		return(cpObj.status);
 	} catch (errObj5) {
 		console.error("Error running command ["+ _command + "].  Exit code = "+ errObj5.code +"\n" + errObj5.toString());
 		if ( _bExitOnFail ) process.exit( errObj5.code );
@@ -128,6 +129,17 @@ exports.executeSubModule = exports.executeSharingSTDOUT
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //==========================================================
 
+exports.showFileAttributes =
+function showFileAttributes( _file ) {
+	// ls -la "${_file}"
+	// EXECUTESHELLCMD.executeSharingSTDOUT ( "/tmp", 'ls', [_file], false, process.env.VERBOSE, false, null );
+	const fstats = fs.statSync(_file);
+	var mtime = new Date(fstats.mtime);
+	var unixFilePermissions = '0' + (fstats.mode & parseInt('777', 8)).toString(8);
+	console.log('> '+ _file +'\t'+ fstats.size +'\t'+ unixFilePermissions +'\t'+ fstats.uid +'\t'+ fstats.gid +'\t'+ mtime );
+}
+
+//---------------------------------------------------------
 function myChdir(_newWorkingDir, originalCWD, _bVerbose2) {
 	if (_newWorkingDir != originalCWD) {
 		try {
