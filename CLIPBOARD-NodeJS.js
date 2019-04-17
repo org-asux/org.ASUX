@@ -194,10 +194,25 @@ if (typeof dir === 'undefined') {
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //==================================
 
+console.log("enter some input onto stdin! >>");
+var stdinObj = process.openStdin();
+stdinObj.addListener('data', function(d) {
+    // note:  d is an object, and when converted to a string it will end with a linefeed.
+    // so we (rather crudely) account for that with toString() and then trim() 
+    console.log("you entered: [" +  d.toString().trim() + "]");
+  });
+
+
 var fileDirPath = PATH.dirname( FilePathVariable );
 
 var fnArr = (process.mainModule.filename).split('/');
 var filename = fnArr[fnArr.length -1];
+
+function getFilesizeInBytes(_filename) {
+  const stats = fs.statSync(_filename);
+  const fileSizeInBytes = stats.size;
+  return fileSizeInBytes;
+}
 
 fs.readFile( PATH.resolve(__dirname, 'settings.json'), 'UTF-8', callbackFunction );
 // Use resolve() instead of concatenating with '/' or '\' else you will run into cross-platform issues
