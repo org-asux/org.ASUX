@@ -127,7 +127,7 @@ function getURLAsFile( _url, _filePath, _cb  ) {
 	newPromise.then(
 		function(httpcode) { // This function corresponds to the "success()" within the Promise
 			console.log( __filename + ": getURLAsFile(): SUCCESS http-code [" + httpcode +"]");
-			if ( _cb) _cb( true, httpcode, body );
+			if ( _cb) _cb( true, httpcode, "success" );
 		},
 		function(_p2) { // This function corresponds to the "reject()" within the Promise
 			let [ errcode, err ] = _p2;
