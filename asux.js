@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-var CmdLine = require('commander');
-var os = require('os');
+var CmdLine = require('commander'); // https://github.com/tj/commander.js/
+var os = require('os');			// https://nodejs.org/api/os.html
 var PATH = require('path'); // to help process the script-file details.
-var fs = require("fs");
+var fs = require("fs"); 		// https://nodejs.org/api/fs.html#fs_fs_accesssync_path_mode
 
 // This is the Node.JS script within the same directory - to make it simple to run an external command
 var EXECUTESHELLCMD = require( __dirname + "/ExecShellCommand.js");
@@ -48,7 +48,7 @@ CmdLine.on('--help', function(){
  */
 
 CmdLine.on('option:verbose', function () {
-	// console.log("Yeah.  Going verbose" + this.verbose);
+	console.log("Yeah.  Going verbose " + this.verbose);
   process.env.VERBOSE = this.verbose;
 });
 
@@ -96,7 +96,7 @@ if (process.env.VERBOSE) console.log( 'OUTPFILE="'+OUTPFILE+'"' );
 // Dont care if this command fails
 // git pull  >/dev/null 2>&1
 if (process.env.VERBOSE) console.log( ` OLD Working Directory was: ${process.cwd()}` );
-EXECUTESHELLCMD.execution ( __dirname, 'git', ['pull', '--quiet'], true, process.env.VERBOSE, true, null);
+EXECUTESHELLCMD.executionPiped ( __dirname, 'git', ['pull', '--quiet'], true, process.env.VERBOSE, true, null);
 
 //--------------------
 if (process.env.VERBOSE) console.log( 'about to process sub-projects of org.ASUX' );
@@ -107,14 +107,14 @@ fs.access( subdir, function(err2) {
 	if (err2 && err2.code === 'ENOENT') {
 		if (process.env.VERBOSE) console.log( `${subdir} does Not exist. So.. pulling from remote Git repo. ` );
 		fs.mkdir(subdir,  //Create dir in case not found.
-				{recursive: true}, (err8)=>{ if(err8) { console.err(err8.toString()); process.exit(31); } } ); 
+				{recursive: true}, (err8)=>{ if(err8) { console.error(err8.toString()); process.exit(31); } } ); 
     console.error( 'Hmmmm.   1st time ever!?   Let me complete initial-setup (1min)...\n');
 //	  var gitpullcmdArgs = ['clone', '--quiet', `https://github.com/${ORGNAME}/${PROJNAME}`];
 	  var gitpullcmdArgs = ['clone', `https://github.com/${ORGNAME}/${PROJNAME}`];
 		console.log( 'git '+ gitpullcmdArgs.join(' ') );
 
 		// use git to get the code for the ./cmdline sub-folder/sub-project
-		EXECUTESHELLCMD.execution ( __dirname, 'git', gitpullcmdArgs, false, process.env.VERBOSE, true, function( err3, response ) {
+		EXECUTESHELLCMD.executeSharingSTDOUT ( __dirname, 'git', gitpullcmdArgs, false, process.env.VERBOSE, true, function( err3, response ) {
 			if(!err3){ console.log(response);
 			}else { // git pull FAILED. Now try to write to an ERROR file, so user can use it to report an issue/bug
 				fs.writeFile( OUTPFILE,  err4, (err5) => {
@@ -131,7 +131,7 @@ fs.access( subdir, function(err2) {
 		if (process.env.VERBOSE) console.log( `about to RENAME folder ${PROJNAME} to just ${subdir} ` );
 
 	  fs.rename( PROJNAME, subdir, function (err6) {
-			if(!err6){ console.log( `renamed ${PROJNAME} --> ${subdir}` ); }else { console.err(err6); }
+			if(!err6){ console.log( `renamed ${PROJNAME} --> ${subdir}` ); }else { console.error(err6); }
 	  });
 
 	}else{ // ok!  ./cmdline folder exists
@@ -142,7 +142,7 @@ fs.access( subdir, function(err2) {
 		} else { // No issues accessing the folder
 			// Let's refresh the .cmdline subfolder - by passing ./cmdline as 1st parameter, so git pull happens inside it.
 			// I'd rather do it here,  instead of having each sub-project/sub-folder do it by itself.
-			EXECUTESHELLCMD.execution(  subdir, 'git', ['pull', '--quiet'], false, process.env.VERBOSE, true, null );
+			EXECUTESHELLCMD.executionPiped(  subdir, 'git', ['pull', '--quiet'], false, process.env.VERBOSE, true, null );
 		} // INNER-if-else err2 & err2.code
 	} // OUTER-if-else err2 & err2.code
 
@@ -164,7 +164,7 @@ fs.access( subdir, function(err2) {
 			// Keeping code around .. .. In case I wanted to run the submodule via JS require
 			// var runOrgASUXCmdLine = require( __dirname +"/"+ subdir + "/asux.js");
 			// runOrgASUXCmdLine.functionName( prms, callBackFn( __dirname, err11, response ) {
-			//		if(!err11){ console.log(response); }else { console.err(err11); process.exit(err11.code); }
+			//		if(!err11){ console.log(response); }else { console.error(err11); process.exit(err11.code); }
 			// });
 
 }); // fs.access
