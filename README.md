@@ -1,4 +1,4 @@
-![Logo](https://github.com/org-asux/artifacts/blob/master/images/ASUX.org-Logo-picturetopeople.org.png)
+![Logo](https://s3.us-east-2.amazonaws.com/org.asux/ASUX.org-Logo-picturetopeople.org.png)
 
 # *.. bringing UN\*X principles & patterns to the world of Application-Servers and 'Cloud'*
 
