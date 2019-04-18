@@ -104,7 +104,7 @@ if (process.env.VERBOSE) console.log( 'about to process sub-projects of org.ASUX
 const subdir = 'cmdline';
 try {
 		if (process.env.VERBOSE) console.log( `checking if ${subdir} exists or not.. .. ` );
-		fs.accessSync( subdir );
+		fs.accessSync( subdir, fs.constants.R_OK | fs.constants.X_OK );
 
 		// ok!  ./cmdline folder exists
 		if (process.env.VERBOSE) console.log( `${subdir} ALREADY Exists` );
