@@ -102,54 +102,63 @@ EXECUTESHELLCMD.executionPiped ( __dirname, 'git', ['pull', '--quiet'], true, pr
 if (process.env.VERBOSE) console.log( 'about to process sub-projects of org.ASUX' );
 
 const subdir = 'cmdline';
-fs.access( subdir, function(err2) {
-	if (process.env.VERBOSE) console.log( `checking if ${subdir} exists or not.. .. ` );
-	if (err2 && err2.code === 'ENOENT') {
+try {
+		if (process.env.VERBOSE) console.log( `checking if ${subdir} exists or not.. .. ` );
+		fs.accessSync( subdir );
+
+		// ok!  ./cmdline folder exists
+		if (process.env.VERBOSE) console.log( `${subdir} ALREADY Exists` );
+
+		// No issues accessing the folder
+		// Let's refresh the .cmdline subfolder - by passing ./cmdline as 1st parameter, so git pull happens inside it.
+		// I'd rather do it here,  instead of having each sub-project/sub-folder do it by itself.
+		EXECUTESHELLCMD.executionPiped(  subdir, 'git', ['pull', '--quiet'], false, process.env.VERBOSE, true, null );
+
+} catch(err2) { // err2.code === 'ENOENT')
+
+		console.error( 'Hmmmm.   1st time ever!?   Let me complete initial-setup (1 minute)...\n');
+		EXECUTESHELLCMD.sleep(5);
+
 		if (process.env.VERBOSE) console.log( `${subdir} does Not exist. So.. pulling from remote Git repo. ` );
-		fs.mkdir(subdir,  //Create dir in case not found.
-				{recursive: true}, (err8)=>{ if(err8) { console.error(err8.toString()); process.exit(31); } } ); 
-    console.error( 'Hmmmm.   1st time ever!?   Let me complete initial-setup (1min)...\n');
-//	  var gitpullcmdArgs = ['clone', '--quiet', `https://github.com/${ORGNAME}/${PROJNAME}`];
+
+		//Create dir in case not found.   FYI: mkdirSync() Returns undefined always.
+		try {
+			fs.mkdirSync ( subdir,  {recursive: true, mode: 0o755} ); // 
+		} catch (err8) { // a.k.a. if fs.mkdirSync throws
+			console.error( __filename +": Internal failure, creating the folder ["+ subdir +"]\n"+ err8.toString());
+			process.exit(11);
+		} // try-catch err8
+
+		// var gitpullcmdArgs = ['clone', '--quiet', `https://github.com/${ORGNAME}/${PROJNAME}`];
 	  var gitpullcmdArgs = ['clone', `https://github.com/${ORGNAME}/${PROJNAME}`];
 		console.log( 'git '+ gitpullcmdArgs.join(' ') );
 
 		// use git to get the code for the ./cmdline sub-folder/sub-project
-		EXECUTESHELLCMD.executeSharingSTDOUT ( __dirname, 'git', gitpullcmdArgs, false, process.env.VERBOSE, true, function( err3, response ) {
-			if(!err3){ console.log(response);
-			}else { // git pull FAILED. Now try to write to an ERROR file, so user can use it to report an issue/bug
-				fs.writeFile( OUTPFILE,  err4, (err5) => {
-					if (err5) { console.error(`Internal error: Please contact the project owner, that: Unable to write to '$OUTPFILE'`);
-					} else { console.error(`Internal error: Please contact the project owner, by uploading the contents of the file '$OUTPFILE'`);
-					} // if err5
-			  } // callback within fs.writeFile
-				); // fs.writeFile
-			} // if-else !err3
-    });
-//!!!!!!!!!!!!!!!!!!!!!!!!! Make a function that allows EVERY EXEC-CMD to benefit
+		const retCode = EXECUTESHELLCMD.executeSharingSTDOUT ( __dirname, 'git', gitpullcmdArgs, false, process.env.VERBOSE, true, null );
+		if(retCode != 0){
+			// git pull FAILED. Now try to write to an ERROR file, so user can use it to report an issue/bug
+			console.error( __filename +": Internal error: Please contact the project owner, with the above lines\n\n");
+			process.exit(12);
+		} // if retCode
 
-		// about to RENAME org.ASUX.cmdline to just cmdline
+		// about to RENAME org.ASUX.cmdline to just cmdline.   FYI: renameSync Returns undefined ALWAYS.
 		if (process.env.VERBOSE) console.log( `about to RENAME folder ${PROJNAME} to just ${subdir} ` );
+		try {
+			fs.renameSync( PROJNAME, subdir);
+		} catch (err6) { // a.k.a. if fs.mkdirSync throws
+			console.error( __filename +": Internal failure, renaming the folder ["+ PROJNAME +"]\n"+ err6.toString());
+			process.exit(12);
+		} // try-catch err8
 
-	  fs.rename( PROJNAME, subdir, function (err6) {
-			if(!err6){ console.log( `renamed ${PROJNAME} --> ${subdir}` ); }else { console.error(err6); }
-	  });
-
-	}else{ // ok!  ./cmdline folder exists
-		if (process.env.VERBOSE) console.log( `${subdir} ALREADY Exists` );
-		if (err2 && err2.code != 'ENOENT') { // well it exist and we have an error code!
-			console.error( 'Internal error: Please contact the project owner, with this detail about "${subdir}" :%s', $err2.toString());
-			process.exit(21);
-		} else { // No issues accessing the folder
-			// Let's refresh the .cmdline subfolder - by passing ./cmdline as 1st parameter, so git pull happens inside it.
-			// I'd rather do it here,  instead of having each sub-project/sub-folder do it by itself.
-			EXECUTESHELLCMD.executionPiped(  subdir, 'git', ['pull', '--quiet'], false, process.env.VERBOSE, true, null );
-		} // INNER-if-else err2 & err2.code
-	} // OUTER-if-else err2 & err2.code
+} // try-catch err2
 
 	//--------------------
 
+
 	//decison made: Each subfolder of org.ASUX (like org.ASUX.cmdline) will be a standalone project ..
 	// .. as in: subfolder/asux.js is EXPECTING to see cmdline-arguments **as if** it were entered by user on shell-prompt
+
+
 
 	//--------------------
 	// In Unix shell, If there are spaces inside the variables, then "$@" retains the spaces, while "$*" does not
@@ -161,13 +170,11 @@ fs.access( subdir, function(err2) {
 	if (process.env.VERBOSE) { console.log( `${__filename} : in ${subdir} running 'node' with cmdline-arguments:` + prms.join(' ') ); }
 	EXECUTESHELLCMD.executeSubModule(  subdir, 'node', prms, false, process.env.VERBOSE, false, null );
 
-			// Keeping code around .. .. In case I wanted to run the submodule via JS require
+			// Keeping code around .. .. In case I wanted to run the submodule via .. JS require()
 			// var runOrgASUXCmdLine = require( __dirname +"/"+ subdir + "/asux.js");
 			// runOrgASUXCmdLine.functionName( prms, callBackFn( __dirname, err11, response ) {
 			//		if(!err11){ console.log(response); }else { console.error(err11); process.exit(err11.code); }
 			// });
-
-}); // fs.access
 
 // The Node.js process will exit on its own if there is no additional work pending in the event loop.
 // The process.exitCode property can be set to tell the process which exit code to use when the process exits gracefully.
