@@ -129,6 +129,38 @@ exports.executeSubModule = exports.executeSharingSTDOUT
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //==========================================================
 
+exports.sleep = 
+/**
+ * CPU intensive solution to replicating the UNIX sleep() function call
+ * @param {*} _seconds how long to sleep in SECONDS
+ */
+function sleep(_seconds) {
+	// there is NO sleep() in Javascript
+	var currentTime = new Date().getTime();
+	while (currentTime + 1000 >= new Date().getTime()) {}
+}
+
+
+/**
+ * Pass in a Map as 1st parameter, so I check boolean-value of _semaphoreMap.get(_semaphoreKey) .. periodically
+ * @param {*} _semaphoreMap This should contain a key whose value is === _semaphoreKey
+ * @param {*} _semaphoreKey 
+ * @param {*} _seconds how long to sleep ** ** between ** ** checks of _semaphoreMap.get(_semaphoreKey)
+ */
+exports.wait = 
+function wait( _semaphoreMap, _semaphoreKey, _seconds) {
+	do { // How to sleep every SECOND and check..
+		process.stdout.write('.');
+		// there is NO sleep() in Javascript
+		var currentTime = new Date().getTime();
+		while (currentTime + (_secs*1000) >= new Date().getTime()) {}
+	} while ( _semaphoreMap.get(_semaphoreKey) );
+}
+
+//==========================================================
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//==========================================================
+
 exports.showFileAttributes =
 function showFileAttributes( _file ) {
 	// ls -la "${_file}"
