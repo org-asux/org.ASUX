@@ -1,3 +1,5 @@
+![Logo](https://github.com/org-asux/artifacts/blob/master/images/ASUX.org-Logo-picturetopeople.org.png)
+
 ## Welcome to org.ASUX Organization on GitHub.com (GitHub Pages)
 
 GitHub link:   https://github.com/org-asux/org.ASUX
