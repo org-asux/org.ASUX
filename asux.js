@@ -112,7 +112,7 @@ try {
 		// No issues accessing the folder
 		// Let's refresh the .cmdline subfolder - by passing ./cmdline as 1st parameter, so git pull happens inside it.
 		// I'd rather do it here,  instead of having each sub-project/sub-folder do it by itself.
-		EXECUTESHELLCMD.executionPiped(  subdir, 'git', ['pull', '--quiet'], false, process.env.VERBOSE, true, null );
+		EXECUTESHELLCMD.executeSharingSTDOUT(  subdir, 'git', ['pull', '--quiet'], true, process.env.VERBOSE, true, null );
 
 } catch(err2) { // err2.code === 'ENOENT')
 
