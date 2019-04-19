@@ -98,6 +98,15 @@ if (process.env.VERBOSE) console.log( 'OUTPFILE="'+OUTPFILE+'"' );
 if (process.env.VERBOSE) console.log( ` OLD Working Directory was: ${process.cwd()}` );
 EXECUTESHELLCMD.executionPiped ( __dirname, 'git', ['pull', '--quiet'], true, process.env.VERBOSE, true, null);
 
+//Create '/tmp.dist'.   FYI: mkdirSync() Returns undefined always.
+const tmpdist = '/tmp/dist';
+try {
+	fs.mkdirSync ( tmpdist,  {recursive: true, mode: 0o755} ); // 
+} catch (err8) { // a.k.a. if fs.mkdirSync throws
+	console.error( __filename +": Internal failure, creating the folder ["+ tmpdist +"]\n"+ err8.toString());
+	process.exit(11);
+} // try-catch err8
+
 //--------------------
 if (process.env.VERBOSE) console.log( 'about to process sub-projects of org.ASUX' );
 
@@ -121,16 +130,8 @@ try {
 
 		if (process.env.VERBOSE) console.log( `${subdir} does Not exist. So.. pulling from remote Git repo. ` );
 
-		//Create dir in case not found.   FYI: mkdirSync() Returns undefined always.
-		try {
-			fs.mkdirSync ( subdir,  {recursive: true, mode: 0o755} ); // 
-		} catch (err8) { // a.k.a. if fs.mkdirSync throws
-			console.error( __filename +": Internal failure, creating the folder ["+ subdir +"]\n"+ err8.toString());
-			process.exit(11);
-		} // try-catch err8
-
 		// var gitpullcmdArgs = ['clone', '--quiet', `https://github.com/${ORGNAME}/${PROJNAME}`];
-	  var gitpullcmdArgs = ['clone', `https://github.com/${ORGNAME}/${PROJNAME}`];
+		var gitpullcmdArgs = ['clone', `https://github.com/${ORGNAME}/${PROJNAME}`];
 		console.log( 'git '+ gitpullcmdArgs.join(' ') );
 
 		// use git to get the code for the ./cmdline sub-folder/sub-project
