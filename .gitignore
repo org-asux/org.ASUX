@@ -8,3 +8,5 @@ AWS
 test.js
 artifacts
 org-ASUX.github.io
+node_modules
+package-lock.json
