@@ -1,0 +1,24 @@
+-classpath
+'/Users/Sarma/.m2/repository/junit/junit/4.8.2/junit-4.8.2.jar:/Users/Sarma/.m2/repository/commons-cli/commons-cli/1.4/commons-cli-1.4.jar:/Users/Sarma/.m2/repository/com/esotericsoftware/yamlbeans/yamlbeans/1.13/yamlbeans-1.13.jar'
+-encoding
+'UTF-8'
+-protected
+-sourcepath
+'/Users/Sarma/Documents/Development/src/API-OpenAPI-OAS3/org.ASUX.yaml/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2019. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'/var/build/org.ASUX-yaml-1.0/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'yaml 1.0 API'
+-linkoffline
+'https://docs.oracle.com/javase/8/docs/api' '/var/build/org.ASUX-yaml-1.0/javadoc-bundle-options'
+-use
+-version
+-windowtitle
+'yaml 1.0 API'
