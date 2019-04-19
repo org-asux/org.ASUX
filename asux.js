@@ -101,10 +101,16 @@ EXECUTESHELLCMD.executionPiped ( __dirname, 'git', ['pull', '--quiet'], true, pr
 //Create '/tmp.dist'.   FYI: mkdirSync() Returns undefined always.
 const tmpdist = '/tmp/dist';
 try {
-	fs.mkdirSync ( tmpdist,  {recursive: true, mode: 0o755} ); // 
-} catch (err8) { // a.k.a. if fs.mkdirSync throws
-	console.error( __filename +": Internal failure, creating the folder ["+ tmpdist +"]\n"+ err8.toString());
-	process.exit(11);
+	if (process.env.VERBOSE) console.log( `checking if ${tmpdist} exists or not.. .. ` );
+	fs.accessSync( tmpdist, fs.constants.R_OK | fs.constants.X_OK );
+} catch (err8) { // a.k.a. if fs.accessSync throws
+	try {
+		if (process.env.VERBOSE) console.log( `mkdir ${tmpdist} .. .. ` );
+		fs.mkdirSync ( tmpdist,  {recursive: true, mode: 0o755} ); // 
+	} catch (err8) { // a.k.a. if fs.mkdirSync throws
+		console.error( __filename +": Internal failure, creating the folder ["+ tmpdist +"]\n"+ err8.toString());
+		process.exit(11);
+	}
 } // try-catch err8
 
 //--------------------
