@@ -1,3 +1,7 @@
+![Logo](https://s3.us-east-2.amazonaws.com/org.asux/ASUX.org-Logo-picturetopeople.org.png)
+
+# *.. bringing UN\*X principles & patterns to the world of Application-Servers and 'Cloud'*
+
 ## Welcome to org.ASUX Organization on GitHub.com (GitHub Pages)
 
 GitHub link:   https://github.com/org-asux/org.ASUX
