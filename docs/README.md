@@ -4,22 +4,36 @@
 
 ## Welcome to org.ASUX Organization on GitHub.com (GitHub Pages)
 
-GitHub link:   https://github.com/org-asux/org.ASUX
+Please start browsing from the ASUX.org Organization home web-site (pages on GitHub's org.ASUX Organization) @<br>
+[https://github.com/org-asux/org-ASUX.github.io/wiki](https://github.com/org-asux/org-ASUX.github.io/wiki/Welcome-to-WIKI-for-org.ASUX)
 
-GitHub WIKI PAGES:  https://github.com/org-asux/org.ASUX/wiki
+See "Quick-Start" section as well as Examples in above link.
 
-# org.ASUX
+Also, see Javadocs, Wiki links, etc.. .. within the above.
+
+GitHub Project link (to download code and get started):   [https://github.com/org-asux/org.ASUX](https://github.com/org-asux/org.ASUX)
+
+# org.ASUX - Summary
+
+See full details @ [https://github.com/org-asux/org-ASUX.github.io](https://github.com/org-asux/org-ASUX.github.io)
+
 <p>The top-level command line for ASUX family. Currently supports:-</p>
 <ul><li><code>yaml</code> -- for YAML file processing</li></ul>
 
-<h2>EXAMPLE</h2>
-<p><code>./asux <b>yaml</b> --list --yamlpath 'paths.*.(get|put|post).responses.200' -i ~/Documents/Development/src/API-OpenAPI-OAS3/org.ASUX.yaml//src/test/my-petstore-micro.yaml -o - </code></p>
+<h2>YAML EXAMPLE</h2>
+<p><code>./asux <b>yaml</b> --read --yamlpath 'paths.*.(get|put|post).responses.200' -i ~/Documents/src/OAS3/test/my-petstore.yaml -o - </code></p>
 
-<p>See the sub-project https://github.com/org-asux/org.ASUX.cmdline</p>
+<p>For gory details, see the sub-project <A HREF='https://github.com/org-asux/org-ASUX.github.io/wiki/Examples'>https://github.com/org-asux/org-ASUX.github.io/wiki/Examples</A> and follow links in there! </p>
 
 <h2>The simplest and easiest way to get started?</h2>
+<p>Full details at <A HREF='https://github.com/org-asux/org-ASUX.github.io/wiki/Welcome-to-WIKI-for-org.ASUX'>https://github.com/org-asux/org-ASUX.github.io/wiki/Welcome-to-WIKI-for-org.ASUX</A></p>
 <p><b>Note</b>: This project requires 3 things for you to make it work:</p>
-<ul><li>Bourne-Shell(my preference is TCSH)</li><li>git</li><li>Maven</li></ul>
+<ul>
+<li>git</li>
+<li>Node.JS or Bourne-Shell(FYI: my preference is TCSH)</li>
+<li>an internet connection to dowload from github</li>
+<li>(Optionally) Maven and internet-access to Maven-central</li>
+</ul>
 <p>It will be a long-time, before it will run on a plain-vanilla Windows laptop.</p>
 
 <h4>Run each of the following 3 commands to get started!</h4>
