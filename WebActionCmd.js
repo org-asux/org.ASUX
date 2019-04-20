@@ -5,7 +5,7 @@ const EXECUTESHELLCMD = require( __dirname + "/ExecShellCommand.js");
 
 const request = require('request'); // https://www.npmjs.com/package/request
 							// https://nodejs.org/api/http.html#http_class_http_incomingmessage
-// var requestSync = require('sync-request'); // https://github.com/ForbesLindesay/sync-request
+var requestSync = require('sync-request'); // https://github.com/ForbesLindesay/sync-request
 // I HATE the way sync-request causes POPUPs on MacOS and Windows 10 - alerting user to attempts to open firewall
 
 //==========================================================
@@ -127,13 +127,6 @@ exports.bHTTPRequestCompleted = bHTTPRequestCompleted;
 exports.getURLAsFile =
 function getURLAsFile( _url, _filePath, _cb  ) { 
 
-	// Test this function - by creating a new JS file containing:
-	// var EXECUTESHELLCMD = require( "/mnt/development/src/org.ASUX/ExecShellCommand.js" );
-	// // EXECUTESHELLCMD.getURLAsFile( 'http://the-server.com/will-return/404', '/tmp/google', null );
-	// // EXECUTESHELLCMD.getURLAsFile( 'http://google.com/doodle.png', '/tmp/google', null );
-	// EXECUTESHELLCMD.getURLAsFile( 'XXXXXXXXXXXXXXXXhttp://google.com/doodle.png', '/tmp/google', null );
-	// EXECUTESHELLCMD.getURLAsFile( 'http://ZZZZZZZZZZZZZZZZZZZZZ.com', '/tmp/google', null );
-	
 	bHTTPRequestCompleted = false; // initialize.  Assuming you're running single-threaded cmdline or back-end jobs
 	request( _url, {}, (err, res, body) => {
 		if (err) {
@@ -160,7 +153,7 @@ function getURLAsFile( _url, _filePath, _cb  ) {
 		} // if-else
 	}); // request( url .. ..)
 
-	//==================== FAILED TO USE PROMISES =====================
+	//==================== I UTTERLY FAILED TO USE PROMISES - towards a SYNCHRONOUS goal =====================
 	// var URLOPTIONS = { url: _url,  resolveWithFullResponse: true }; //  headers: { 'User-Agent': 'request' }
 	// var newPromise = Promise_URL2File( URLOPTIONS, _filePath );
 	// newPromise.then(
@@ -181,61 +174,68 @@ function getURLAsFile( _url, _filePath, _cb  ) {
 /**
  * Pass a file and it's automtically written to, and it will be closed.
  * returns {*} [ true/false, httpcode, "success/error-message" ]
+ * @param {*} _url the URL you want, whether httpS or otherwise
  * @param {*} _urloptions something like: { url: _url,  resolveWithFullResponse: true, headers: { 'User-Agent': 'request' } }
  * @param {*} _filePath path to the file into which the RESPONSE body is written to
  */
 
 var getURLAsFileSynchronous = 
-function getURLAsFileSynchronous( _url, _filePath ) {
+function getURLAsFileSynchronous( _url, _urloptions, _filePath ) {
 
-	getURLAsFile( _url, _filePath, null  );
-	EXECUTESHELLCMD.sleep(1); // in case the request is completed in < 2 seconds
-	var bFirstIteration = true;
-	while ( ! bHTTPRequestCompleted ); { // bHTTPRequestCompleted is set INSIDE the preceeding getURLAsFile()
-		if ( bFirstIteration ) console.error( _url +" is taking too long ..  ");
-		bFirstIteration = false;
-		process.stdout.write('.');
-		// there is NO sleep() in Javascript
-		var currentTime = new Date().getTime();
-		while (currentTime + (1000) >= new Date().getTime()) {}
-	};
+	// Test this function - by creating a new JS file containing:
+	// var EXECUTESHELLCMD = require( "/mnt/development/src/org.ASUX/ExecShellCommand.js" );
+	// // EXECUTESHELLCMD.getURLAsFile( 'http://the-server.com/will-return/404', null, '/tmp/google' );
+	// // EXECUTESHELLCMD.getURLAsFile( 'http://google.com/doodle.png', null, '/tmp/google' );
+	// EXECUTESHELLCMD.getURLAsFile( 'XXXXXXXXXXXXXXXXhttp://google.com/doodle.png', null, '/tmp/google' );
+	// EXECUTESHELLCMD.getURLAsFile( 'http://ZZZZZZZZZZZZZZZZZZZZZ.com', null, '/tmp/google' );
+	// getURLAsFileSynchronous( 'https://s3.amazonaws.com/org.asux.cmdline/junit.junit.junit-4.8.2.jar', null, '/tmp/jar' );
+	// getURLAsFile( 'https://s3.amazonaws.com/org.asux.cmdline/junit.junit.junit-4.8.222.jar', null, '/tmp/jar' );
 
 	// ===================== following code uses require("sync-request") =====================
-	// console.error( __filename +": The function getURLAsFileSynchronous() is completely COMMENTED OUT.  Never like sync-request NPM Module");
-	// var URLOPTIONS = { url: _url,  followRedirects: true, body: Buffer }; // see better examples in Aysnc version of function above.
 
-	// var response = requestSync('GET', _url, URLOPTIONS );
-	// // response.statusCode
-	// // response.headers  response.headers=[{"accept-ranges":"bytes","cache-control":"max-age=604800","content-type":"text/html; charset=UTF-8","date":"Wed, 17 Apr 2019 17:09:11 GMT","etag":"\"1541025663+gzip\"","expires":"Wed, 24 Apr 2019 17:09:11 GMT","last-modified":"Fri, 09 Aug 2013 23:54:35 GMT","server":"ECS (phd/FD6F)","vary":"Accept-Encoding","x-cache":"HIT","content-length":"606","connection":"close"}]
-	// // response.body -- either String or Buffer typeof.
-	// // response.body.toString()
-	// // if ( process.env.VERBOSE && _response )
-	// if ( process.env.VERBOSE ) console.log( __filename + ": getURLAsFileSynchronous(): response.headers=["+ JSON.stringify(response.headers) +"]!!!!!!!");
+	var URLOPTIONS = (_urloptions != null) ? _urloptions :
+					{ url: _url,  followRedirects: true, body: Buffer }; // see better examples in Aysnc version of function above.
 
-	// if ( process.env.VERBOSE ) console.log( __filename +": response.body.size = "+ response.body.length )
-	// const filedescr = fs.openSync( _filePath, "w", 0o666 ); // https://nodejs.org/api/fs.html#fs_fs_opensync_path_flags_mode
-	// fs.writeSync( filedescr, response.body, 0, response.body.length, null, function(err) {
-    //     if (err) {
-	// 		const m = ": Error/Failure writing to file ["+ _filePath +"] - got error ["+ err +"]";
-	// 		console.error( __filename + m);
-	// 		throw m;
-	// 	}
-    //     fs.close(filedescr, function() {
-    //         console.log('wrote the file ['+ _filePath +']successfully');
-    //     });
-    // });
+	var response = requestSync('GET', _url, URLOPTIONS );
+	// response.statusCode
+	// response.headers  response.headers=[{"accept-ranges":"bytes","cache-control":"max-age=604800","content-type":"text/html; charset=UTF-8","date":"Wed, 17 Apr 2019 17:09:11 GMT","etag":"\"1541025663+gzip\"","expires":"Wed, 24 Apr 2019 17:09:11 GMT","last-modified":"Fri, 09 Aug 2013 23:54:35 GMT","server":"ECS (phd/FD6F)","vary":"Accept-Encoding","x-cache":"HIT","content-length":"606","connection":"close"}]
+	// response.body -- either String or Buffer typeof.
+	// response.body.toString()
+	// if ( process.env.VERBOSE && _response )
+	if ( process.env.VERBOSE ) console.log( __filename + ": getURLAsFileSynchronous(): response.headers=["+ JSON.stringify(response.headers) +"]!!!!!!!");
+	if ( process.env.VERBOSE ) console.log( __filename +": getURLAsFileSynchronous(): response.body.size = "+ response.body.length )
 
-	// if ( response.statusCode == 200 )
-	// 	return [ response.statusCode, null ];
-	// else
-	// 	return [ response.statusCode, response.body.toString() ];
+	try {
+		const filedescr = fs.openSync( _filePath, "w", 0o666 ); // https://nodejs.org/api/fs.html#fs_fs_opensync_path_flags_mode
+		fs.writeSync( filedescr, response.body );
+		fs.closeSync(filedescr);
+		if ( process.env.VERBOSE ) console.log('wrote the file ['+ _filePath +'] successfully');
+	} catch (err4) {
+		console.error( __filename + ": Serious Error/Failure writing to file ["+ _filePath +"] - got error ["+ err4 +"]" );
+		process.exit(45);
+	}
+
+	if ( response.statusCode == 200 )
+		return [ response.statusCode, null ];
+	else
+		return [ response.statusCode, response.body.toString() ];
+
+	// NEVER WORKED.  What was I thinking trying to convert a ASYNC bunch of code and trying to make it SYNCHRONOUS - in stupid Javascript.
+	// exports.getURLAsFile( _url, _filePath, null  );
+	// EXECUTESHELLCMD.sleep(1); // in case the request is completed in < 2 seconds
+	// var bFirstIteration = true;
+	// while ( ! bHTTPRequestCompleted ); { // bHTTPRequestCompleted is set INSIDE the preceeding getURLAsFile()
+	// 	if ( bFirstIteration ) console.error( _url +" is taking too long ..  ");
+	// 	bFirstIteration = false;
+	// 	process.stdout.write('.');
+	// 	// there is NO sleep() in Javascript
+	// 	var currentTime = new Date().getTime();
+	// 	while (currentTime + (1000) >= new Date().getTime()) {}
+	// };
 
 };
 
 exports.getURLAsFileSynchronous = getURLAsFileSynchronous;;
-
-// getURLAsFileSynchronous( 'https://s3.amazonaws.com/org.asux.cmdline/junit.junit.junit-4.8.222.jar', '/tmp/jar' );
-// getURLAsFile( 'https://s3.amazonaws.com/org.asux.cmdline/junit.junit.junit-4.8.222.jar', '/tmp/jar', null );
 
 //==========================================================
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
