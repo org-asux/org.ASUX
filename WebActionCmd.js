@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 
 const fs = require('fs');  // https://nodejs.org/api/fs.html#fs_fs_accesssync_path_mode
+const EXECUTESHELLCMD = require( __dirname + "/ExecShellCommand.js");
+
 const request = require('request'); // https://www.npmjs.com/package/request
 							// https://nodejs.org/api/http.html#http_class_http_incomingmessage
-var requestSync = require('sync-request'); // https://github.com/ForbesLindesay/sync-request
+// var requestSync = require('sync-request'); // https://github.com/ForbesLindesay/sync-request
+// I HATE the way sync-request causes POPUPs on MacOS and Windows 10 - alerting user to attempts to open firewall
 
 //==========================================================
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -107,9 +110,16 @@ function Promise_URL2File( _urloptions, _filePath ) {
 exports.Promise_URL2File = Promise_URL2File;;
 
 //-------------------------------------------
+
+var bHTTPRequestCompleted = false;
+
+exports.bHTTPRequestCompleted = bHTTPRequestCompleted;
+
+//-------------------------------------------
 /**
  * Pass a file and it's automtically written to, and it will be closed.
  * Use the _cb (callback) ***only*** if you need detailed errors.
+ * @param {*} _url the URL you want, whether httpS or otherwise
  * @param {*} _urloptions something like: { url: _url,  resolveWithFullResponse: true, headers: { 'User-Agent': 'request' } }
  * @param {*} _filePath path to the file into which the RESPONSE body is written to
  * @param {*} _cb the callback function with 2 parameters (statusCode, string) -- where string is either HTTP-response-body or error-message
@@ -124,19 +134,46 @@ function getURLAsFile( _url, _filePath, _cb  ) {
 	// EXECUTESHELLCMD.getURLAsFile( 'XXXXXXXXXXXXXXXXhttp://google.com/doodle.png', '/tmp/google', null );
 	// EXECUTESHELLCMD.getURLAsFile( 'http://ZZZZZZZZZZZZZZZZZZZZZ.com', '/tmp/google', null );
 	
-	var URLOPTIONS = { url: _url,  resolveWithFullResponse: true }; //  headers: { 'User-Agent': 'request' }
-	var newPromise = Promise_URL2File( URLOPTIONS, _filePath );
-	newPromise.then(
-		function(httpcode) { // This function corresponds to the "success()" within the Promise
-			console.log( __filename + ": getURLAsFile(): SUCCESS http-code [" + httpcode +"]");
-			if ( _cb) _cb( true, httpcode, "success" );
-		},
-		function(_p2) { // This function corresponds to the "reject()" within the Promise
-			let [ errcode, err ] = _p2;
-			console.error( __filename + ": getURLAsFile(): Got HTTP-ERROR# [" + errcode +"] ["+ err +"]");
+	bHTTPRequestCompleted = false; // initialize.  Assuming you're running single-threaded cmdline or back-end jobs
+	request( _url, {}, (err, res, body) => {
+		if (err) {
+			console.log( __filename +": "+ err.toString() );
+			bHTTPRequestCompleted = true;
 			if ( _cb) _cb( false, errcode, err );
-		}
-	);
+		} else {
+			console.log( __filename +": "+ res.headers.toString() );
+			console.log( __filename +": "+ body.toString() );
+			// console.log(body.url);
+			// console.log(body.explanation);
+			try {
+				const filedescr = fs.openSync( _filePath, "w", 0o644 ); // https://nodejs.org/api/fs.html#fs_fs_opensync_path_flags_mode
+				fs.writeFileSync( filedescr, body, {} );
+				fs.closeSync(filedescr);
+				console.log( __filename +'wrote the file ['+ _filePath +']successfully');
+			} catch(err) {
+				const m = ": Error/Failure writing to file ["+ _filePath +"] - got error ["+ err +"]";
+				console.error( __filename + m);
+				fs.unlink( _filePath, () => {}); // Delete temp file
+			}
+			bHTTPRequestCompleted = true;
+			if ( _cb) _cb( true, httpcode, "success" );
+		} // if-else
+	}); // request( url .. ..)
+
+	//==================== FAILED TO USE PROMISES =====================
+	// var URLOPTIONS = { url: _url,  resolveWithFullResponse: true }; //  headers: { 'User-Agent': 'request' }
+	// var newPromise = Promise_URL2File( URLOPTIONS, _filePath );
+	// newPromise.then(
+	// 	function(httpcode) { // This function corresponds to the "success()" within the Promise
+	// 		console.log( __filename + ": getURLAsFile(): SUCCESS http-code [" + httpcode +"]");
+	// 		if ( _cb) _cb( true, httpcode, "success" );
+	// 	},
+	// 	function(_p2) { // This function corresponds to the "reject()" within the Promise
+	// 		let [ errcode, err ] = _p2;
+	// 		console.error( __filename + ": getURLAsFile(): Got HTTP-ERROR# [" + errcode +"] ["+ err +"]");
+	// 		if ( _cb) _cb( false, errcode, err );
+	// 	}
+	// );
 
 };
 
@@ -151,47 +188,47 @@ function getURLAsFile( _url, _filePath, _cb  ) {
 var getURLAsFileSynchronous = 
 function getURLAsFileSynchronous( _url, _filePath ) {
 
-	var URLOPTIONS = { url: _url,  followRedirects: true, body: Buffer }; // see better examples in Aysnc version of function above.
+	getURLAsFile( _url, _filePath, null  );
+	EXECUTESHELLCMD.sleep(1); // in case the request is completed in < 2 seconds
+	var bFirstIteration = true;
+	while ( ! bHTTPRequestCompleted ); { // bHTTPRequestCompleted is set INSIDE the preceeding getURLAsFile()
+		if ( bFirstIteration ) console.error( _url +" is taking too long ..  ");
+		bFirstIteration = false;
+		process.stdout.write('.');
+		// there is NO sleep() in Javascript
+		var currentTime = new Date().getTime();
+		while (currentTime + (1000) >= new Date().getTime()) {}
+	};
 
-	var response = requestSync('GET', _url, URLOPTIONS );
-	// response.statusCode
-	// response.headers  response.headers=[{"accept-ranges":"bytes","cache-control":"max-age=604800","content-type":"text/html; charset=UTF-8","date":"Wed, 17 Apr 2019 17:09:11 GMT","etag":"\"1541025663+gzip\"","expires":"Wed, 24 Apr 2019 17:09:11 GMT","last-modified":"Fri, 09 Aug 2013 23:54:35 GMT","server":"ECS (phd/FD6F)","vary":"Accept-Encoding","x-cache":"HIT","content-length":"606","connection":"close"}]
-	// response.body -- either String or Buffer typeof.
-	// response.body.toString()
-	// if ( process.env.VERBOSE && _response )
-	if ( process.env.VERBOSE ) console.log( __filename + ": getURLAsFileSynchronous(): response.headers=["+ JSON.stringify(response.headers) +"]!!!!!!!");
+	// ===================== following code uses require("sync-request") =====================
+	// console.error( __filename +": The function getURLAsFileSynchronous() is completely COMMENTED OUT.  Never like sync-request NPM Module");
+	// var URLOPTIONS = { url: _url,  followRedirects: true, body: Buffer }; // see better examples in Aysnc version of function above.
 
-	// const fileStream = fs.createWriteStream( _filePath, { flags: "w", mode: 0o666 } );  // https://nodejs.org/api/fs.html#fs_file_system
-	// fileStream.on('error', function (err) {
-	// 	fs.unlink( _filePath, () => {}); // Delete temp file
-	// });
-	// fileStream.write(response.body); // Warning: This requires URL option of body: Buffer
-	// fileStream.end(); // flushes
-	// fileStream.close();
-	if ( process.env.VERBOSE ) console.log( __filename +": response.body.size = "+ response.body.length )
-	const filedescr = fs.openSync( _filePath, "w", 0o666 ); // https://nodejs.org/api/fs.html#fs_fs_opensync_path_flags_mode
-	fs.writeSync( filedescr, response.body, 0, response.body.length, null, function(err) {
-        if (err) {
-			const m = ": Error/Failure writing to file ["+ _filePath +"] - got error ["+ err +"]";
-			console.error( __filename + m);
-			throw m;
-		}
-        fs.close(fd, function() {
-            console.log('wrote the file ['+ _filePath +']successfully');
-        });
-    });
+	// var response = requestSync('GET', _url, URLOPTIONS );
+	// // response.statusCode
+	// // response.headers  response.headers=[{"accept-ranges":"bytes","cache-control":"max-age=604800","content-type":"text/html; charset=UTF-8","date":"Wed, 17 Apr 2019 17:09:11 GMT","etag":"\"1541025663+gzip\"","expires":"Wed, 24 Apr 2019 17:09:11 GMT","last-modified":"Fri, 09 Aug 2013 23:54:35 GMT","server":"ECS (phd/FD6F)","vary":"Accept-Encoding","x-cache":"HIT","content-length":"606","connection":"close"}]
+	// // response.body -- either String or Buffer typeof.
+	// // response.body.toString()
+	// // if ( process.env.VERBOSE && _response )
+	// if ( process.env.VERBOSE ) console.log( __filename + ": getURLAsFileSynchronous(): response.headers=["+ JSON.stringify(response.headers) +"]!!!!!!!");
 
-	// do { // How to sleep every SECOND and check..
-	//	 	process.stdout.write('.');
-	//	 	// there is NO sleep() in Javascript
-	//	 	var currentTime = new Date().getTime();
-	//	 	while (currentTime + 1000 >= new Date().getTime()) {}
-	// } while ( bConditionFlag );
+	// if ( process.env.VERBOSE ) console.log( __filename +": response.body.size = "+ response.body.length )
+	// const filedescr = fs.openSync( _filePath, "w", 0o666 ); // https://nodejs.org/api/fs.html#fs_fs_opensync_path_flags_mode
+	// fs.writeSync( filedescr, response.body, 0, response.body.length, null, function(err) {
+    //     if (err) {
+	// 		const m = ": Error/Failure writing to file ["+ _filePath +"] - got error ["+ err +"]";
+	// 		console.error( __filename + m);
+	// 		throw m;
+	// 	}
+    //     fs.close(filedescr, function() {
+    //         console.log('wrote the file ['+ _filePath +']successfully');
+    //     });
+    // });
 
-	if ( response.statusCode == 200 )
-		return [ response.statusCode, null ];
-	else
-		return [ response.statusCode, response.body.toString() ];
+	// if ( response.statusCode == 200 )
+	// 	return [ response.statusCode, null ];
+	// else
+	// 	return [ response.statusCode, response.body.toString() ];
 
 };
 
