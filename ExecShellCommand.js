@@ -95,6 +95,40 @@ exports.executeSubModule = exports.executeSharingSTDOUT
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //==========================================================
 
+// Decided to generalize the repeated code to try running ./pre.js ./pre.sh ./post.js ./post.sh
+exports.runPrePostScript = 
+function runPrePostScript( _runner, _fldr, _script ) {
+	// const _script = './pre.js';
+	// const _fldr = ".";
+	// const runner = 'node';
+	try {
+		if (process.env.VERBOSE) console.log(__filename + ": checking if [" + _fldr+'/'+_script + "] exists or not.. .. ");
+		fs.accessSync(_script, fs.constants.R_OK | fs.constants.X_OK);
+		var preParams = process.argv;
+		preParams.splice(0, 0, _script);
+		EXECUTESHELLCMD.executeSharingSTDOUT( _fldr, _runner, preParams, false, process.env.VERBOSE, false, null);
+	} catch (err8) { // a.k.a. if fs.accessSync throws
+		if (process.env.VERBOSE) console.log(__filename + ": " + _fldr+'/'+_script + " does NOT EXIST.  So skipping quietly");
+		if (process.env.VERBOSE) console.log(__filename + ": exception details: err8 = " + err8.toString());
+	}
+}
+
+exports.runPreScripts = 	// Note the 'plural' in function-name - versus name of the above runPrePostScript function.
+function runPreScripts() {	// Note the 'plural' in function-name - versus name of the above runPrePostScript function.
+	exports.runPrePostScript( 'node', '.', 'pre.js' );
+	exports.runPrePostScript( 'sh',   '.', 'pre.sh' );
+}
+
+exports.runPostScripts = 	// Note the 'plural' in function-name - versus name of the above runPrePostScript function.
+function runPostScripts() {	// Note the 'plural' in function-name - versus name of the above runPrePostScript function.
+	exports.runPrePostScript( 'node', '.', 'post.js' );
+	exports.runPrePostScript( 'sh',   '.', 'post.sh' );
+}
+
+//==========================================================
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//==========================================================
+
 // exports.executionByExec =
 // function( _newWorkingDir, _command, _cmdArgs, _quietlyRunCmd, _bVerbose2, _bExitOnFail, mycallback96 ) {
 // 	const child99 = execFileSync( _command, _cmdArgs, ( errObj1, outStr1, errStr1) => {
