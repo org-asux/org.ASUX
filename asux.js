@@ -5,17 +5,21 @@ var os = require('os');			// https://nodejs.org/api/os.html
 var PATH = require('path'); // to help process the script-file details.
 var fs = require("fs"); 		// https://nodejs.org/api/fs.html#fs_fs_accesssync_path_mode
 
+//--------------------------------------
 // This is the Node.JS script within the same directory - to make it simple to run an external command
 var EXECUTESHELLCMD = require( __dirname + "/ExecShellCommand.js");
 
-//==========================
+var COMMAND = "unknown"; // will be set based on what the user enters on the commandline.
+
+//======================================
 CmdLine
 	.version('1.0', '-v, --version')
 	.usage('[options] <commands ...>')
 	.option('--verbose', 'A value that can be increased by repeating', 0)
+	.option('--properties [propsFile]', 'A JSON file containing Key-value pairs', 0)
 	;
 
-//==========================
+//---------------
 /* attach options to a command */
 /* if a command does NOT define an action (see .action invocation), then the options are NOT validated */
 /* For Git-like submodule commands.. ..
@@ -31,7 +35,7 @@ CmdLine
 .command('aws', 'a large family of commands to interact with AWS components like CloudFormation, API-Gateway & Lambda functions', {isDefault: false, noHelp: false} )
 	;
 
-//==========================
+//--------------------------
 // Custom HELP output .. must be before .parse() since node's emit() is immediate
 
 CmdLine.on('--help', function(){
@@ -52,21 +56,30 @@ CmdLine.on('option:verbose', function () {
   process.env.VERBOSE = this.verbose;
 });
 
+CmdLine.on('option:properties', function () {
+	console.log("Reading properties file [" + this.properties +"]");
+	// read the file and store it in GLOBAL variable ;
+	PROPERTIES = require ( this.properties );
+});
+
+//---------------------------------------
 CmdLine.on('command:yaml', function () {
 	if (process.env.VERBOSE) console.log("Yeah.  processing YAML command");
+	COMMAND = 'yaml';
 	sendArgs2SubModule_Cmdline();
 });
 
 CmdLine.on('command:aws', function () {
 	if (process.env.VERBOSE) console.log("Yeah.  processing Amazon-AWS command");
+	COMMAND = 'aws';
 	// sendArgs2SubModule_AWS();
 });
 
 // Like the 'default' in a switch statement.. .. After all of the above "on" callbacks **FAIL** to trigger, we'll end up here.
 // If we end up here, then .. Show error about unknown command
-CmdLine.on('command:*', function () {
-  console.error('Invalid command: %s\nSee --help for a list of available commands.', CmdLine.args.join(' '));
-  process.exit(1);
+CmdLine.on('command:*', function (_cmd) {
+	console.error("Invalid command: "+ _cmd +"\nSee --help for a list of available commands.\n"+ process.argv.join(' '));
+	process.exit(1);
 });
 
 //==========================
@@ -168,14 +181,24 @@ try {
 
 
 	//--------------------
+	// pre-scripts (Before running ./cmdline/asux.js)
+	EXECUTESHELLCMD.runPreScripts(); // ignore any exit code from these PRE-scripts
+
+	//--------------------------------------------------------
 	// In Unix shell, If there are spaces inside the variables, then "$@" retains the spaces, while "$*" does not
 	// The following lines of code are the JS-quivalent of shell's      ./cmdline/asux $@
-	// Get rid of 'node' (optionally)'--verbose' and 'asux.js'.. .. and finally the 'yaml/asux'
-	var prms = process.argv.slice( process.env.VERBOSE ? 4 : 3 );
-	prms.splice(0,0, './asux.js' ); // insert ./asux.js as the 1st cmdline parameter
-	if (process.env.VERBOSE) prms.splice( 1, 0, '--verbose' ); // optionally, insert '--verbose' as the 2nd cmdline parameter
+	// For starters, Get rid of 'node' and 'asux.js' via slice(2)
+	var prms = [];
+	for (var ix in process.argv) {
+    if ( process.argv[ix].match('.*node(.exe)?$') ) continue; // get rid of node.js  or  node.exe (on windows)
+		if ( ix < 2 ) continue; // For starters, Get rid of 'node' and 'asux.js'
+		if ( process.argv[ix] == COMMAND ) continue; // Skip 'yaml' or 'aws' or .. ..
+		prms.push( process.argv[ix]);
+	}
+	prms.splice( 0, 0, './asux.js' ); // insert ./asux.js as the 1st cmdline parameter to node.js
 	if (process.env.VERBOSE) { console.log( `${__filename} : in ${subdir} running 'node' with cmdline-arguments:` + prms.join(' ') ); }
-	EXECUTESHELLCMD.executeSubModule(  subdir, 'node', prms, false, process.env.VERBOSE, false, null );
+	process.exitCode =
+			EXECUTESHELLCMD.executeSubModule(  subdir, 'node', prms, false, process.env.VERBOSE, false, null );
 
 			// Keeping code around .. .. In case I wanted to run the submodule via .. JS require()
 			// var runOrgASUXCmdLine = require( __dirname +"/"+ subdir + "/asux.js");
@@ -183,8 +206,11 @@ try {
 			//		if(!err11){ console.log(response); }else { console.error(err11); process.exit(err11.code); }
 			// });
 
-// The Node.js process will exit on its own if there is no additional work pending in the event loop.
-// The process.exitCode property can be set to tell the process which exit code to use when the process exits gracefully.
+	//--------------------
+	EXECUTESHELLCMD.runPostScripts(); // ignore any exit code from these Post-scripts
+
+	// The Node.js process will exit on its own if there is no additional work pending in the event loop.
+	// The process.exitCode property can be set to tell the process which exit code to use when the process exits gracefully.
 
 } // end function sendArgs2CmdlineModule
 
