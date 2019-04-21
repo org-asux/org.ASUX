@@ -1,0 +1,12 @@
+{
+        "name": "org.ASUX",
+        "version": "1.0.0",
+        "description": "see https://github.com/org-asux/org-ASUX.github.io/wiki",
+        "main": "asux.js",
+        "author": "Sarma",
+        "license": "BSD 3-Clause License",
+        "dependencies": {"request", "sync-request", "commander"},
+        "keywords": "UN*X style cmdline tools for the Application-Server and Cloud era.  YAML read delete query find replace substitute list processor command-line ",
+        "bugs": { "url": "https://github.com/org-asux/org-ASUX.github.io/wiki" },
+        "homepage": "https://github.com/org-asux/org-ASUX.github.io/wiki"
+}
