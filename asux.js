@@ -9,6 +9,7 @@ var fs = require("fs"); 		// https://nodejs.org/api/fs.html#fs_fs_accesssync_pat
 // This is the Node.JS script within the same directory - to make it simple to run an external command
 var EXECUTESHELLCMD = require( __dirname + "/ExecShellCommand.js");
 
+var INITIAL_CWD = process.cwd(); // just in case I mistakenly process.chdir() somewhere below.
 var COMMAND = "unknown"; // will be set based on what the user enters on the commandline.
 
 //======================================
@@ -93,9 +94,9 @@ function sendArgs2SubModule_Cmdline() {
 
 	if ( __dirname != process.cwd()  ) {
 	if (process.env.VERBOSE) console.log("you **WERE** in the directory: '%s'", process.cwd() );
-	process.chdir(  __dirname );
-	// COMMENT: Must switch to root of org.ASUX project working folder - to fetch sub-projects
-	if (process.env.VERBOSE) console.log("switched to directory: '%s'", process.cwd());
+	// process.chdir(  __dirname );
+	// COMMENT: NO LONGER CORRECT --> Must switch to root of org.ASUX project working folder - to fetch sub-projects
+	// if (process.env.VERBOSE) console.log("switched to directory: '%s'", process.cwd());
 }else{
 	if (process.env.VERBOSE) console.log("You are running from where this Node.JS Script is.  Nice! %s", __dirname );
 }
@@ -130,25 +131,25 @@ EXECUTESHELLCMD.executionPiped ( __dirname, 'git', ['pull', '--quiet'], true, pr
 //--------------------
 if (process.env.VERBOSE) console.log( 'about to process sub-projects of org.ASUX' );
 
-const subdir = 'cmdline';
+const DIR_orgASUXcmdline = __dirname + '/cmdline';
 try {
-		if (process.env.VERBOSE) console.log( `checking if ${subdir} exists or not.. .. ` );
-		fs.accessSync( subdir, fs.constants.R_OK | fs.constants.X_OK );
+		if (process.env.VERBOSE) console.log( `checking if ${DIR_orgASUXcmdline} exists or not.. .. ` );
+		fs.accessSync( DIR_orgASUXcmdline, fs.constants.R_OK | fs.constants.X_OK );
 
 		// ok!  ./cmdline folder exists
-		if (process.env.VERBOSE) console.log( `${subdir} ALREADY Exists` );
+		if (process.env.VERBOSE) console.log( `${DIR_orgASUXcmdline} ALREADY Exists` );
 
 		// No issues accessing the folder
 		// Let's refresh the .cmdline subfolder - by passing ./cmdline as 1st parameter, so git pull happens inside it.
 		// I'd rather do it here,  instead of having each sub-project/sub-folder do it by itself.
-		EXECUTESHELLCMD.executeSharingSTDOUT(  subdir, 'git', ['pull', '--quiet'], true, process.env.VERBOSE, true, null );
+		EXECUTESHELLCMD.executeSharingSTDOUT(  DIR_orgASUXcmdline, 'git', ['pull', '--quiet'], true, process.env.VERBOSE, true, null );
 
 } catch(err2) { // err2.code === 'ENOENT')
 
 		console.error( 'Hmmmm.   1st time ever!?   Let me complete initial-setup (1 minute)...\n');
 		EXECUTESHELLCMD.sleep(5);
 
-		if (process.env.VERBOSE) console.log( `${subdir} does Not exist. So.. pulling from remote Git repo. ` );
+		if (process.env.VERBOSE) console.log( `${DIR_orgASUXcmdline} does Not exist. So.. pulling from remote Git repo. ` );
 
 		// var gitpullcmdArgs = ['clone', '--quiet', `https://github.com/${ORGNAME}/${PROJNAME}`];
 		var gitpullcmdArgs = ['clone', `https://github.com/${ORGNAME}/${PROJNAME}`];
@@ -163,9 +164,9 @@ try {
 		} // if retCode
 
 		// about to RENAME org.ASUX.cmdline to just cmdline.   FYI: renameSync Returns undefined ALWAYS.
-		if (process.env.VERBOSE) console.log( `about to RENAME folder ${PROJNAME} to just ${subdir} ` );
+		if (process.env.VERBOSE) console.log( `about to RENAME folder ${PROJNAME} to just ${DIR_orgASUXcmdline} ` );
 		try {
-			fs.renameSync( PROJNAME, subdir);
+			fs.renameSync( PROJNAME, DIR_orgASUXcmdline);
 		} catch (err6) { // a.k.a. if fs.mkdirSync throws
 			console.error( __filename +": Internal failure, renaming the folder ["+ PROJNAME +"]\n"+ err6.toString());
 			process.exit(12);
@@ -196,13 +197,13 @@ try {
 		if ( process.argv[ix] == COMMAND ) continue; // Skip 'yaml' or 'aws' or .. ..
 		prms.push( process.argv[ix]);
 	}
-	prms.splice( 0, 0, './asux.js' ); // insert ./asux.js as the 1st cmdline parameter to node.js
-	if (process.env.VERBOSE) { console.log( `${__filename} : in ${subdir} running 'node' with cmdline-arguments:` + prms.join(' ') ); }
+	prms.splice( 0, 0, DIR_orgASUXcmdline +'/asux.js' ); // insert ./asux.js as the 1st cmdline parameter to node.js
+	if (process.env.VERBOSE) { console.log( `${__filename} : running Node.JS with cmdline-arguments:` + prms.join(' ') ); }
 
 	process.env.PARENTPROJFLDR=__dirname; // for use by cmdline/asux.js .. so it know where this asux.js is.
 
 	process.exitCode =
-			EXECUTESHELLCMD.executeSubModule(  subdir, 'node', prms, false, process.env.VERBOSE, false, null );
+			EXECUTESHELLCMD.executeSubModule(  INITIAL_CWD, 'node', prms, false, process.env.VERBOSE, false, null );
 
 			// Keeping code around .. .. In case I wanted to run the submodule via .. JS require()
 			// var runOrgASUXCmdLine = require( __dirname +"/"+ subdir + "/asux.js");
