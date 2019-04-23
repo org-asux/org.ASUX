@@ -3,9 +3,10 @@
 cmdline
 yaml
 *~
-test script.sh
+**/*~
 AWS
-test.js
+test/test.js
+test/test script.sh
 artifacts
 org-ASUX.github.io
 node_modules
