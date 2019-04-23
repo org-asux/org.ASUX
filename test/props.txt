@@ -1,0 +1,9 @@
+Key101=SHORTVALUE101
+
+### WARNING!!! For values with spaces in them.. 
+###      .. Make sure there are NO QUOTES used.
+### The QUOTES will be pulled in, as part of the value!!!!
+
+Key202=LOOOOOOOOOONG VALUE with SPACES 202
+
+### EoFile
