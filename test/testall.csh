@@ -55,7 +55,31 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=/tmp/test-output/test-${TESTNUM}
-asux.js yaml list '*.**.schema' --inputfile nano.yaml \
+asux.js yaml list '*,**,schema' --delimiter , --inputfile nano.yaml \
+        -o ${OUTPFILE}
+diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
+
+@ TESTNUM = $TESTNUM + 1
+set OUTPFILE=/tmp/test-output/test-${TESTNUM}
+asux.js yaml list 'paths,/pet,put,**,in' --delimiter , --inputfile my-petstore-micro.yaml  \
+        -o ${OUTPFILE}
+diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
+
+@ TESTNUM = $TESTNUM + 1
+set OUTPFILE=/tmp/test-output/test-${TESTNUM}
+asux.js yaml list 'paths,/pet,put,parameters,*,in' --delimiter , --inputfile my-petstore-micro.yaml   \
+        -o ${OUTPFILE}
+diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
+
+@ TESTNUM = $TESTNUM + 1
+set OUTPFILE=/tmp/test-output/test-${TESTNUM}
+asux.js yaml list 'paths,/pet,put,parameters,[0],in' --delimiter , --inputfile my-petstore-micro.yaml \
+        -o ${OUTPFILE}
+diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
+
+@ TESTNUM = $TESTNUM + 1
+set OUTPFILE=/tmp/test-output/test-${TESTNUM}
+asux.js yaml list 'paths,/pet,put,parameters,[13],in' --delimiter , --inputfile my-petstore-micro.yaml  \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
@@ -69,26 +93,13 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 # set OUTPFILE=/tmp/test-output/test-${TESTNUM}
 #     \
 #         -o ${OUTPFILE}
+# diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
 # @ TESTNUM = $TESTNUM + 1
 # set OUTPFILE=/tmp/test-output/test-${TESTNUM}
 #     \
 #         -o ${OUTPFILE}
-
-# @ TESTNUM = $TESTNUM + 1
-# set OUTPFILE=/tmp/test-output/test-${TESTNUM}
-#     \
-#         -o ${OUTPFILE}
-
-# @ TESTNUM = $TESTNUM + 1
-# set OUTPFILE=/tmp/test-output/test-${TESTNUM}
-#     \
-#         -o ${OUTPFILE}
-
-# @ TESTNUM = $TESTNUM + 1
-# set OUTPFILE=/tmp/test-output/test-${TESTNUM}
-#     \
-#         -o ${OUTPFILE}
+# diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
 
 ###---------------------------------
