@@ -1,0 +1,59 @@
+### This is the file 'mySampleBatch.txt'
+batch-lookup-properties-file=myProperties.txt
+# Note: this properties-file will have 100+ rows.. like:
+#             us-east-1a=ASXPLACEHLDR-subnet-1
+#             us-east-2a=ASXPLACEHLDR-subnet-2
+# batch-lookup-properties-file could have been a cmdline param, but it’s MUCH MORE useful to load multiple props files in a single batch!
+      
+// this is also a comment!
+// Both '#' and '//' an appear ANYWHERE ( even at the end of a command).  Convenient for documentation!
+	
+-- Also, this a comment, but no character can precede the hyphen, not even WHITESPACE.
+-- As in, the double-dash comment line should have the '--' at the very 1st character of the line.
+-- NO INDENTATIONS ALLOWED .. only for '--'.     This restriction does NOT apply to '#' and '//'
+
+# Note: In the following we have missing -i & -o .  cmd-line options!
+#       It means that - by default - stdin/stdout respectively.
+# The output of a line is the input for the SUCCESSOR line
+# Well! The input for the 1st command in this BATCH is given by the -i cmdline-option to the yaml batch command!
+# And.. the output of the LAST command in this BATCH is sent to what's specified in the -o cmdline-option to the yaml batch command!
+
+# NOTE for the aws.cli commands to work, you MUST provide accurate values for --region & --profile
+###### aws.sdk list-regions ## This is Not of much use.
+aws.sdk describe-availability-zones -region XYZ -profile XYZ
+yaml fromJSON   ## This will take the JSON output by the above aws.sdk and convert it into YAML.
+yaml read availability.[].ZoneName   ## Take the YAML and give me a simple list of AZs, in plain text, one per line
+
+saveAs @filename ##### Warning! Will NOT overwrite any Existing file!
+
+saveAs tempName #### Note: Not as a file!  It is used EXCLUSIVELY within this BATCH file
+# You may never need to use ‘saveAs’ as you are required to provide ‘-o’ option for entire Batch command
+# .. but.. if you need multiple DERIVED-inputs within a single batch-script.. yeah! we have saveAs!
+
+// useAsInput @filename ### At a random spot within a batch script.. you can switch your input (equivalent to switching -i)
+// useAsInput tempName  ### same as above, but MUST be a 'saveAs' from within this same batch-file
+
+//--------------------------------------------------
+  foreach    ### Yeah! Loops!  
+   # foreach can handle both a simple text output (from previous line) as well as very simple KV-pair YAML
+   # 2 predefined variables are available within the body of foreach:-
+   #   They are:  ${ASUX::linenum}       and     ${ASUX::line} 
+   #
+   # Works best for plain text.  If YAML is output from above command, then ${ASUX::line} refers to JUST iterates thru the KEYs in the YAML file.
+
+	saveProperty  @fileName “MyPublic-Subnet-${ASUX::linenum}” ${ASUX::line} 
+	saveProperty  tempName “MyPublic-Subnet-${ASUX::linenum}” ${ASUX::line}     ### why 	saveProperty - vs. - replace command? What if ASUX:: variable in RHS!?  What if ASUX:: variable is PART of a key!
+
+	yaml replace  ${ASUX::line} ${ASUX::LOOKUP::line} 
+	## note : batch-cmd - when it detects ASUX::LOOKUP .. it will will first check if -i was a simple KV-pair YAML, and use ${ASUX::line} as key and lookup for value. If none found, next lookup in batch-lookkp-properties-file. 
+
+ end            ### End of foreach loop
+//--------------------------------------------------
+
+useAsInput tempName   // see 'saveAs tempName' above.
+
+yaml macro @<properties-file>
+yaml delete **.ASUXPLACEHOLDER*
+## above delete MUST exactly FOLLOW the MACRO-command, in this specific way.. .. to get rid of subnet-4 and subnet-5 yaml-SUBtrees, for regions with just 3 subnets. Make sure, in yaml-file, you have ASUXPLACEHOLDER-subnet-3/4 
+
+#EoF
