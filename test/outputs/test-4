@@ -1,0 +1,4 @@
+- paths	/pet	put	parameters	[0]	in
+- paths	/pet	put	parameters	[1]	in
+- paths	/pet	put	parameters	[2]	in
+- paths	/pet	put	parameters	[3]	in

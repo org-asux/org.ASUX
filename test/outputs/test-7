@@ -1,0 +1,16 @@
+swagger: '2.0'
+info: 
+   contact: 
+      email: sarma@ussmoso.com
+      url: http://www.apache.org/licenses/LICENSE-2.0.html
+basePath: /playground
+paths: 
+   /pet: 
+      put: 
+         consumes: 
+         - application/json
+         responses: 
+            LOOOOOOOOOONG VALUE with SPACES 202: 
+               description: SHORTVALUE101
+               schema: 
+                  $ref: LOOOOOOOOOONG VALUE with SPACES 202
