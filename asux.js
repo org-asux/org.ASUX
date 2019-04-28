@@ -112,21 +112,21 @@ if (process.env.VERBOSE) console.log( 'OUTPFILE="'+OUTPFILE+'"' );
 if (process.env.VERBOSE) console.log( ` OLD Working Directory was: ${process.cwd()}` );
 EXECUTESHELLCMD.executionPiped ( __dirname, 'git', ['pull', '--quiet'], true, process.env.VERBOSE, true, null);
 
-// No longer needed.  Once upon a time, I was using /tmp/dist to download JARs from AWS.  Now, the JARs are part of GIT Project's lib folder
-//Create '/tmp.dist'.   FYI: mkdirSync() Returns undefined always.
-// const tmpdist = '/tmp/dist';
-// try {
-// 	if (process.env.VERBOSE) console.log( `checking if ${tmpdist} exists or not.. .. ` );
-// 	fs.accessSync( tmpdist, fs.constants.R_OK | fs.constants.X_OK );
-// } catch (err8) { // a.k.a. if fs.accessSync throws
-// 	try {
-// 		if (process.env.VERBOSE) console.log( `mkdir ${tmpdist} .. .. ` );
-// 		fs.mkdirSync ( tmpdist,  {recursive: true, mode: 0o755} ); // 
-// 	} catch (err8) { // a.k.a. if fs.mkdirSync throws
-// 		console.error( __filename +": Internal failure, creating the folder ["+ tmpdist +"]\n"+ err8.toString());
-// 		process.exit(11);
-// 	}
-// } // try-catch err8
+//Create '/tmp'.   FYI: mkdirSync() Returns undefined always.
+// At least one asux.js script runs commands like mvn from /tmp folder.
+const tmpdist = '/tmp';
+try {
+	if (process.env.VERBOSE) console.log( `checking if ${tmpdist} exists or not.. .. ` );
+	fs.accessSync( tmpdist, fs.constants.R_OK | fs.constants.X_OK );
+} catch (err8) { // a.k.a. if fs.accessSync throws
+	try {
+		if (process.env.VERBOSE) console.log( `mkdir ${tmpdist} .. .. ` );
+		fs.mkdirSync ( tmpdist,  {recursive: true, mode: 0o755} ); // 
+	} catch (err8) { // a.k.a. if fs.mkdirSync throws
+		console.error( __filename +": Internal failure, creating the folder ["+ tmpdist +"]\n"+ err8.toString());
+		process.exit(11);
+	}
+} // try-catch err8
 
 //--------------------
 if (process.env.VERBOSE) console.log( 'about to process sub-projects of org.ASUX' );
