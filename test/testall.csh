@@ -116,7 +116,14 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 ##-------------------------------------------
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=/tmp/test-output/test-${TESTNUM}
-asux.js yaml batch ./simpleBatch.txt --inputfile /dev/null \
+asux.js yaml batch @./simpleBatch.txt --inputfile /dev/null \
+        -o ${OUTPFILE} > /dev/null   ## I have print statements n this BATCH-file, that are put onto stdout.
+echo $OUTPFILE
+diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
+
+@ TESTNUM = $TESTNUM + 1
+set OUTPFILE=/tmp/test-output/test-${TESTNUM}
+asux.js yaml batch 'useAsInput @/tmp/aws.AZs.json' --inputfile /dev/null \
         -o ${OUTPFILE}
 echo $OUTPFILE
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
