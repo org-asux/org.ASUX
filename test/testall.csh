@@ -136,9 +136,9 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
 ###---------------------------------
 
-unset noglob
-foreach fn ( /tmp/test-output/* )
-        diff ./outputs/$fn:t $fn
-end
+set noglob
+echo 'foreach fn ( /tmp/test-output/* )'
+echo '       diff ./outputs/$fn:t $fn'
+echo end
 ###---------------------------------
 #EoScript
