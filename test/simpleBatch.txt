@@ -1,29 +1,30 @@
 ### This is the file 'simpleBatch.txt'
 
 
-properties batchLookup=./props.txt
-# Note: this properties-file will have 100+ rows.. like:
-#             us-east-1a=ASXPLACEHLDR-subnet-1
-#             us-east-2a=ASXPLACEHLDR-subnet-2
-# properties could have been a cmdline param, but it’s MUCH MORE useful to load !!MULTIPLE!! property-files within a single batch!
+# properties batchLookup=./props.txt
 
-## Outside of this batch-file run: aws.sdk ec2 describe-availability-zones --region us-east-2 --output json --profile XYZ
 
 useAsInput @/tmp/aws.AZs.json
 
 #---------------------------
-saveTo tempName #### Note: Not as a file!  It is used EXCLUSIVELY within this BATCH file
-// useAsInput tempName  ### same as above, but MUST be a 'saveTo' from within this same batch-file
+## Outside of this batch-file run:-
+## aws.sdk ec2 describe-availability-zones --region us-east-2 --output json --profile XYZ
+## useAsInput @/tmp/aws.AZs.yaml
+## yaml --read         AvailabilityZones.*.ZoneId
+
+aws.sdk --list-regions
 
 //--------------------------------------------------
-  foreach    ### Yeah! Loops!  
-	print AAAAAA ${ASUX::foreach.index}
+ foreach
 	print ${ASUX::foreach.iteration.value}
-	print ZZZZZZ ${ASUX::foreach.index}
-
- end            ### End of foreach loop
+	aws.sdk --list-AZs      ${ASUX::foreach.iteration.value}
+	foreach
+		print AAAAAA ${ASUX::foreach.index}
+		print ${ASUX::foreach.iteration.value}
+	end
+ end
 //--------------------------------------------------
 
-useAsInput @/tmp/aws.AZs.json
+# useAsInput @/tmp/aws.AZs.json
 
 #EoF
