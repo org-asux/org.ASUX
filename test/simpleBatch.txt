@@ -2,7 +2,7 @@
 
 # properties batchLookup=./props.txt
 
-useAsInput @/tmp/aws.AZs.json
+useAsInput @./aws.AZs.json
 
 #---------------------------
 ## Outside of this batch-file run:-
@@ -24,6 +24,6 @@ foreach
 end
 //--------------------------------------------------
 
-useAsInput @/tmp/aws.AZs.json
+# useAsInput @./aws.AZs.json
 
 #EoF
