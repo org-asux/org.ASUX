@@ -1,8 +1,6 @@
 ### This is the file 'simpleBatch.txt'
 
-
 # properties batchLookup=./props.txt
-
 
 useAsInput @/tmp/aws.AZs.json
 
@@ -15,16 +13,17 @@ useAsInput @/tmp/aws.AZs.json
 aws.sdk --list-regions
 
 //--------------------------------------------------
- foreach
+foreach
 	print ${ASUX::foreach.iteration.value}
 	aws.sdk --list-AZs      ${ASUX::foreach.iteration.value}
 	foreach
-		print AAAAAA ${ASUX::foreach.index}
+		print AZ no. ${ASUX::foreach.index} is: 
 		print ${ASUX::foreach.iteration.value}
 	end
- end
+	print \n ## We do Not get here, above end matches for BOTH of above lines.
+end
 //--------------------------------------------------
 
-# useAsInput @/tmp/aws.AZs.json
+useAsInput @/tmp/aws.AZs.json
 
 #EoF

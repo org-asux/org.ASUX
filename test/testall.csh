@@ -22,9 +22,11 @@ endif
 
 set TESTSRCFLDR=/mnt/development/src/org.ASUX/test
 set TEMPLATEFLDR=${TESTSRCFLDR}/outputs
+set OUTPUTFLDR=/tmp/test-output
 
 ###------------------------------
-mkdir -p /tmp/test-output
+\rm -rf ${OUTPUTFLDR}
+mkdir -p ${OUTPUTFLDR}
 
 chdir ${TESTSRCFLDR}
 if ( $?VERBOSE ) pwd
@@ -48,88 +50,92 @@ set noclobber
 set TESTNUM=1
 
 # node /mnt/development/src/org.ASUX/
-set OUTPFILE=/tmp/test-output/test-${TESTNUM}
+set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
+echo $OUTPFILE
 asux.js yaml read 'paths,/pet' --delimiter , --inputfile nano.yaml \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
 @ TESTNUM = $TESTNUM + 1
-set OUTPFILE=/tmp/test-output/test-${TESTNUM}
+set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
+echo $OUTPFILE
 asux.js yaml list '*,**,schema' --delimiter , --inputfile nano.yaml \
         -o ${OUTPFILE}
-echo $OUTPFILE
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
 ##-------------------------------------------
 @ TESTNUM = $TESTNUM + 1
-set OUTPFILE=/tmp/test-output/test-${TESTNUM}
+set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
+echo $OUTPFILE
 asux.js yaml list 'paths,/pet,put,**,in' --delimiter , --inputfile my-petstore-micro.yaml  \
         -o ${OUTPFILE}
-echo $OUTPFILE
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
 @ TESTNUM = $TESTNUM + 1
-set OUTPFILE=/tmp/test-output/test-${TESTNUM}
+set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
+echo $OUTPFILE
 asux.js yaml list 'paths,/pet,put,*,*,in' --delimiter , --inputfile my-petstore-micro.yaml   \
         -o ${OUTPFILE}
-echo $OUTPFILE
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
 @ TESTNUM = $TESTNUM + 1
-set OUTPFILE=/tmp/test-output/test-${TESTNUM}
+set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
+echo $OUTPFILE
 asux.js yaml list 'paths,/pet,put,parameters,2,in' --delimiter , --inputfile my-petstore-micro.yaml \
         -o ${OUTPFILE}
-echo $OUTPFILE
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
 @ TESTNUM = $TESTNUM + 1
-set OUTPFILE=/tmp/test-output/test-${TESTNUM}
+set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
+echo $OUTPFILE
 asux.js yaml list 'paths,/pet,put,parameters,[13],in' --delimiter , --inputfile my-petstore-micro.yaml  \
         -o ${OUTPFILE}
-echo $OUTPFILE
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
 ##-------------------------------------------
 @ TESTNUM = $TESTNUM + 1
-set OUTPFILE=/tmp/test-output/test-${TESTNUM}
+set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
+echo $OUTPFILE
 asux.js yaml replace 'paths,/pet,put,parameters,[13],in' 'replaced text by asux.js' --delimiter , --inputfile my-petstore-micro.yaml  \
-        -o ${OUTPFILE}
-echo $OUTPFILE
+        -o ${OUTPFILE} >! ${OUTPFILE}.stdout
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
+diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 
 ##-------------------------------------------
 @ TESTNUM = $TESTNUM + 1
-set OUTPFILE=/tmp/test-output/test-${TESTNUM}
+set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
+echo $OUTPFILE
 asux.js yaml delete 'paths,/pet,put,parameters,[13],in' --delimiter , --inputfile my-petstore-micro.yaml  \
-        -o ${OUTPFILE}
-echo $OUTPFILE
+        -o ${OUTPFILE} >! ${OUTPFILE}.stdout
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
+diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 
 ##-------------------------------------------
 @ TESTNUM = $TESTNUM + 1
-set OUTPFILE=/tmp/test-output/test-${TESTNUM}
+set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
+echo $OUTPFILE
 asux.js yaml macro props.txt --inputfile nano.yaml \
         -o ${OUTPFILE}
-echo $OUTPFILE
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
 ##-------------------------------------------
 @ TESTNUM = $TESTNUM + 1
-set OUTPFILE=/tmp/test-output/test-${TESTNUM}
+set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
+echo $OUTPFILE
 asux.js yaml batch @./simpleBatch.txt --inputfile /dev/null \
         -o ${OUTPFILE} > /dev/null   ## I have print statements n this BATCH-file, that are put onto stdout.
-echo $OUTPFILE
+echo -n 'sleeping 5s ..'; sleep 5 ## waiting for output to catch up..
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
 @ TESTNUM = $TESTNUM + 1
-set OUTPFILE=/tmp/test-output/test-${TESTNUM}
+set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
+echo $OUTPFILE
 asux.js yaml batch 'useAsInput @/tmp/aws.AZs.json' --inputfile /dev/null \
         -o ${OUTPFILE}
-echo $OUTPFILE
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
 # @ TESTNUM = $TESTNUM + 1
-# set OUTPFILE=/tmp/test-output/test-${TESTNUM}
+# set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 #     \
 #         -o ${OUTPFILE}
 # diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
@@ -137,7 +143,7 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 ###---------------------------------
 
 set noglob
-echo 'foreach fn ( /tmp/test-output/* )'
+echo 'foreach fn ( ${OUTPUTFLDR}/* )'
 echo '       diff ./outputs/$fn:t $fn'
 echo end
 ###---------------------------------
