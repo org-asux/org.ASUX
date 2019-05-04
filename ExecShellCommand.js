@@ -27,7 +27,7 @@ function( _newWorkingDir, _command, _cmdArgs, _quietlyRunCmd, _bVerbose2, _bExit
 
 	//----------------------
 	try { // synchornous version of Javascript's child_process.execFile(...)
-		const cpObj = spawnSync( _command, _cmdArgs, {'cwd': _newWorkingDir, 'timeout': 10000, 'env': process.env } );
+		const cpObj = spawnSync( _command, _cmdArgs, {'cwd': _newWorkingDir, 'timeout': 0, 'env': process.env } );
 						// Why am I explicitly passing process.env?  Because I enhance 'process.env' in org.ASUX/asux.js
 		if ( ! _quietlyRunCmd ) {
 			if (_bVerbose2) console.log( `${__filename} : about to dump output from command (code=${cpObj.status}))\n${cpObj.stdout}\n`+ cpObj.stderr +"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" );
@@ -70,7 +70,7 @@ function( _newWorkingDir, _command, _cmdArgs, _quietlyRunCmd, _bVerbose2, _bExit
 
 	//----------------------
 	try { // synchornous version of Javascript's child_process.execFile(...)
-		const cpObj = spawnSync( _command, _cmdArgs, {'cwd': _newWorkingDir, stdio: 'inherit', 'timeout': 10000, 'env': process.env} );
+		const cpObj = spawnSync( _command, _cmdArgs, {'cwd': _newWorkingDir, stdio: 'inherit', 'timeout': 0, 'env': process.env} );
 						// Why am I explicitly passing process.env?  Because I enhance 'process.env' in org.ASUX/asux.js
 		if ( ! _quietlyRunCmd ) {
 			if (_bVerbose2) console.log( `${__filename} : about to dump output from command (code=${cpObj.status}))` +"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
