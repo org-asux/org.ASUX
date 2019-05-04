@@ -1,0 +1,11 @@
+MyRootELEMENT: 
+   subElem: 
+      leafElem: 
+         State: available
+         Messages: 
+         - A
+         - B
+         - C
+         RegionName: eu-north-1
+         ZoneName: eu-north-1c
+         ZoneId: eun1-az3

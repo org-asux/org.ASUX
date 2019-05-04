@@ -1,0 +1,33 @@
+### This is the file 'mapsBatch2.txt'
+
+makeNewRoot MyRootELEMENT
+saveTo !saveAs-ROOT
+
+aws.sdk --list-regions
+
+print user.home = ${ASUX::user.home} \n
+print user.dir = ${ASUX::user.dir} \n
+
+//--------------------------------------------------
+foreach
+	print ${ASUX::foreach.iteration.value}
+	setProperty REGION=${ASUX::foreach.iteration.value}
+	aws.sdk   --describe-AZs      ${ASUX::foreach.iteration.value}
+	#______ ATTENTION: the above aws.sdk command's output is NOT SIMPLE KVPairs.
+	#______ It has an empty ARRAY object called 'Messages'
+	#______ [ .., .., {State:available, Messages:[], RegionName:eu-north-1, ZoneName:eu-north-1a, ZoneId:eun1-az1}, .. ]
+
+	foreach
+		#______ print AZ no. ${ASUX::foreach.index} is: 
+		#______ print ${ASUX::foreach.iteration.value} \n
+		#______ {"State=available":"Messages=","[]":"RegionName=eu-west-2","ZoneName=eu-west-2b":"ZoneId=euw2-az3"}  
+
+		yaml --delete Messages  ### See above comments about empty ARRAY object called 'Messages'
+		saveTo saveAs-${ASUX::foreach.index}
+		useAsInput !saveAs-ROOT
+		yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter ,
+	end
+end
+//--------------------------------------------------
+
+#EoF

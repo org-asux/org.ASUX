@@ -1,8 +1,5 @@
-### This is the file 'simpleBatch.txt'
+### This is the file 'mapsBatch1.txt'
 
-# properties batchLookup=./props.txt
-
-## useAsInput @/mnt/development/src/org.ASUX/test/aws.regions-details.json
 aws.sdk --list-regions
 
 //--------------------------------------------------
@@ -11,12 +8,14 @@ foreach
 	aws.sdk --describe-AZs      ${ASUX::foreach.iteration.value}
 	### ATTENTION: the above aws.sdk command's output is NOT SIMPLE KVPairs.
 	### It has an empty ARRAY object called 'Messages'
-	### Example: {State=available, Messages=[], RegionName=eu-north-1, ZoneName=eu-north-1a, ZoneId=eun1-az1}
+	### [ .., .., {State:available, Messages:[], RegionName:eu-north-1, ZoneName:eu-north-1a, ZoneId:eun1-az1}, .. ]
 
 	foreach
 		print AZ no. ${ASUX::foreach.index} is: 
 		print ${ASUX::foreach.iteration.value}
-		yaml --delete Messages. ### See above comments about empty ARRAY object called 'Messages'
+		## {"State=available":"Messages=","[]":"RegionName=eu-west-2","ZoneName=eu-west-2b":"ZoneId=euw2-az3"}  
+
+		yaml --delete Messages  ### See above comments about empty ARRAY object called 'Messages'
 		foreach
 			print ${ASUX::foreach.iteration.key} = ${ASUX::foreach.iteration.value}
 		end
@@ -26,6 +25,6 @@ foreach
 end
 //--------------------------------------------------
 
-# useAsInput @/tmp/aws.AZs.json
+# useAsInput @./aws.AZs.json
 
 #EoF

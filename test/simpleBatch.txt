@@ -21,9 +21,10 @@ foreach
 		print ${ASUX::foreach.iteration.value}
 	end
 	print \n ## We do Not get here, above end matches for BOTH of above lines.
+	#______ sleep 30
 end
 //--------------------------------------------------
 
-# useAsInput @./aws.AZs.json
+#______ useAsInput @./aws.AZs.json
 
 #EoF
