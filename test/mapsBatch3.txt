@@ -1,0 +1,17 @@
+### This is the file 'mapsBatch1.txt'
+
+#________ aws.sdk --list-regions
+setParameter REGION=us-west-2
+
+//--------------------------------------------------
+foreach
+	print ${ASUX::foreach.iteration.value}
+	echo aws.sdk --describe-AZs      ${ASUX::foreach.iteration.value}
+	### ATTENTION: the above aws.sdk command's output is NOT SIMPLE KVPairs.
+	### It has an empty ARRAY object called 'Messages'
+	### [ .., .., {State:available, Messages:[], RegionName:eu-north-1, ZoneName:eu-north-1a, ZoneId:eun1-az1}, .. ]
+	print \n
+end
+//--------------------------------------------------
+
+#EoF
