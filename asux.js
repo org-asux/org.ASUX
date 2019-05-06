@@ -132,7 +132,7 @@ try {
 if (process.env.VERBOSE) console.log( 'about to process sub-projects of org.ASUX' );
 
 const DIR_orgASUXcmdline = __dirname + '/cmdline';
-const DIR_orgASUXcmdline_Downloaded = __dirname + '/'+ ${PROJNAME};
+const DIR_orgASUXcmdline_Downloaded = __dirname + '/'+ PROJNAME;
 try {
 		if (process.env.VERBOSE) console.log( `checking if ${DIR_orgASUXcmdline} exists or not.. .. ` );
 		fs.accessSync( DIR_orgASUXcmdline, fs.constants.R_OK | fs.constants.X_OK );
