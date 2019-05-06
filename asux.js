@@ -132,6 +132,7 @@ try {
 if (process.env.VERBOSE) console.log( 'about to process sub-projects of org.ASUX' );
 
 const DIR_orgASUXcmdline = __dirname + '/cmdline';
+const DIR_orgASUXcmdline_Downloaded = __dirname + '/'+ ${PROJNAME};
 try {
 		if (process.env.VERBOSE) console.log( `checking if ${DIR_orgASUXcmdline} exists or not.. .. ` );
 		fs.accessSync( DIR_orgASUXcmdline, fs.constants.R_OK | fs.constants.X_OK );
@@ -166,7 +167,7 @@ try {
 		// about to RENAME org.ASUX.cmdline to just cmdline.   FYI: renameSync Returns undefined ALWAYS.
 		if (process.env.VERBOSE) console.log( `about to RENAME folder ${PROJNAME} to just ${DIR_orgASUXcmdline} ` );
 		try {
-			fs.renameSync( PROJNAME, DIR_orgASUXcmdline);
+			fs.renameSync( DIR_orgASUXcmdline_Downloaded, DIR_orgASUXcmdline);
 		} catch (err6) { // a.k.a. if fs.mkdirSync throws
 			console.error( __filename +": Internal failure, renaming the folder ["+ PROJNAME +"]\n"+ err6.toString());
 			process.exit(12);
