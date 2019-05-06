@@ -14,4 +14,11 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | b
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 nvm install 7
+npm install commander
+
 popd
+
+echo ''
+echo please logout and login again.. or .. enter the commands in lines 14 & 15 (in this BASH script) on the terminal
+
+

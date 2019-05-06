@@ -35,6 +35,7 @@ paths:
          -  description: Pet object that needs to be added to the store
             name: body
             required: true
+            type: CustomObject
             schema: 
                $ref: '#/definitions/Pet'
             in: replaced text by asux.js
@@ -47,6 +48,7 @@ paths:
          -  description: Updated name & status of the pet after changing type to scheme
             name: petname
             required: true
+            type: CustomObject
             schema: 
                $ref: '#/definitions/User'
             in: replaced text by asux.js

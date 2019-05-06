@@ -9,21 +9,31 @@ echo "Usage: $0 [--verbose]"
 #     exit 1
 # endif
 
-echo -n "Sleep interval? >>"; set DELAY=$<
-if ( "$DELAY" == "" ) set DELAY=2
+###------------------------------
+set ORGASUXFLDR=/mnt/development/src/org.ASUX
+set path=( $path ${ORGASUXFLDR} )
+set TESTSRCFLDR=${ORGASUXFLDR}/test
+if (  !  $?CLASSPATH ) setenv CLASSPATH ''
 
 ###------------------------------
-source ~/bin/include/variables.csh
-
-set path=( $path /mnt/development/src/org.ASUX )
-
 if ( $#argv == 1 ) then
         set VERBOSE=1
 else
         unset VERBOSE
 endif
 
-set TESTSRCFLDR=/mnt/development/src/org.ASUX/test
+chdir ${TESTSRCFLDR}
+if ( $?VERBOSE ) pwd
+
+if ( ! -e ./profile ) then
+        echo "AWS login credentials missing in a file ./profile"
+        exit 2
+endif
+
+###------------------------------
+echo -n "Sleep interval? >>"; set DELAY=$<
+if ( "$DELAY" == "" ) set DELAY=2
+
 set TEMPLATEFLDR=${TESTSRCFLDR}/outputs
 set OUTPUTFLDR=/tmp/test-output
 
@@ -31,13 +41,10 @@ set OUTPUTFLDR=/tmp/test-output
 \rm -rf ${OUTPUTFLDR}
 mkdir -p ${OUTPUTFLDR}
 
-chdir ${TESTSRCFLDR}
-if ( $?VERBOSE ) pwd
-
 alias diff \diff -bB
 
 ###------------------------------
-set JARFLDR=/mnt/development/src/org.ASUX/lib
+set JARFLDR=${ORGASUXFLDR}/lib
 
 set MYJAR=${JARFLDR}/org.ASUX.yaml.jar
 set YAMLBEANSJAR=${JARFLDR}/com.esotericsoftware.yamlbeans-yamlbeans-1.13.jar
@@ -54,7 +61,6 @@ set noclobber
 
 set TESTNUM=1
 
-# node /mnt/development/src/org.ASUX/
 # 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
@@ -175,6 +181,7 @@ diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 # 14
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
+echo $OUTPFILE
 echo 'MyRootELEMENT: ""' | asux.js yaml  insert MyRootELEMENT.subElem.leafElem '{State=available, Messages=[A,B,C], RegionName=eu-north-1, ZoneName=eu-north-1c, ZoneId=eun1-az3}' -i -  \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
@@ -182,6 +189,7 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 # 15
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
+echo $OUTPFILE
 asux.js yaml table 'paths,/pet,put,parameters' 'name,type' --delimiter , -i my-petstore-micro.yaml    \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
