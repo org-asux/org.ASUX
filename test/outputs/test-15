@@ -1,0 +1,8 @@
+-  - myown_delete_api_key
+   - string
+-  - body
+   - CustomObject
+-  - petId
+   - integer
+-  - petname
+   - CustomObject
