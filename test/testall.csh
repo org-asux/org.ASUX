@@ -179,11 +179,12 @@ echo 'MyRootELEMENT: ""' | asux.js yaml  insert MyRootELEMENT.subElem.leafElem '
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
-# @ TESTNUM = $TESTNUM + 1
-# set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
-#     \
-#         -o ${OUTPFILE}
-# diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
+# 15
+@ TESTNUM = $TESTNUM + 1
+set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
+asux.js yaml table 'paths,/pet,put,parameters' 'name,type' --delimiter , -i my-petstore-micro.yaml    \
+        -o ${OUTPFILE}
+diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
 # @ TESTNUM = $TESTNUM + 1
 # set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
