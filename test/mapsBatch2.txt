@@ -23,9 +23,11 @@ foreach
 		#______ {"State=available":"Messages=","[]":"RegionName=eu-west-2","ZoneName=eu-west-2b":"ZoneId=euw2-az3"}  
 
 		yaml --delete Messages  ### See above comments about empty ARRAY object called 'Messages'
-		saveTo saveAs-${ASUX::foreach.index}
+		saveTo !saveAs-${ASUX::foreach.index}
+
 		useAsInput !saveAs-ROOT
 		yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter ,
+		saveTo !saveAs-ROOT
 	end
 end
 //--------------------------------------------------

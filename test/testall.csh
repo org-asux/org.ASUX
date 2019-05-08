@@ -182,9 +182,11 @@ diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-echo 'MyRootELEMENT: ""' | asux.js yaml  insert MyRootELEMENT.subElem.leafElem '{State=available, Messages=[A,B,C], RegionName=eu-north-1, ZoneName=eu-north-1c, ZoneId=eun1-az3}' -i -  \
-        -o ${OUTPFILE}
+# echo 'MyRootELEMENT: ""' | asux.js yaml  insert MyRootELEMENT.subElem.leafElem '{State=available, Messages=[A,B,C], RegionName=eu-north-1, ZoneName=eu-north-1c, ZoneId=eun1-az3}' -i -  -o -
+asux.js yaml batch @insertReplaceBatch.txt  -i /dev/null    \
+        -o ${OUTPFILE} >! ${OUTPFILE}.stdout
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
+diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 
 # 15
 @ TESTNUM = $TESTNUM + 1
@@ -194,17 +196,38 @@ asux.js yaml table 'paths,/pet,put,parameters' 'name,type' --delimiter , -i my-p
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
+# 16
 # @ TESTNUM = $TESTNUM + 1
 # set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
-#     \
+# echo $OUTPFILE
+# asux.js yaml batch @./mapsBatch3.txt -i /dev/null    \
 #         -o ${OUTPFILE}
 # diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
+# diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 
 # @ TESTNUM = $TESTNUM + 1
 # set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
+# echo $OUTPFILE
 #     \
 #         -o ${OUTPFILE}
 # diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
+# diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
+
+# @ TESTNUM = $TESTNUM + 1
+# set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
+# echo $OUTPFILE
+#     \
+#         -o ${OUTPFILE}
+# diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
+# diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
+
+# @ TESTNUM = $TESTNUM + 1
+# set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
+# echo $OUTPFILE
+#     \
+#         -o ${OUTPFILE}
+# diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
+# diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 
 ###---------------------------------
 
