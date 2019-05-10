@@ -1,7 +1,7 @@
 ### This is the file 'mapsBatch1.txt'
 
 makeNewRoot MyRootELEMENT
-saveTo !saved-ROOT
+saveTo !YAMLROOT
 
 useAsInput MyRootELEMENT: ""
 yaml --insert MyRootELEMENT "dlfkjhasdlfhasdfadsfafsdfasdfasdfasdfasdf"
@@ -12,8 +12,17 @@ yaml --insert MyRootELEMENT.subElem "dlfkjhasdlfhasdfadsfafsdfasdfasdfasdfasdf"
 print -
 
 useAsInput MyRootELEMENT: ""
-yaml --insert MyRootELEMENT.subElem.leafElem "{State=available, Messages=[A,B,C], RegionName=eu-north-1, ZoneName=eu-north-1c, ZoneId=eun1-az3}"
+yaml --insert MyRootELEMENT.subElem.leafElem '{State: "available", Messages: [A,B,C], RegionName: "eu-north-1", ZoneName: "eu-north-1c", ZoneId: "eun1-az3"}'
 print -
+
+useAsInput   '{"AdditionalRootElement": {"State": "available", "Messages": [A,B,C], "RegionName": "eu-north-1", "ZoneName": "eu-north-1c", "ZoneId": "eun1-az3"}}'
+print -
+saveTo !AdditionalRootElement
+
+useAsInput !YAMLROOT
+yaml --insert /  !AdditionalRootElement
+print -
+sleep 30
 
 aws.sdk --list-regions
 
@@ -26,13 +35,13 @@ foreach
 	#________ makeNewRoot MyCompositeELEMENT-${ASUX::foreach.index}
 	#________ yaml --insert MyCompositeELEMENT-${ASUX::foreach.index} !AZDETAILS --delimiter ,
 	#________ saveTo !MyCompositeELEMENT-${ASUX::foreach.index}
-	#________ useAsInput !saved-ROOT
+	#________ useAsInput !YAMLROOT
 	#________ yaml --insert MyRootELEMENT,MyCompositeELEMENT-${ASUX::foreach.index} !MyCompositeELEMENT-${ASUX::foreach.index} --delimiter ,
 
-	useAsInput !saved-ROOT
+	useAsInput !YAMLROOT
 	yaml --insert MyRootELEMENT,MyCompositeELEMENT-${ASUX::foreach.index} !AZDETAILS --delimiter ,
-	saveTo !saved-ROOT
-	#________ print !saved-ROOT 
+	saveTo !YAMLROOT
+	#________ print !YAMLROOT 
 end
 print \n
 
