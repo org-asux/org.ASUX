@@ -134,7 +134,10 @@ diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml macro props.txt --inputfile nano.yaml \
+asux.js yaml macro "unknown=value" --double-quote --inputfile nano.yaml \
+        -o ${OUTPFILE}
+diff ${OUTPFILE} nano.yaml
+asux.js yaml macro @props.txt --inputfile nano.yaml \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
