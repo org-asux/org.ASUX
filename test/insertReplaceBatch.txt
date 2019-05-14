@@ -20,10 +20,12 @@ print -
 saveTo !AdditionalRootElement
 
 useAsInput !YAMLROOT
+saveTo !DUPLICATEROOT ### Do Not contaminate YAMLROOT with a new top-level-element called "AdditionalRootElement"
+	## Even if you do NOT saveAs !YAMLROOT.. no matter, due to Java properties using memory-references, it's contaminated by the following 2 commands.
 yaml --insert /  !AdditionalRootElement
 print -
-sleep 30
 
+//--------------------------------------------------
 aws.sdk --list-regions
 
 //--------------------------------------------------
