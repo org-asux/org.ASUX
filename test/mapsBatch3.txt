@@ -1,17 +1,33 @@
 ### This is the file 'mapsBatch1.txt'
 
-#________ aws.sdk --list-regions
-setParameter REGION=us-west-2
+makeNewRoot MyRootELEMENT
+saveTo !YAMLROOT
+
+aws.sdk --list-regions
 
 //--------------------------------------------------
 foreach
 	print ${ASUX::foreach.iteration.value}
-	echo aws.sdk --describe-AZs      ${ASUX::foreach.iteration.value}
-	### ATTENTION: the above aws.sdk command's output is NOT SIMPLE KVPairs.
-	### It has an empty ARRAY object called 'Messages'
-	### [ .., .., {State:available, Messages:[], RegionName:eu-north-1, ZoneName:eu-north-1a, ZoneId:eun1-az1}, .. ]
-	print \n
+	aws.sdk   --describe-AZs      ${ASUX::foreach.iteration.value}
+	saveTo !AZDETAILS   ### Save the contents of ${ASUX::foreach.iteration.value} into AZDETAILS
+
+	makeNewRoot AdditionalRootElement-${ASUX::foreach.index}
+	yaml --insert AdditionalRootElement-${ASUX::foreach.index} !AZDETAILS
+	#________ print -
+	saveTo !AdditionalRootElement
+
+	#________ print \n
+	#________ print !YAMLROOT
+	#________ print \n
+	#________ print !AdditionalRootElement
+	#________ sleep 20
+
+
+	useAsInput !YAMLROOT
+	yaml --insert /  !AdditionalRootElement
+	saveTo !YAMLROOT
+	#________ print !YAMLROOT 
 end
-//--------------------------------------------------
+print \n
 
 #EoF
