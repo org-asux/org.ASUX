@@ -13,4 +13,4 @@ paths:
         ${ASUX::Key202}:
           description: ${ASUX::Key101}
           schema:
-            $ref: '${ASUX::Key202}'
+            $ref: ${ASUX::Key202}
