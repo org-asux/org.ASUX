@@ -16,3 +16,5 @@ package-lock.json
 runaws.csh
 AWS-SDK
 runclass.csh
+org.ASUX.common
+org.ASUX.yaml
