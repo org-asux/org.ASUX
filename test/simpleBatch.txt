@@ -1,5 +1,6 @@
 ### This is the file 'simpleBatch.txt'
 
+useYAMLLibrary com.esotericsoftware.yamlbeans
 # properties batchLookup=./props.txt
 
 useAsInput @./aws.AZs.json
