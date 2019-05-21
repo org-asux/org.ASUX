@@ -18,3 +18,5 @@ AWS-SDK
 runclass.csh
 org.ASUX.common
 org.ASUX.yaml
+org.ASUX.YAML.CollectionsImpl
+org.ASUX.YAML.NodeImpl
