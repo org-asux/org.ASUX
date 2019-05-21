@@ -7,6 +7,11 @@ echo "Usage: $0 [--verbose]"
 #     echo Usage: $0 'org.ASUX.yaml.Cmd [--verbose] --delete --double-quote --yamlpath "paths.*.*.responses.200" $YAMLLIB --inputfile $cwd/src/test/my-petstore-micro.yaml -o /tmp/output2.yaml ' >>& /dev/stderr
 #     echo '' >>& /dev/stderr
 #     exit 1
+# /Users/Sarma/Documents/Development/src/org.ASUX/ExecShellCommand.js :-
+#                       java arguments: -cp :/Users/Sarma/.m2/repository/org/asux/common/1.0/common-1.0.jar:/Users/Sarma/.m2/repository/org/asux/yaml/1.0/yaml-1.0.jar:/Users/Sarma/.m2/repository/org/asux/yaml.collectionsimpl/1.0/yaml.collectionsimpl-1.0.jar:/Users/Sarma/.m2/repository/junit/junit/4.8.2/junit-4.8.2.jar:/Users/Sarma/.m2/repository/commons-cli/commons-cli/1.4/commons-cli-1.4.jar:/Users/Sarma/.m2/repository/com/esotericsoftware/yamlbeans/yamlbeans/1.13/yamlbeans-1.13.jar:/Users/Sarma/.m2/repository/org/yaml/snakeyaml/1.24/snakeyaml-1.24.jar:/Users/Sarma/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.9.8/jackson-databind-2.9.8.jar:/Users/Sarma/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.9.6/jackson-annotations-2.9.6.jar:/Users/Sarma/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.9.8/jackson-core-2.9.8.jar:/Users/Sarma/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.9.6/jackson-core-2.9.6.jar:/Users/Sarma/.m2/repository/com/opencsv/opencsv/4.0/opencsv-4.0.jar:/Users/Sarma/.m2/repository/org/apache/commons/commons-lang3/3.6/commons-lang3-3.6.jar:/Users/Sarma/.m2/repository/org/apache/commons/commons-text/1.1/commons-text-1.1.jar:/Users/Sarma/.m2/repository/commons-beanutils/commons-beanutils/1.9.3/commons-beanutils-1.9.3.jar:/Users/Sarma/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar:/Users/Sarma/.m2/repository/commons-collections/commons-collections/3.2.2/commons-collections-3.2.2.jar:/Users/Sarma/.m2/repository/com/amazonaws/aws-java-sdk-core/1.11.541/aws-java-sdk-core-1.11.541.jar:/Users/Sarma/.m2/repository/org/apache/httpcomponents/httpclient/4.5.5/httpclient-4.5.5.jar:/Users/Sarma/.m2/repository/org/apache/httpcomponents/httpcore/4.4.10/httpcore-4.4.10.jar:/Users/Sarma/.m2/repository/commons-codec/commons-codec/1.10/commons-codec-1.10.jar:/Users/Sarma/.m2/repository/software/amazon/ion/ion-java/1.2.0/ion-java-1.2.0.jar:/Users/Sarma/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-cbor/2.9.6/jackson-dataformat-cbor-2.9.6.jar:/Users/Sarma/.m2/repository/joda-time/joda-time/2.8.1/joda-time-2.8.1.jar:/Users/Sarma/.m2/repository/com/amazonaws/aws-java-sdk-ec2/1.11.541/aws-java-sdk-ec2-1.11.541.jar:/Users/Sarma/.m2/repository/com/amazonaws/jmespath-java/1.11.541/jmespath-java-1.11.541.jar
+#                       org.ASUX.yaml.Cmd --verbose --yamllibrary CollectionsImpl
+#                       --batch @./mapsBatch1.txt -i /dev/null -o -
+#
 # endif
 
 ###------------------------------
@@ -47,11 +52,13 @@ alias diff \diff -bB
 ###------------------------------
 set JARFLDR=${ORGASUXFLDR}/lib
 
-set MYJAR=${JARFLDR}/org.ASUX.yaml.jar
-set YAMLBEANSJAR=${JARFLDR}/com.esotericsoftware.yamlbeans-yamlbeans-1.13.jar
-set JUNITJAR=${JARFLDR}/junit.junit.junit-4.8.2.jar
-set COMMONSCLIJAR=${JARFLDR}/commons-cli-1.4.jar
-setenv CLASSPATH  ${CLASSPATH}:${COMMONSCLIJAR}:${JUNITJAR}:${YAMLBEANSJAR}:${MYJAR} ## to get the jndi.properties
+# set MYJAR1=${JARFLDR}/org.ASUX.common.jar
+# set MYJAR2=${JARFLDR}/org.ASUX.yaml.jar
+# set MYJAR3=${JARFLDR}/org.ASUX.yaml.collectionsimpl.jar
+# set YAMLBEANSJAR=${JARFLDR}/com.esotericsoftware.yamlbeans-yamlbeans-1.13.jar
+# set JUNITJAR=${JARFLDR}/junit.junit.junit-4.8.2.jar
+# set COMMONSCLIJAR=${JARFLDR}/commons-cli-1.4.jar
+# setenv CLASSPATH  ${CLASSPATH}:${COMMONSCLIJAR}:${JUNITJAR}:${YAMLBEANSJAR}:${MYJAR} ## to get the jndi.properties
 
 if ( $?VERBOSE ) echo $CLASSPATH
 
@@ -65,7 +72,7 @@ set TESTNUM=1
 # 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml read 'paths,/pet' --delimiter , $YAMLLIB --inputfile nano.yaml \
+asux.js yaml  $YAMLLIB  read 'paths,/pet' --delimiter , --inputfile nano.yaml \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
@@ -73,7 +80,7 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml list '*,**,schema' --delimiter , $YAMLLIB --inputfile nano.yaml \
+asux.js yaml  $YAMLLIB  list '*,**,schema' --delimiter , --inputfile nano.yaml \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
@@ -82,7 +89,7 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml list 'paths,/pet,put,**,in' --delimiter , $YAMLLIB --inputfile my-petstore-micro.yaml  \
+asux.js yaml  $YAMLLIB  list 'paths,/pet,put,**,in' --delimiter , --inputfile my-petstore-micro.yaml  \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
@@ -90,7 +97,7 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml list 'paths,/pet,put,*,*,in' --delimiter , $YAMLLIB --inputfile my-petstore-micro.yaml   \
+asux.js yaml  $YAMLLIB  list 'paths,/pet,put,*,*,in' --delimiter , --inputfile my-petstore-micro.yaml   \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
@@ -98,7 +105,7 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml list 'paths,/pet,put,parameters,2,in' --delimiter , $YAMLLIB --inputfile my-petstore-micro.yaml \
+asux.js yaml  $YAMLLIB  list 'paths,/pet,put,parameters,2,in' --delimiter , --inputfile my-petstore-micro.yaml \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
@@ -106,7 +113,7 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml list 'paths,/pet,put,parameters,[13],in' --delimiter , $YAMLLIB --inputfile my-petstore-micro.yaml  \
+asux.js yaml  $YAMLLIB  list 'paths,/pet,put,parameters,[13],in' --delimiter , --inputfile my-petstore-micro.yaml  \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
@@ -115,7 +122,7 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml replace 'paths,/pet,put,parameters,[13],in' 'replaced text by asux.js' --delimiter , $YAMLLIB --inputfile my-petstore-micro.yaml  \
+asux.js yaml  $YAMLLIB  replace 'paths,/pet,put,parameters,[13],in' 'replaced text by asux.js' --delimiter , --inputfile my-petstore-micro.yaml  \
         -o ${OUTPFILE} --showStats >! ${OUTPFILE}.stdout
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
@@ -125,7 +132,7 @@ diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml delete 'paths,/pet,put,parameters,[13],in' --delimiter , $YAMLLIB --inputfile my-petstore-micro.yaml  \
+asux.js yaml  $YAMLLIB  delete 'paths,/pet,put,parameters,[13],in' --delimiter , --inputfile my-petstore-micro.yaml  \
         -o ${OUTPFILE} --showStats >! ${OUTPFILE}.stdout
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
@@ -135,10 +142,10 @@ diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml macro "unknown=value" --double-quote $YAMLLIB --inputfile nano.yaml \
+asux.js yaml  $YAMLLIB  macro "unknown=value" --double-quote  --inputfile nano.yaml \
         -o ${OUTPFILE}
 diff ${OUTPFILE} nano.yaml
-asux.js yaml macro @props.txt $YAMLLIB --inputfile nano.yaml \
+asux.js yaml  $YAMLLIB  macro @props.txt  --inputfile nano.yaml \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
@@ -147,7 +154,7 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml batch @./simpleBatch.txt $YAMLLIB --inputfile /dev/null \
+asux.js yaml  $YAMLLIB  batch @./simpleBatch.txt  --inputfile /dev/null \
         -o ${OUTPFILE} > /dev/null   ## I have print statements n this BATCH-file, that are put onto stdout.
 # echo -n "sleeping ${DELAY}s .."; sleep ${DELAY} ## waiting for output to catch up..
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
@@ -156,7 +163,7 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml batch 'useAsInput @./aws.AZs.json' $YAMLLIB --inputfile /dev/null \
+asux.js yaml  $YAMLLIB  batch 'useAsInput @./aws.AZs.json'  --inputfile /dev/null \
         -o ${OUTPFILE}
 # echo -n "sleeping ${DELAY}s .."; sleep ${DELAY} ## waiting for output to catch up..
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
@@ -165,7 +172,7 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml batch @./mapsBatch1.txt $YAMLLIB --inputfile /dev/null  \
+asux.js yaml  $YAMLLIB  batch @./mapsBatch1.txt  --inputfile /dev/null  \
         -o ${OUTPFILE} >! ${OUTPFILE}.stdout
 # echo -n "sleeping ${DELAY}s .."; sleep ${DELAY} ## waiting for output to catch up..
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
@@ -175,7 +182,7 @@ diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml batch @./mapsBatch2.txt $YAMLLIB --inputfile /dev/null  \
+asux.js yaml  $YAMLLIB  batch @./mapsBatch2.txt  --inputfile /dev/null  \
         -o ${OUTPFILE} >! ${OUTPFILE}.stdout
 # echo -n "sleeping ${DELAY}s .."; sleep ${DELAY} ## waiting for output to catch up..
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
@@ -186,8 +193,8 @@ diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-# echo 'MyRootELEMENT: ""' | asux.js yaml  insert MyRootELEMENT.subElem.leafElem '{State: "available", Messages: [A,B,C], RegionName: "eu-north-1", ZoneName: "eu-north-1c", ZoneId: "eun1-az3"}' $YAMLLIB --inputfile -  -o -
-asux.js yaml batch @insertReplaceBatch.txt  $YAMLLIB --inputfile /dev/null    \
+# echo 'MyRootELEMENT: ""' | asux.js yaml  $YAMLLIB   insert MyRootELEMENT.subElem.leafElem '{State: "available", Messages: [A,B,C], RegionName: "eu-north-1", ZoneName: "eu-north-1c", ZoneId: "eun1-az3"}'  --inputfile -  -o -
+asux.js yaml  $YAMLLIB  batch @insertReplaceBatch.txt   --inputfile /dev/null    \
         -o ${OUTPFILE} >! ${OUTPFILE}.stdout
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
@@ -196,7 +203,7 @@ diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml table 'paths,/pet,put,parameters' 'name,type' --delimiter , $YAMLLIB --inputfile my-petstore-micro.yaml    \
+asux.js yaml  $YAMLLIB  table 'paths,/pet,put,parameters' 'name,type' --delimiter , --inputfile my-petstore-micro.yaml    \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
@@ -204,7 +211,7 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 # @ TESTNUM = $TESTNUM + 1
 # set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 # echo $OUTPFILE
-# asux.js yaml batch @./mapsBatch3.txt $YAMLLIB --inputfile /dev/null    \
+# asux.js yaml  $YAMLLIB  batch @./mapsBatch3.txt  --inputfile /dev/null    \
 #         -o ${OUTPFILE}
 # diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 # diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
