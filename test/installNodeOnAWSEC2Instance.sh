@@ -19,6 +19,6 @@ npm install commander
 popd
 
 echo ''
-echo please logout and login again.. or .. enter the commands in lines 14 & 15 (in this BASH script) on the terminal
+echo 'please logout and login again.. or .. enter the commands in lines 14 & 15 (in this BASH script) on the terminal'
 
 
