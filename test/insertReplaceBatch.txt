@@ -3,26 +3,37 @@
 makeNewRoot MyRootELEMENT
 saveTo !YAMLROOT
 
-useAsInput MyRootELEMENT: ""
-yaml --insert MyRootELEMENT "dlfkjhasdlfhasdfadsfafsdfasdfasdfasdfasdf"
+### !!!!!!!!!!!!!! Attention !!!!!!!!!!!!!!
+### using SINGLE-quote to represent an empty-string as '' will fail, due to SHELL Interpretations, which WILL CONVERT the '' into just '
+
+useAsInput 'MyRootELEMENT': ""
+yaml --insert MyRootELEMENT "dlfkjhasdlfhasdfadsfafsdfasdfasdfasdfasdf"  --no-quote
 print -
 
 useAsInput MyRootELEMENT: ""
-yaml --insert MyRootELEMENT.subElem "dlfkjhasdlfhasdfadsfafsdfasdfasdfasdfasdf"
+yaml --insert MyRootELEMENT.subElem "dlfkjhasdlfhasdfadsfafsdfasdfasdfasdfasdf"   --no-quote
 print -
 
-useAsInput MyRootELEMENT: ""
-yaml --insert MyRootELEMENT.subElem.leafElem '{State: "available", Messages: [A,B,C], RegionName: "eu-north-1", ZoneName: "eu-north-1c", ZoneId: "eun1-az3"}'
-print -
-
-useAsInput   '{"AdditionalRootElement": {"State": "available", "Messages": [A,B,C], "RegionName": "eu-north-1", "ZoneName": "eu-north-1c", "ZoneId": "eun1-az3"}}'
+useAsInput   '{"AdditionalRootElement": {"State": "available", "Messages": ["A","B","C"], "RegionName": "eu-north-1", "ZoneName": "eu-north-1c", "ZoneId": "eun1-az3"}}'
 print -
 saveTo !AdditionalRootElement
+
+useAsInput MyRootELEMENT: ""
+echo yaml --insert MyRootELEMENT.subElem.leafElem '{State: "available", Messages: ["A","B","C"], RegionName: "eu-north-1", ZoneName: "eu-north-1c", ZoneId: "eun1-az3"}'   --no-quote
+print -
 
 useAsInput !YAMLROOT
 saveTo !DUPLICATEROOT ### Do Not contaminate YAMLROOT with a new top-level-element called "AdditionalRootElement"
 	## Even if you do NOT saveAs !YAMLROOT.. no matter, due to Java properties using memory-references, it's contaminated by the following 2 commands.
-yaml --insert /  !AdditionalRootElement
+echo yaml --insert /  !AdditionalRootElement --no-quote
+print -
+
+useAsInput @1kvpair.yaml
+echo yaml --insert /  !AdditionalRootElement --double-quote
+print -
+
+useAsInput @simpleSequence.yaml
+echo yaml --insert /  !AdditionalRootElement --no-quote
 print -
 
 //--------------------------------------------------
@@ -35,16 +46,17 @@ foreach
 	saveTo !AZDETAILS   ### Save the contents of ${ASUX::foreach.iteration.value} into AZDETAILS
 
 	#________ makeNewRoot MyCompositeELEMENT-${ASUX::foreach.index}
-	#________ yaml --insert MyCompositeELEMENT-${ASUX::foreach.index} !AZDETAILS --delimiter ,
+	#________ yaml --insert MyCompositeELEMENT-${ASUX::foreach.index} !AZDETAILS --delimiter , --no-quote
 	#________ saveTo !MyCompositeELEMENT-${ASUX::foreach.index}
 	#________ useAsInput !YAMLROOT
-	#________ yaml --insert MyRootELEMENT,MyCompositeELEMENT-${ASUX::foreach.index} !MyCompositeELEMENT-${ASUX::foreach.index} --delimiter ,
+	#________ yaml --insert MyRootELEMENT,MyCompositeELEMENT-${ASUX::foreach.index} !MyCompositeELEMENT-${ASUX::foreach.index} --delimiter , --no-quote
 
 	useAsInput !YAMLROOT
-	yaml --insert MyRootELEMENT,MyCompositeELEMENT-${ASUX::foreach.index} !AZDETAILS --delimiter ,
+	yaml --insert MyRootELEMENT,MyCompositeELEMENT-${ASUX::foreach.index} !AZDETAILS --delimiter ,   --no-quote
 	saveTo !YAMLROOT
 	#________ print !YAMLROOT 
 end
 print \n
+useAsInput !YAMLROOT 
 
 #EoF

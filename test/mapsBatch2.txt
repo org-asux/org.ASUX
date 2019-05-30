@@ -4,18 +4,20 @@ makeNewRoot MyRootELEMENT
 saveTo !saveAs-ROOT
 
 aws.sdk --list-regions
+print -
 
 print user.home = ${ASUX::user.home} \n
 print user.dir = ${ASUX::user.dir} \n
 
 //--------------------------------------------------
 foreach
-	print ${ASUX::foreach.iteration.value}
+	print ${ASUX::foreach.iteration.value} \n
 	setProperty REGION=${ASUX::foreach.iteration.value}
 	aws.sdk   --describe-AZs      ${ASUX::foreach.iteration.value}
 	#______ ATTENTION: the above aws.sdk command's output is NOT SIMPLE KVPairs.
 	#______ It has an empty ARRAY object called 'Messages'
 	#______ [ .., .., {State:available, Messages:[], RegionName:eu-north-1, ZoneName:eu-north-1a, ZoneId:eun1-az1}, .. ]
+	print -
 
 	foreach
 		#______ print AZ no. ${ASUX::foreach.index} is: 
@@ -24,10 +26,12 @@ foreach
 
 		yaml --delete Messages  ### See above comments about empty ARRAY object called 'Messages'
 		saveTo !saveAs-${ASUX::foreach.index}
+		## print -
 
 		useAsInput !saveAs-ROOT
-		yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter ,
+		echo yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
 		saveTo !saveAs-ROOT
+		print -
 	end
 end
 //--------------------------------------------------

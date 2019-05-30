@@ -1,6 +1,6 @@
 ### This is the file 'simpleBatch.txt'
 
-useYAMLLibrary com.esotericsoftware.yamlbeans
+#################### useYAMLLibrary com.esotericsoftware.yamlbeans
 # properties batchLookup=./props.txt
 
 useAsInput @./aws.AZs.json
@@ -15,8 +15,9 @@ aws.sdk --list-regions
 
 //--------------------------------------------------
 foreach
-	print ${ASUX::foreach.iteration.value}
+	print ${ASUX::foreach.iteration.value} \n
 	aws.sdk --list-AZs      ${ASUX::foreach.iteration.value}
+	print -
 	foreach
 		print AZ no. ${ASUX::foreach.index} is: 
 		print ${ASUX::foreach.iteration.value}

@@ -15,7 +15,8 @@ echo "Usage: $0 [--verbose]"
 # endif
 
 ###------------------------------
-set YAMLLIB=( --yamllibrary com.esotericsoftware.yamlbeans )
+# set YAMLLIB=( --yamllibrary com.esotericsoftware.yamlbeans )
+set YAMLLIB=( --yamllibrary NodeImpl )
 set ORGASUXFLDR=/mnt/development/src/org.ASUX
 set path=( $path ${ORGASUXFLDR} )
 set TESTSRCFLDR=${ORGASUXFLDR}/test
@@ -80,7 +81,7 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml  $YAMLLIB  list '*,**,schema' --delimiter , --inputfile nano.yaml \
+asux.js yaml  $YAMLLIB  list '*,**,schema' --delimiter , --single-quote --inputfile nano.yaml \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
@@ -89,7 +90,7 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml  $YAMLLIB  list 'paths,/pet,put,**,in' --delimiter , --inputfile my-petstore-micro.yaml  \
+asux.js yaml  $YAMLLIB  list 'paths,/pet,put,**,in' --delimiter , --single-quote --inputfile my-petstore-micro.yaml  \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
@@ -97,7 +98,7 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml  $YAMLLIB  list 'paths,/pet,put,*,*,in' --delimiter , --inputfile my-petstore-micro.yaml   \
+asux.js yaml  $YAMLLIB  list 'paths,/pet,put,*,*,in' --delimiter , --single-quote --inputfile my-petstore-micro.yaml   \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
@@ -105,7 +106,7 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml  $YAMLLIB  list 'paths,/pet,put,parameters,2,in' --delimiter , --inputfile my-petstore-micro.yaml \
+asux.js yaml  $YAMLLIB  list 'paths,/pet,put,parameters,2,in' --delimiter , --single-quote --inputfile my-petstore-micro.yaml \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
@@ -113,7 +114,7 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml  $YAMLLIB  list 'paths,/pet,put,parameters,[13],in' --delimiter , --inputfile my-petstore-micro.yaml  \
+asux.js yaml  $YAMLLIB  list 'paths,/pet,put,parameters,[13],in' --delimiter , --single-quote --inputfile my-petstore-micro.yaml  \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
@@ -122,8 +123,8 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml  $YAMLLIB  replace 'paths,/pet,put,parameters,[13],in' 'replaced text by asux.js' --delimiter , --inputfile my-petstore-micro.yaml  \
-        -o ${OUTPFILE} --showStats >! ${OUTPFILE}.stdout
+asux.js yaml  $YAMLLIB  replace 'paths,/pet,put,parameters,[13],in' 'replaced text by asux.js' --delimiter ,  --double-quote --showStats --inputfile my-petstore-micro.yaml  \
+        -o ${OUTPFILE} >! ${OUTPFILE}.stdout
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 
@@ -132,8 +133,8 @@ diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml  $YAMLLIB  delete 'paths,/pet,put,parameters,[13],in' --delimiter , --inputfile my-petstore-micro.yaml  \
-        -o ${OUTPFILE} --showStats >! ${OUTPFILE}.stdout
+asux.js yaml  $YAMLLIB  delete 'paths,/pet,put,parameters,[13],in' --delimiter ,  --showStats --inputfile my-petstore-micro.yaml  \
+        -o ${OUTPFILE} >! ${OUTPFILE}.stdout
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 
@@ -154,7 +155,7 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml  $YAMLLIB  batch @./simpleBatch.txt  --inputfile /dev/null \
+asux.js yaml  $YAMLLIB  batch @./simpleBatch.txt --no-quote --inputfile /dev/null \
         -o ${OUTPFILE} > /dev/null   ## I have print statements n this BATCH-file, that are put onto stdout.
 # echo -n "sleeping ${DELAY}s .."; sleep ${DELAY} ## waiting for output to catch up..
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
@@ -163,7 +164,7 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml  $YAMLLIB  batch 'useAsInput @./aws.AZs.json'  --inputfile /dev/null \
+asux.js yaml  $YAMLLIB  batch 'useAsInput @./aws.AZs.json' --single-quote --inputfile /dev/null \
         -o ${OUTPFILE}
 # echo -n "sleeping ${DELAY}s .."; sleep ${DELAY} ## waiting for output to catch up..
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
@@ -172,7 +173,7 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml  $YAMLLIB  batch @./mapsBatch1.txt  --inputfile /dev/null  \
+asux.js yaml  $YAMLLIB  batch @./mapsBatch1.txt --single-quote --inputfile /dev/null  \
         -o ${OUTPFILE} >! ${OUTPFILE}.stdout
 # echo -n "sleeping ${DELAY}s .."; sleep ${DELAY} ## waiting for output to catch up..
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
@@ -182,7 +183,7 @@ diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml  $YAMLLIB  batch @./mapsBatch2.txt  --inputfile /dev/null  \
+asux.js yaml  $YAMLLIB  batch @./mapsBatch2.txt --single-quote --inputfile /dev/null  \
         -o ${OUTPFILE} >! ${OUTPFILE}.stdout
 # echo -n "sleeping ${DELAY}s .."; sleep ${DELAY} ## waiting for output to catch up..
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
@@ -194,7 +195,7 @@ diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
 # echo 'MyRootELEMENT: ""' | asux.js yaml  $YAMLLIB   insert MyRootELEMENT.subElem.leafElem '{State: "available", Messages: [A,B,C], RegionName: "eu-north-1", ZoneName: "eu-north-1c", ZoneId: "eun1-az3"}'  --inputfile -  -o -
-asux.js yaml  $YAMLLIB  batch @insertReplaceBatch.txt   --inputfile /dev/null    \
+asux.js yaml  $YAMLLIB  batch @insertReplaceBatch.txt --no-quote  --inputfile /dev/null    \
         -o ${OUTPFILE} >! ${OUTPFILE}.stdout
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
@@ -203,7 +204,7 @@ diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml  $YAMLLIB  table 'paths,/pet,put,parameters' 'name,type' --delimiter , --inputfile my-petstore-micro.yaml    \
+asux.js yaml  $YAMLLIB  table 'paths,/pet,put,parameters' 'name,type' --showStats --delimiter , --no-quote --inputfile my-petstore-micro.yaml    \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
