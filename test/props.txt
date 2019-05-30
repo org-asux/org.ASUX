@@ -6,4 +6,10 @@ Key101=SHORTVALUE101
 
 Key202=LOOOOOOOOOONG VALUE with SPACES 202
 
+### Testing SnakeYAML library's ability to have ${ASUX::_} anywhere (even under '!')
+Equals=Equals
+Ref=Ref
+USEast1=us-east-1
+Condition=Condition
+
 ### EoFile
