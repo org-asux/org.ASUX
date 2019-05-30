@@ -12,6 +12,14 @@ var EXECUTESHELLCMD = require( __dirname + "/ExecShellCommand.js");
 var INITIAL_CWD = process.cwd(); // just in case I mistakenly process.chdir() somewhere below.
 var COMMAND = "unknown"; // will be set based on what the user enters on the commandline.
 
+var TMPDIR="/tmp";  // i do NOT like os.tmpdir().. as I canNOT MANUALLY find files I create there .
+var ORGNAME="org-asux";
+var PROJNAME="org.ASUX.cmdline";
+var OUTPFILE=TMPDIR + "/org.ASUX-setup-output-" + process.pid + ".txt";
+if (process.env.VERBOSE) console.log( 'OUTPFILE="'+OUTPFILE+'"' );
+
+var LASTRUNTIMESTAMP_FILEPATH = TMPDIR + "/org.ASUX-asux.js-lastRunTimeStamp.txt"
+
 //======================================
 CmdLine
 	.version('1.0', '-v, --version')
@@ -83,6 +91,33 @@ CmdLine.on('command:*', function (_cmd) {
 	process.exit(1);
 });
 
+//============================================================
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//============================================================
+
+// the following code allows me to check when was the last time this script was run.
+// if more than one day, set a flag.. so that 'daily-update' activities can be kicked off downstream.
+var bLastRunLongAgo = false;
+var currTimeStamp = Date.now() / 1000;
+if (process.env.VERBOSE) console.log( 'LASTRUNTIMESTAMP_FILEPATH="'+LASTRUNTIMESTAMP_FILEPATH+'"' );
+try {
+	if (process.env.VERBOSE) console.log( `checking if ${LASTRUNTIMESTAMP_FILEPATH} exists or not.. .. ` );
+	const timeStampStrBuf = fs.readFileSync( LASTRUNTIMESTAMP_FILEPATH ); // must contain String-form of a timestamp
+	const lastRunTimeInSecs = timeStampStrBuf.toString();
+	if (process.env.VERBOSE) console.log( __filename +" file contents of LASTRUNTIMESTAMP_FILEPATH: ["+ LASTRUNTIMESTAMP_FILEPATH +"] = ["+ data +"]\n");
+	bLastRunLongAgo = ( currTimeStamp > lastRunTimeInSecs + (24*3600) );
+	if (process.env.VERBOSE) console.log( "you last ran this script "+ (currTimeStamp - lastRunTimeInSecs) +" seconds ago!" );
+} catch (err33) { // a.k.a. if fs.readFileSync throws err13.code === 'ENOENT' || 'EISDIR')
+	if (process.env.VERBOSE) console.log( __filename +"Internal error: failed to read LASTRUNTIMESTAMP_FILEPATH: ["+ LASTRUNTIMESTAMP_FILEPATH +"]\n"+ err33);
+}; // try-catch of fs.readFileSync ( LASTRUNTIMESTAMP_FILEPATH .. )
+
+try {
+	fs.writeFileSync( LASTRUNTIMESTAMP_FILEPATH, currTimeStamp, { mode: 0o755 });
+} catch (err33) { // a.k.a. if fs.writeFileSync throws err13.code === 'ENOENT' || 'EISDIR')
+	console.error( __filename +"Internal error: failed to WRITE "+ currTimeStamp +" to File @ ["+ LASTRUNTIMESTAMP_FILEPATH +"]\n"+ err33);
+}; // try-catch of fs.readFileSync ( LASTRUNTIMESTAMP_FILEPATH .. )
+
+
 //==========================
 CmdLine.parse(process.argv);
 
@@ -102,28 +137,26 @@ function sendArgs2SubModule_Cmdline() {
 }
 
 //-------------------
-var ORGNAME="org-asux";
-var PROJNAME="org.ASUX.cmdline";
-var OUTPFILE=os.tmpdir() + "/org.ASUX-setup-output-" + process.pid + ".txt";
-if (process.env.VERBOSE) console.log( 'OUTPFILE="'+OUTPFILE+'"' );
-
 // Dont care if this command fails
 // git pull  >/dev/null 2>&1
 if (process.env.VERBOSE) console.log( ` OLD Working Directory was: ${process.cwd()}` );
-EXECUTESHELLCMD.executionPiped ( __dirname, 'git', ['pull', '--quiet'], true, process.env.VERBOSE, true, null);
+if ( bLastRunLongAgo ) {
+		EXECUTESHELLCMD.executionPiped ( __dirname, 'git', ['pull', '--quiet'], true, process.env.VERBOSE, true, null);
+} else {
+		if (process.env.VERBOSE) console.log(`skipping git pull -quiet for ${DIR_orgASUXcmdline}`);
+}
 
 //Create '/tmp'.   FYI: mkdirSync() Returns undefined always.
 // At least one asux.js script runs commands like mvn from /tmp folder.
-const tmpdist = '/tmp';
 try {
-	if (process.env.VERBOSE) console.log( `checking if ${tmpdist} exists or not.. .. ` );
-	fs.accessSync( tmpdist, fs.constants.R_OK | fs.constants.X_OK );
+	if (process.env.VERBOSE) console.log( `checking if ${TMPDIR} exists or not.. .. ` );
+	fs.accessSync( TMPDIR, fs.constants.R_OK | fs.constants.X_OK );
 } catch (err8) { // a.k.a. if fs.accessSync throws
 	try {
-		if (process.env.VERBOSE) console.log( `mkdir ${tmpdist} .. .. ` );
-		fs.mkdirSync ( tmpdist,  {recursive: true, mode: 0o755} ); // 
+		if (process.env.VERBOSE) console.log( `mkdir ${TMPDIR} .. .. ` );
+		fs.mkdirSync ( TMPDIR,  {recursive: true, mode: 0o755} ); // 
 	} catch (err8) { // a.k.a. if fs.mkdirSync throws
-		console.error( __filename +": Internal failure, creating the folder ["+ tmpdist +"]\n"+ err8.toString());
+		console.error( __filename +": Internal failure, creating the folder ["+ TMPDIR +"]\n"+ err8.toString());
 		process.exit(11);
 	}
 } // try-catch err8
@@ -143,7 +176,11 @@ try {
 		// No issues accessing the folder
 		// Let's refresh the .cmdline subfolder - by passing ./cmdline as 1st parameter, so git pull happens inside it.
 		// I'd rather do it here,  instead of having each sub-project/sub-folder do it by itself.
-		EXECUTESHELLCMD.executeSharingSTDOUT(  DIR_orgASUXcmdline, 'git', ['pull', '--quiet'], true, process.env.VERBOSE, true, null );
+		if ( bLastRunLongAgo ) {
+				EXECUTESHELLCMD.executeSharingSTDOUT(  DIR_orgASUXcmdline, 'git', ['pull', '--quiet'], true, process.env.VERBOSE, true, null );
+		} else {
+				if (process.env.VERBOSE) console.log(`skipping git pull -quiet for ${DIR_orgASUXcmdline}`);
+		}
 
 } catch(err2) { // err2.code === 'ENOENT')
 
