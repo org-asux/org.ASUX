@@ -195,7 +195,7 @@ diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
 # echo 'MyRootELEMENT: ""' | asux.js yaml  $YAMLLIB   insert MyRootELEMENT.subElem.leafElem '{State: "available", Messages: [A,B,C], RegionName: "eu-north-1", ZoneName: "eu-north-1c", ZoneId: "eun1-az3"}'  --inputfile -  -o -
-asux.js yaml  $YAMLLIB  batch @insertReplaceBatch.txt --no-quote  --inputfile /dev/null    \
+asux.js yaml  $YAMLLIB  batch @insertReplaceBatch.txt --double-quote  --inputfile /dev/null    \
         -o ${OUTPFILE} >! ${OUTPFILE}.stdout
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
