@@ -1,0 +1,16 @@
+### This is the file 'ErrorScenarios-InsertReplace.txt'
+
+makeNewRoot MyRootELEMENT
+saveTo !YAMLROOT
+
+yaml --replace / "simpleString" 
+
+useAsInput ""
+yaml --insert / "simpleString" 
+
+useAsInput !YAMLROOT
+yaml insert '\>)(' "simpleString" 
+
+#_____ print \n
+
+#EoF

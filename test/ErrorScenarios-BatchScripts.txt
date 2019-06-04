@@ -1,0 +1,10 @@
+### This is the file 'ErrorScenarios-InsertReplace.txt'
+
+makeNewRoot MyRootELEMENT
+#_____ saveTo !YAMLROOT
+
+yaml batch 'myINVALIDcommand xyz'
+
+#_____ print \n
+
+#EoF

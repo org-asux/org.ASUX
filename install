@@ -1,0 +1,63 @@
+#!/bin/sh
+
+### The following line did NOT work on Windows
+# CmdPath="${BASH_SOURCE[0]}"
+
+CmdPath="$0"
+# echo $CmdPath
+CmdDir="$(dirname "$CMD")"
+# echo ${CmdDir}
+
+###-------------------
+orgASUXFldr=`pwd`
+echo "orgASUXFldr = '${orgASUXFldr}''"
+
+if [ "${CmdDir}" -ne "." ]; then
+	orgASUXFldr="${CmdDir}"
+	>&2 echo "ok.  I should assume you are an experienced-enough user of BASH."
+	>&2 echo "If not, you are the user I hate to support .. or, to provide help/advice."
+	>&2 echo "Stop this script immediately.. .. if 'git clone https://github.com/org-asux/org.ASUX.git' command did Not create the ${orgASUXFldr} folder .."
+	sleep 5
+fi
+
+###-------------------
+### Check to see if Node.JS (Specifically, the program 'node') exists - in the path.
+
+command -v node
+if [ $? -ne 0 ]; then
+	>&2 echo "Node.JS (node) is not installed.  You have to do it manually."
+	>&2 echo "ATTENTION! Unfortunately, you have to do it MANUALLY.     Enter the following command AS-IS (incl. the DOT/PERIOD) on the Bash/Shell command-line prompt :-"
+	>&2 echo "       . ${orgASUXFldr}/installNodeOnAWSEC2Instance.sh"
+	exit 1
+fi
+
+###-------------------
+### Copy ${orgASUXFldr} into path - if its NOT in it already
+
+command -v asux.js
+if [ $? -ne 0 ]; then
+	>&2 echo "${orgASUXFldr} is Not in the path.  I can try to append it to your path (in .bashrc)."
+	>&2 echo 'If you do NOT want this script to change your .bashrc, press Cntl-C Now.. ..!!!'
+	>&2 echo ' '
+	read -p 'Otherwise press ENTER key to continue' BLACKHOLEVARIABLE
+	echo 'export PATH="'${orgASUXFldr}':${PATH}' >> ~/.bashrc
+	>&2 echo "ATTENTION! Done!  You have 2 options now."
+	>&2 echo "(1) Logout and Login again.  Or .. (2) Enter the following command AS-IS (incl. the DOT/PERIOD) on the Bash/Shell command-line prompt :-"
+	>&2 echo "       export PATH='${orgASUXFldr}':${PATH}"
+	exit 1
+fi
+
+###-------------------
+LOGFILE=/tmp/org.ASUX-1st-run-logs.txt
+node ${orgASUXFldr}/asux.js install >&2 ${LOGFILE}
+if [ $? -eq 0 ]; then
+	>&2 echo ' '
+	>&2 echo ' '
+	>&2 "You are now all ready to run commands!  Try entering the following example:-"
+	>&2 echo "		${orgASUXFldr}/asux.js yaml read 'paths,/pet' --delimiter , -i test/nano.yaml -o - "
+else
+	>&2 echo "Something went wrong. Please look at the bottom of the file ${LOGFILE}"
+fi
+
+### EoScript
+
