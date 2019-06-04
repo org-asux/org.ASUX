@@ -27,7 +27,9 @@ command -v node
 if [ $? -ne 0 ]; then
 	>&2 echo "Node.JS (node) is not installed.  You have to do it manually."
 	>&2 echo "ATTENTION! Unfortunately, you have to do it MANUALLY.     Enter the following command AS-IS (incl. the DOT/PERIOD) on the Bash/Shell command-line prompt :-"
+	>&2 echo ' '
 	>&2 echo "       . ${orgASUXFldr}/installNodeOnAWSEC2Instance.sh"
+	>&2 echo ' '
 	exit 1
 fi
 
