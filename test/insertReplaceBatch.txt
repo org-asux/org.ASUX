@@ -3,15 +3,32 @@
 makeNewRoot MyRootELEMENT
 saveTo !YAMLROOT
 
+useAsInput @nano.yaml
+yaml --insert paths,/pet,put,consumes @simpleSequence.yaml --delimiter , --no-quote
+print -
+
+useAsInput @nano.yaml
+yaml --insert paths,/pet,put,consumes,0 @simpleSequence.yaml --delimiter , --no-quote
+print -
+
+useAsInput @nano.yaml
+yaml --insert paths,/pet,put,consumes,1 @simpleSequence.yaml --delimiter , --no-quote
+print -
+
+useAsInput @nano.yaml
+yaml --replace paths,/pet,put,consumes,0 @simpleSequence.yaml --delimiter , --no-quote
+print -
+
+
 ### !!!!!!!!!!!!!! Attention !!!!!!!!!!!!!!
 ### using SINGLE-quote to represent an empty-string as '' will fail, due to SHELL Interpretations, which WILL CONVERT the '' into just '
 
 useAsInput 'MyRootELEMENT': ""
-yaml --insert MyRootELEMENT "dlfkjhasdlfhasdfadsfafsdfasdfasdfasdfasdf"  --no-quote
+yaml --insert MyRootELEMENT "dlfkjhasdlfhasdfadsfafsdfasdfasdfasdfasdf"
 print -
 
 useAsInput MyRootELEMENT: ""
-yaml --insert MyRootELEMENT.subElem "dlfkjhasdlfhasdfadsfafsdfasdfasdfasdfasdf"   --no-quote
+yaml --insert MyRootELEMENT.subElem "dlfkjhasdlfhasdfadsfafsdfasdfasdfasdfasdf"
 print -
 
 useAsInput   '{"AdditionalRootElement": {"State": "available", "Messages": ["A","B","C"], "RegionName": "eu-north-1", "ZoneName": "eu-north-1c", "ZoneId": "eun1-az3"}}'

@@ -1,17 +1,93 @@
-'MyRootELEMENT': dlfkjhasdlfhasdfadsfafsdfasdfasdfasdfasdf
+swagger: "2.0"
+info:
+  contact:
+    email: sarma@ussmoso.com
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+basePath: /playground
+paths:
+  /pet:
+    put:
+      consumes:
+      - application/json
+      - - petId
+        - integer
+      responses:
+        ${ASUX::Key202}:
+          description: ${ASUX::Key101}
+          schema:
+            $ref: ${ASUX::Key202}
+
+swagger: "2.0"
+info:
+  contact:
+    email: sarma@ussmoso.com
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+basePath: /playground
+paths:
+  /pet:
+    put:
+      consumes:
+      - - petId
+        - integer
+      - application/json
+      responses:
+        ${ASUX::Key202}:
+          description: ${ASUX::Key101}
+          schema:
+            $ref: ${ASUX::Key202}
+
+swagger: "2.0"
+info:
+  contact:
+    email: sarma@ussmoso.com
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+basePath: /playground
+paths:
+  /pet:
+    put:
+      consumes:
+      - application/json
+      responses:
+        ${ASUX::Key202}:
+          description: ${ASUX::Key101}
+          schema:
+            $ref: ${ASUX::Key202}
+      '1':
+      - petId
+      - integer
+
+swagger: "2.0"
+info:
+  contact:
+    email: sarma@ussmoso.com
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+basePath: /playground
+paths:
+  /pet:
+    put:
+      consumes:
+      - - petId
+        - integer
+      responses:
+        ${ASUX::Key202}:
+          description: ${ASUX::Key101}
+          schema:
+            $ref: ${ASUX::Key202}
+
+'MyRootELEMENT': "dlfkjhasdlfhasdfadsfafsdfasdfasdfasdfasdf"
 
 MyRootELEMENT:
-  subElem: dlfkjhasdlfhasdfadsfafsdfasdfasdfasdfasdf
+  "subElem": "dlfkjhasdlfhasdfadsfafsdfasdfasdfasdfasdf"
 
-AdditionalRootElement:
-  State: available
-  Messages:
-  - A
-  - B
-  - C
-  RegionName: eu-north-1
-  ZoneName: eu-north-1c
-  ZoneId: eun1-az3
+"AdditionalRootElement":
+  "State": "available"
+  "Messages":
+  - "A"
+  - "B"
+  - "C"
+  "RegionName": "eu-north-1"
+  "ZoneName": "eu-north-1c"
+  "ZoneId": "eun1-az3"
 
 Echo (As-Is): yaml --insert MyRootELEMENT.subElem.leafElem '{State: "available", Messages: ["A","B","C"], RegionName: "eu-north-1", ZoneName: "eu-north-1c", ZoneId: "eun1-az3"}' --no-quote
 Echo (Macro-substituted): yaml --insert MyRootELEMENT.subElem.leafElem '{State: "available", Messages: ["A","B","C"], RegionName: "eu-north-1", ZoneName: "eu-north-1c", ZoneId: "eun1-az3"}' --no-quote
@@ -29,42 +105,42 @@ MyRootELEMENT:
 
 Echo (As-Is): yaml --insert / !AdditionalRootElement --no-quote
 Echo (Macro-substituted): yaml --insert / !AdditionalRootElement --no-quote
-MyRootELEMENT: ''
-AdditionalRootElement:
-  State: available
-  Messages:
-  - A
-  - B
-  - C
-  RegionName: eu-north-1
-  ZoneName: eu-north-1c
-  ZoneId: eun1-az3
+"MyRootELEMENT": ""
+"AdditionalRootElement":
+  "State": "available"
+  "Messages":
+  - "A"
+  - "B"
+  - "C"
+  "RegionName": "eu-north-1"
+  "ZoneName": "eu-north-1c"
+  "ZoneId": "eun1-az3"
 
 Echo (As-Is): yaml --insert / !AdditionalRootElement --double-quote
 Echo (Macro-substituted): yaml --insert / !AdditionalRootElement --double-quote
 MyRootELEMENT: "\t"
-AdditionalRootElement:
-  State: available
-  Messages:
-  - A
-  - B
-  - C
-  RegionName: eu-north-1
-  ZoneName: eu-north-1c
-  ZoneId: eun1-az3
+"AdditionalRootElement":
+  "State": "available"
+  "Messages":
+  - "A"
+  - "B"
+  - "C"
+  "RegionName": "eu-north-1"
+  "ZoneName": "eu-north-1c"
+  "ZoneId": "eun1-az3"
 
 Echo (As-Is): yaml --insert / !AdditionalRootElement --no-quote
 Echo (Macro-substituted): yaml --insert / !AdditionalRootElement --no-quote
 - petId
 - integer
-- AdditionalRootElement:
-    State: available
-    Messages:
-    - A
-    - B
-    - C
-    RegionName: eu-north-1
-    ZoneName: eu-north-1c
-    ZoneId: eun1-az3
+- "AdditionalRootElement":
+    "State": "available"
+    "Messages":
+    - "A"
+    - "B"
+    - "C"
+    "RegionName": "eu-north-1"
+    "ZoneName": "eu-north-1c"
+    "ZoneId": "eun1-az3"
 
 eu-north-1 ap-south-1 eu-west-3 eu-west-2 eu-west-1 ap-northeast-2 ap-northeast-1 sa-east-1 ca-central-1 ap-southeast-1 ap-southeast-2 eu-central-1 us-east-1 us-east-2 us-west-1 us-west-2 
