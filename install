@@ -63,7 +63,7 @@ if [ $? -ne 0 ]; then
 	sleep 2
 	>&2 echo "ATTENTION! You have 2 options now."
 	>&2 echo "		(1) Logout and Login again.  Or .."
-	>&2 echo "		(2) Enter the following command AS-IS (incl. the DOT/PERIOD) on the Bash/Shell command-line prompt :-"
+	>&2 echo "		(2) Enter the following command AS-IS on the Bash/Shell command-line prompt :-"
 	>&2 echo "				export PATH='${orgASUXFldr}:${PATH}'"
 	>&2 echo ' '
 	sleep 2
