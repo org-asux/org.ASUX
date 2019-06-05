@@ -5,16 +5,16 @@
 
 CmdPath="$0"
 # echo $CmdPath
-#___ SCRIPTFLDR="$(dirname "$CmdPath")"
-SCRIPTFLDR="$( cd "$(dirname "$0")" ; pwd -P )"
-#___ echo ${SCRIPTFLDR}
+SCRIPTFLDR_RELATIVE="$(dirname "$CmdPath")"
+SCRIPTFULLFLDRPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+#___ echo ${SCRIPTFULLFLDRPATH}
 
 ###-------------------
 orgASUXFldr=`pwd`
 #__ echo "orgASUXFldr = '${orgASUXFldr}''"
 
-if [ "${SCRIPTFLDR}" != "." ]; then
-	orgASUXFldr="${SCRIPTFLDR}"
+if [ "${SCRIPTFLDR_RELATIVE}" != "." ]; then
+	orgASUXFldr="${SCRIPTFULLFLDRPATH}"
 	>&2 echo ' '
 	>&2 echo "ok.  I should assume you are an experienced-enough user of BASH."
 	>&2 echo "If not, you are the user I hate to support .. or, to provide help/advice."
