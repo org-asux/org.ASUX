@@ -5,15 +5,16 @@
 
 CmdPath="$0"
 # echo $CmdPath
-CmdDir="$(dirname "$CmdPath")"
-# echo ${CmdDir}
+#___ SCRIPTFLDR="$(dirname "$CmdPath")"
+SCRIPTFLDR="$( cd "$(dirname "$0")" ; pwd -P )"
+#___ echo ${SCRIPTFLDR}
 
 ###-------------------
 orgASUXFldr=`pwd`
 #__ echo "orgASUXFldr = '${orgASUXFldr}''"
 
-if [ "${CmdDir}" != "." ]; then
-	orgASUXFldr="${CmdDir}"
+if [ "${SCRIPTFLDR}" != "." ]; then
+	orgASUXFldr="${SCRIPTFLDR}"
 	>&2 echo ' '
 	>&2 echo "ok.  I should assume you are an experienced-enough user of BASH."
 	>&2 echo "If not, you are the user I hate to support .. or, to provide help/advice."
@@ -49,6 +50,7 @@ if [ $? -ne 0 ]; then
 	>&2 echo 'If you do NOT want this script to change your .bashrc, press Cntl-C Now.. ..!!!'
 	>&2 echo ' '
 	read -p 'Otherwise press ENTER key to continue' BLACKHOLEVARIABLE
+	echo ' ' >> ~/.bashrc
 	echo 'export PATH="'${orgASUXFldr}'":${PATH}' >> ~/.bashrc
 	>&2 echo "ATTENTION! Done!  You have 2 options now."
 	>&2 echo "(1) Logout and Login again.  Or .. (2) Enter the following command AS-IS (incl. the DOT/PERIOD) on the Bash/Shell command-line prompt :-"

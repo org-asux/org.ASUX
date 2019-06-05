@@ -3,6 +3,9 @@
 
 CmdPath="$0"
 #___ echo $CmdPath
+#___ SCRIPTFLDR="$(dirname "$CmdPath")"
+SCRIPTFLDR="$( cd "$(dirname "$0")" ; pwd -P )"
+#___ echo ${SCRIPTFLDR}
 CmdName=`basename "$CmdPath"`
 #___ echo ${CmdName}
 
