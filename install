@@ -35,6 +35,8 @@ if [ $? -ne 0 ]; then
 	>&2 echo "       . ${orgASUXFldr}/installNodeOnAWSEC2Instance.sh"
 	>&2 echo ' '
 	exit 1
+else
+	echo "verified that Node.JS (node) is installed"
 fi
 
 ###-------------------
@@ -47,12 +49,14 @@ if [ $? -ne 0 ]; then
 	>&2 echo 'If you do NOT want this script to change your .bashrc, press Cntl-C Now.. ..!!!'
 	>&2 echo ' '
 	read -p 'Otherwise press ENTER key to continue' BLACKHOLEVARIABLE
-	echo 'export PATH="'${orgASUXFldr}':${PATH}' >> ~/.bashrc
+	echo 'export PATH="'${orgASUXFldr}'":${PATH}' >> ~/.bashrc
 	>&2 echo "ATTENTION! Done!  You have 2 options now."
 	>&2 echo "(1) Logout and Login again.  Or .. (2) Enter the following command AS-IS (incl. the DOT/PERIOD) on the Bash/Shell command-line prompt :-"
 	>&2 echo "       export PATH='${orgASUXFldr}':${PATH}"
 	>&2 echo ' '
 	exit 1
+else
+	echo 'verified that your org.ASUX project is in the PATH ..and can be used in any folder!'
 fi
 
 ###-------------------
