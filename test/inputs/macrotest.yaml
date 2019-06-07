@@ -1,0 +1,16 @@
+Conditions:
+##  USEast1: !${ASUX::Equals}
+##    - !${ASUX::Ref} 'AWS::Region'
+  USEast1: !Equals
+    - !Ref 'AWS::Region'
+    - us-east-1
+  USEast2: !Equals
+    - !Ref 'AWS::Region'
+    - us-east-2
+##  doesExistSubnet1: !${ASUX::Condition} USEast1
+  doesExistSubnet1: !Condition USEast1
+  doesExistSubnet2: !Condition USEast2
+  doesExistSubnet3: !Or
+    - !Condition ${ASUX::USEast1}
+    - !Condition USEast2
+#EOF

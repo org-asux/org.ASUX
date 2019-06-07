@@ -1,0 +1,16 @@
+swagger: "2.0"
+info:
+  contact:
+    email: sarma@ussmoso.com
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+basePath: /playground
+paths:
+  /pet:
+    put:
+      consumes:
+      - application/json
+      responses:
+        ${ASUX::Key202}:
+          description: ${ASUX::Key101}
+          schema:
+            $ref: ${ASUX::Key202}
