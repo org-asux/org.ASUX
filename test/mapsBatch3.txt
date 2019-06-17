@@ -12,7 +12,7 @@ foreach
 	saveTo !AZDETAILS   ### Save the contents of ${ASUX::foreach.iteration.value} into AZDETAILS
 
 	makeNewRoot AdditionalRootElement-${ASUX::foreach.index}
-	yaml --insert AdditionalRootElement-${ASUX::foreach.index} !AZDETAILS
+	yaml --insert AdditionalRootElement-${ASUX::foreach.index} !AZDETAILS --no-quote
 	#________ print -
 	saveTo !AdditionalRootElement
 
