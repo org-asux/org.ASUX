@@ -14,16 +14,25 @@ var COMMAND = "unknown"; // will be set based on what the user enters on the com
 
 var TMPDIR="/tmp";  // i do NOT like os.tmpdir().. as I canNOT MANUALLY find files I create there .
 var ORGNAME="org-asux";
-var PROJNAME="org.ASUX.cmdline";
 var OUTPFILE=TMPDIR + "/org.ASUX-setup-output-" + process.pid + ".txt";
 if (process.env.VERBOSE) console.log( 'OUTPFILE="'+OUTPFILE+'"' );
 
-var LASTRUNTIMESTAMP_FILEPATH = TMPDIR + "/org.ASUX-asux.js-lastRunTimeStamp.txt"
+var LASTRUNTIMESTAMP_FILEPATH_PREFIX = TMPDIR + "/org.ASUX-asux.js-lastRunTimeStamp"
 
 var bLastRunLongAgo = true;
 
+//--------------------------------------
+var PROJNAME_cmdline="org.ASUX.cmdline";
 const DIR_orgASUXcmdline = __dirname + '/cmdline';
-const DIR_orgASUXcmdline_Downloaded = __dirname + '/'+ PROJNAME;
+const DIR_orgASUXcmdline_Downloaded = __dirname + '/'+ PROJNAME_cmdline;
+
+var PROJNAME_AWS="org.ASUX.AWS";
+const DIR_orgASUXAWS = __dirname + '/AWS';
+const DIR_orgASUXAWS_Downloaded = __dirname + '/'+ PROJNAME_AWS;
+
+var PROJNAME_AWSCFN="org.ASUX.AWS.CFN";
+const DIR_orgASUXAWSCFN = __dirname + '/AWS/CFN';
+const DIR_orgASUXAWSCFN_Downloaded = __dirname + '/'+ PROJNAME_AWSCFN;
 
 //======================================
 CmdLine
@@ -47,6 +56,7 @@ CmdLine
 CmdLine
 .command('yaml', 'read/query/list/replace/delete content from YAML files', { isDefault: false, noHelp: false } )
 .command('aws', 'a large family of commands to interact with AWS components like CloudFormation, API-Gateway & Lambda functions', {isDefault: false, noHelp: false} )
+.command('aws.cfn', 'Create, Generate AWS CloudFormation-templates', {isDefault: false, noHelp: false} )
 .command('install', 'if you are installing / re-installing', { isDefault: false, noHelp: true } )
 	;
 
@@ -81,24 +91,29 @@ CmdLine.on('option:properties', function () {
 CmdLine.on('command:install', function () {
 	if (process.env.VERBOSE) console.log("Yeah.  helping 'install' script verify proper installation");
 	COMMAND = 'install';
-	runGitPull();
-	createAndAccessSlashTmp();
-	checkIfSubProjectsExist();
+	verifyInstall();
 });
 
 //---------------------------------------
 CmdLine.on('command:yaml', function () {
 	if (process.env.VERBOSE) console.log("Yeah.  processing YAML command");
 	COMMAND = 'yaml';
-	runGitPull();
-	sendArgs2SubModule_Cmdline();
+	verifyInstall();
+	sendArgs2SubModule( DIR_orgASUXcmdline );
 });
 
 CmdLine.on('command:aws', function () {
 	if (process.env.VERBOSE) console.log("Yeah.  processing Amazon-AWS command");
 	COMMAND = 'aws';
-	runGitPull();
-	// sendArgs2SubModule_AWS();
+	verifyInstall();
+	sendArgs2SubModule( DIR_orgASUXAWS );
+});
+
+CmdLine.on('command:aws.cfn', function () {
+	if (process.env.VERBOSE) console.log("Yeah.  processing Amazon-AWS-CloudFormation command");
+	COMMAND = 'aws.cfn';
+	verifyInstall();
+	sendArgs2SubModule( DIR_orgASUXAWSCFN );
 });
 
 // Like the 'default' in a switch statement.. .. After all of the above "on" callbacks **FAIL** to trigger, we'll end up here.
@@ -115,20 +130,33 @@ CmdLine.parse(process.argv);
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //============================================================
 
+function verifyInstall() {
+	runGitPullAll();
+	createAndAccessSlashTmp();
+	checkIfAllSubProjectsExist();
+}
+
+function runGitPullAll() {
+	runGitPull( PROJNAME_cmdline,	DIR_orgASUXcmdline	);
+	runGitPull( PROJNAME_AWS,		DIR_orgASUXAWS		);
+	runGitPull( PROJNAME_AWSCFN,	DIR_orgASUXAWSCFN	);
+}
+
 // Run 'git pull' at most 1/day on this project as well as sub-projects like org.ASUX.cmdline
-function runGitPull() {
+function runGitPull( _PROJNAME, _DIR_orgASUXSubProject ) {
 
 		// the following code allows me to check when was the last time this script was run.
 		// if more than one day, set a flag.. so that 'daily-update' activities can be kicked off downstream.
-		var currTimeStamp = Date.now() / 1000;
+		const currTimeStamp = Date.now() / 1000;
 		var oneDayLater = 24*3600;
 		var lastRunTimeInSecs = "99999999999999";
-		if (process.env.VERBOSE) console.log( 'LASTRUNTIMESTAMP_FILEPATH="'+LASTRUNTIMESTAMP_FILEPATH+'"' );
+		const LASTRUNTIMESTAMP_FILEPATH = LASTRUNTIMESTAMP_FILEPATH_PREFIX +'-'+ _PROJNAME +'.txt';
+		if (process.env.VERBOSE) console.log( "\nLASTRUNTIMESTAMP_FILEPATH='"+LASTRUNTIMESTAMP_FILEPATH+'"' );
 		try {
 			if (process.env.VERBOSE) console.log( `checking if ${LASTRUNTIMESTAMP_FILEPATH} exists or not.. .. ` );
 			const timeStampStrBuf = fs.readFileSync( LASTRUNTIMESTAMP_FILEPATH ); // must contain String-form of a timestamp
 			lastRunTimeInSecs = Number( timeStampStrBuf.toString() );
-			if (process.env.VERBOSE) console.log( __filename +" file contents of LASTRUNTIMESTAMP_FILEPATH: ["+ LASTRUNTIMESTAMP_FILEPATH +"] = ["+ timeStampStrBuf +"]\n");
+			if (process.env.VERBOSE) console.log( __filename +" file contents of LASTRUNTIMESTAMP_FILEPATH: ["+ LASTRUNTIMESTAMP_FILEPATH +"] = ["+ timeStampStrBuf +"]");
 			if ( isNaN( lastRunTimeInSecs ) ) {
 					console.error("Serious Internal-Error! Failed to determine the 'last-run-timestamp' (it is contents of file "+ LASTRUNTIMESTAMP_FILEPATH +").\n Very likely that file does NOT contain time-in-seconds content.");
 					process.exit(1);
@@ -152,7 +180,7 @@ function runGitPull() {
 		if (process.env.VERBOSE) console.log( ` OLD Working Directory was: ${process.cwd()}` );
 		if ( bLastRunLongAgo ) {
 				EXECUTESHELLCMD.executionPiped ( __dirname, 'git', ['pull', '--quiet'], true, process.env.VERBOSE, true, null);
-				EXECUTESHELLCMD.executeSharingSTDOUT(  DIR_orgASUXcmdline, 'git', ['pull', '--quiet'], true, process.env.VERBOSE, true, null );
+				EXECUTESHELLCMD.executeSharingSTDOUT(  _DIR_orgASUXSubProject, 'git', ['pull', '--quiet'], true, process.env.VERBOSE, true, null );
 				try {
 					fs.writeFileSync( LASTRUNTIMESTAMP_FILEPATH, currTimeStamp, { mode: 0o755 });
 				} catch (err33) { // a.k.a. if fs.writeFileSync throws err13.code === 'ENOENT' || 'EISDIR')
@@ -173,7 +201,7 @@ function createAndAccessSlashTmp() {
 	//Create '/tmp'.   FYI: mkdirSync() Returns undefined always.
 	// At least one asux.js script runs commands like mvn from /tmp folder.
 	try {
-			if (process.env.VERBOSE) console.log( `checking if ${TMPDIR} exists or not.. .. ` );
+			if (process.env.VERBOSE) console.log( `\nchecking if ${TMPDIR} exists or not.. .. ` );
 			fs.accessSync( TMPDIR, fs.constants.R_OK | fs.constants.X_OK );
 	} catch (err8) { // a.k.a. if fs.accessSync throws
 			try {
@@ -190,26 +218,33 @@ function createAndAccessSlashTmp() {
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //============================================================
 
-function checkIfSubProjectsExist() {
+function checkIfAllSubProjectsExist() {
+	checkIfSubProjectExists( PROJNAME_cmdline,	DIR_orgASUXcmdline,		DIR_orgASUXcmdline_Downloaded	);
+	checkIfSubProjectExists( PROJNAME_AWS,		DIR_orgASUXAWS,			DIR_orgASUXAWS_Downloaded		);
+	checkIfSubProjectExists( PROJNAME_AWSCFN,	DIR_orgASUXAWSCFN,		DIR_orgASUXAWSCFN_Downloaded	);
+}
 
+//============================================================
+function checkIfSubProjectExists( _PROJNAME, _DIR_orgASUXSubProject, _DIR_orgASUXSubProject_Downloaded )
+{
 	if (process.env.VERBOSE) console.log( 'about to process sub-projects of org.ASUX' );
 
 	try {
-			if (process.env.VERBOSE) console.log( `checking if ${DIR_orgASUXcmdline} exists or not.. .. ` );
-			fs.accessSync( DIR_orgASUXcmdline, fs.constants.R_OK | fs.constants.X_OK );
+			if (process.env.VERBOSE) console.log( `checking if ${_DIR_orgASUXSubProject} exists or not.. .. ` );
+			fs.accessSync( _DIR_orgASUXSubProject, fs.constants.R_OK | fs.constants.X_OK );
 
 			// ok!  ./cmdline folder exists
-			if (process.env.VERBOSE) console.log( `${DIR_orgASUXcmdline} ALREADY Exists` );
+			if (process.env.VERBOSE) console.log( `${_DIR_orgASUXSubProject} ALREADY Exists` );
 
 	} catch(err2) { // err2.code === 'ENOENT')
 
-			console.error( 'Hmmmm.   1st time ever!?   Let me complete initial-setup (1 minute)...\n');
+			console.error( 'Hmmmm.   1st time ever!?   Let me complete initial-setup (1 minute)...\n' );
 			EXECUTESHELLCMD.sleep(5);
 
-			if (process.env.VERBOSE) console.log( `${DIR_orgASUXcmdline} does Not exist. So.. pulling from remote Git repo. ` );
+			if (process.env.VERBOSE) console.log( `${_DIR_orgASUXSubProject} does Not exist. So.. pulling from remote Git repo.` );
 
-			// var gitpullcmdArgs = ['clone', '--quiet', `https://github.com/${ORGNAME}/${PROJNAME}`];
-			var gitpullcmdArgs = ['clone', `https://github.com/${ORGNAME}/${PROJNAME}`];
+			// var gitpullcmdArgs = ['clone', '--quiet', `https://github.com/${ORGNAME}/${_PROJNAME}`];
+			var gitpullcmdArgs = ['clone', `https://github.com/${ORGNAME}/${_PROJNAME}`];
 			console.log( 'git '+ gitpullcmdArgs.join(' ') );
 
 			// use git to get the code for the ./cmdline sub-folder/sub-project
@@ -221,11 +256,11 @@ function checkIfSubProjectsExist() {
 			} // if retCode
 
 			// about to RENAME org.ASUX.cmdline to just cmdline.   FYI: renameSync Returns undefined ALWAYS.
-			if (process.env.VERBOSE) console.log( `about to RENAME folder ${PROJNAME} to just ${DIR_orgASUXcmdline} ` );
+			if (process.env.VERBOSE) console.log( `about to RENAME folder ${_PROJNAME} to just ${_DIR_orgASUXSubProject} ` );
 			try {
-				fs.renameSync( DIR_orgASUXcmdline_Downloaded, DIR_orgASUXcmdline);
+				fs.renameSync( _DIR_orgASUXSubProject_Downloaded, _DIR_orgASUXSubProject );
 			} catch (err6) { // a.k.a. if fs.mkdirSync throws
-				console.error( __filename +": Internal failure, renaming the folder ["+ PROJNAME +"]\n"+ err6.toString());
+				console.error( __filename +": Internal failure, renaming the folder ["+ _PROJNAME +"]\n"+ err6.toString());
 				process.exit(12);
 			} // try-catch err8
 
@@ -236,20 +271,15 @@ function checkIfSubProjectsExist() {
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //============================================================
 
-function sendArgs2SubModule_Cmdline() {
+function sendArgs2SubModule( _DIR_orgASUXSubProject ) {
 
 	if ( __dirname != process.cwd()  ) {
 		if (process.env.VERBOSE) console.log("you **WERE** in the directory: '%s'", process.cwd() );
-		// process.chdir(  __dirname );
-		// COMMENT: NO LONGER CORRECT --> Must switch to root of org.ASUX project working folder - to fetch sub-projects
+		// process.chdir(  __dirname ); <-- ATTENTION: NO LONGER CORRECT --> Need to stay in the topmost org.ASUX project working folder - to git-fetch sub-projects
 		// if (process.env.VERBOSE) console.log("switched to directory: '%s'", process.cwd());
 	}else{
 		if (process.env.VERBOSE) console.log("You are running from where this Node.JS Script is.  Nice! %s", __dirname );
 	}
-
-	//-------------------
-	createAndAccessSlashTmp();
-	checkIfSubProjectsExist();
 
 	//--------------------
 
@@ -275,13 +305,12 @@ function sendArgs2SubModule_Cmdline() {
 		prms.push( process.argv[ix]);
 	}
 	//--------------------------------------------------------
-	prms.splice( 0, 0, DIR_orgASUXcmdline +'/asux.js' ); // insert ./asux.js as the 1st cmdline parameter to node.js
+	prms.splice( 0, 0, _DIR_orgASUXSubProject +'/asux.js' ); // insert ./asux.js as the 1st cmdline parameter to node.js
 	if (process.env.VERBOSE) { console.log( `${__filename} : running Node.JS with cmdline-arguments:` + prms.join(' ') ); }
 
-	process.env.PARENTPROJFLDR=__dirname; // for use by cmdline/asux.js .. so it know where this asux.js is.
+	process.env.ORGASUXHOME=__dirname; // for use by cmdline/asux.js .. so it know where this asux.js is.
 
-	process.exitCode =
-			EXECUTESHELLCMD.executeSubModule(  INITIAL_CWD, 'node', prms, false, process.env.VERBOSE, false, null );
+	process.exitCode = EXECUTESHELLCMD.executeSubModule(  INITIAL_CWD, 'node', prms, false, process.env.VERBOSE, false, null );
 
 			// Keeping code around .. .. In case I wanted to run the submodule via .. JS require()
 			// var runOrgASUXCmdLine = require( __dirname +"/"+ subdir + "/asux.js");
