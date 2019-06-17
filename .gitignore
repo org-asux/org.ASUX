@@ -20,3 +20,9 @@ org.ASUX.common
 org.ASUX.yaml
 org.ASUX.YAML.CollectionsImpl
 org.ASUX.YAML.NodeImpl
+AWS
+AWS.CFN
+AWS-SDK
+org.ASUX.AWS
+org.ASUX.AWS.CFN
+org.ASUX.AWS-SDK
