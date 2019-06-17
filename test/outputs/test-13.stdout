@@ -37,8 +37,8 @@ eu-north-1
   'Messages': [
     ]
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-north-1.0 !saveAs-0 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-north-1.0 !saveAs-0 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -46,8 +46,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-north-1.0 !saveAs-0 --d
     'State': 'available'
     'RegionName': 'eu-north-1'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-north-1.1 !saveAs-1 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-north-1.1 !saveAs-1 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -60,8 +60,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-north-1.1 !saveAs-1 --d
     'State': 'available'
     'RegionName': 'eu-north-1'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-north-1.2 !saveAs-2 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-north-1.2 !saveAs-2 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -99,8 +99,8 @@ ap-south-1
   'Messages': [
     ]
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-south-1.0 !saveAs-0 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-south-1.0 !saveAs-0 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -123,8 +123,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-south-1.0 !saveAs-0 --d
     'State': 'available'
     'RegionName': 'ap-south-1'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-south-1.1 !saveAs-1 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-south-1.1 !saveAs-1 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -152,8 +152,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-south-1.1 !saveAs-1 --d
     'State': 'available'
     'RegionName': 'ap-south-1'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-south-1.2 !saveAs-2 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-south-1.2 !saveAs-2 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -206,8 +206,8 @@ eu-west-3
   'Messages': [
     ]
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-west-3.0 !saveAs-0 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-west-3.0 !saveAs-0 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -245,8 +245,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-west-3.0 !saveAs-0 --de
     'State': 'available'
     'RegionName': 'eu-west-3'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-west-3.1 !saveAs-1 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-west-3.1 !saveAs-1 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -289,8 +289,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-west-3.1 !saveAs-1 --de
     'State': 'available'
     'RegionName': 'eu-west-3'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-west-3.2 !saveAs-2 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-west-3.2 !saveAs-2 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -358,8 +358,8 @@ eu-west-2
   'Messages': [
     ]
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-west-2.0 !saveAs-0 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-west-2.0 !saveAs-0 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -412,8 +412,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-west-2.0 !saveAs-0 --de
     'State': 'available'
     'RegionName': 'eu-west-2'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-west-2.1 !saveAs-1 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-west-2.1 !saveAs-1 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -471,8 +471,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-west-2.1 !saveAs-1 --de
     'State': 'available'
     'RegionName': 'eu-west-2'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-west-2.2 !saveAs-2 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-west-2.2 !saveAs-2 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -555,8 +555,8 @@ eu-west-1
   'Messages': [
     ]
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-west-1.0 !saveAs-0 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-west-1.0 !saveAs-0 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -624,8 +624,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-west-1.0 !saveAs-0 --de
     'State': 'available'
     'RegionName': 'eu-west-1'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-west-1.1 !saveAs-1 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-west-1.1 !saveAs-1 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -698,8 +698,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-west-1.1 !saveAs-1 --de
     'State': 'available'
     'RegionName': 'eu-west-1'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-west-1.2 !saveAs-2 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-west-1.2 !saveAs-2 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -797,8 +797,8 @@ ap-northeast-2
   'Messages': [
     ]
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-northeast-2.0 !saveAs-0 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-northeast-2.0 !saveAs-0 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -881,8 +881,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-northeast-2.0 !saveAs-0
     'State': 'available'
     'RegionName': 'ap-northeast-2'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-northeast-2.1 !saveAs-1 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-northeast-2.1 !saveAs-1 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -970,8 +970,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-northeast-2.1 !saveAs-1
     'State': 'available'
     'RegionName': 'ap-northeast-2'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-northeast-2.2 !saveAs-2 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-northeast-2.2 !saveAs-2 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -1084,8 +1084,8 @@ ap-northeast-1
   'Messages': [
     ]
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-northeast-1.0 !saveAs-0 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-northeast-1.0 !saveAs-0 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -1183,8 +1183,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-northeast-1.0 !saveAs-0
     'State': 'available'
     'RegionName': 'ap-northeast-1'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-northeast-1.1 !saveAs-1 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-northeast-1.1 !saveAs-1 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -1287,8 +1287,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-northeast-1.1 !saveAs-1
     'State': 'available'
     'RegionName': 'ap-northeast-1'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-northeast-1.2 !saveAs-2 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-northeast-1.2 !saveAs-2 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -1410,8 +1410,8 @@ sa-east-1
   'Messages': [
     ]
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,sa-east-1.0 !saveAs-0 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,sa-east-1.0 !saveAs-0 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -1524,8 +1524,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,sa-east-1.0 !saveAs-0 --de
     'State': 'available'
     'RegionName': 'sa-east-1'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,sa-east-1.1 !saveAs-1 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,sa-east-1.1 !saveAs-1 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -1657,8 +1657,8 @@ ca-central-1
   'Messages': [
     ]
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,ca-central-1.0 !saveAs-0 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ca-central-1.0 !saveAs-0 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -1781,8 +1781,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,ca-central-1.0 !saveAs-0 -
     'State': 'available'
     'RegionName': 'ca-central-1'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,ca-central-1.1 !saveAs-1 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ca-central-1.1 !saveAs-1 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -1930,8 +1930,8 @@ ap-southeast-1
   'Messages': [
     ]
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-southeast-1.0 !saveAs-0 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-southeast-1.0 !saveAs-0 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -2064,8 +2064,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-southeast-1.0 !saveAs-0
     'State': 'available'
     'RegionName': 'ap-southeast-1'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-southeast-1.1 !saveAs-1 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-southeast-1.1 !saveAs-1 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -2203,8 +2203,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-southeast-1.1 !saveAs-1
     'State': 'available'
     'RegionName': 'ap-southeast-1'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-southeast-1.2 !saveAs-2 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-southeast-1.2 !saveAs-2 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -2367,8 +2367,8 @@ ap-southeast-2
   'Messages': [
     ]
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-southeast-2.0 !saveAs-0 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-southeast-2.0 !saveAs-0 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -2516,8 +2516,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-southeast-2.0 !saveAs-0
     'State': 'available'
     'RegionName': 'ap-southeast-2'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-southeast-2.1 !saveAs-1 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-southeast-2.1 !saveAs-1 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -2670,8 +2670,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-southeast-2.1 !saveAs-1
     'State': 'available'
     'RegionName': 'ap-southeast-2'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,ap-southeast-2.2 !saveAs-2 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-southeast-2.2 !saveAs-2 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -2849,8 +2849,8 @@ eu-central-1
   'Messages': [
     ]
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-central-1.0 !saveAs-0 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-central-1.0 !saveAs-0 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -3013,8 +3013,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-central-1.0 !saveAs-0 -
     'State': 'available'
     'RegionName': 'eu-central-1'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-central-1.1 !saveAs-1 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-central-1.1 !saveAs-1 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -3182,8 +3182,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-central-1.1 !saveAs-1 -
     'State': 'available'
     'RegionName': 'eu-central-1'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,eu-central-1.2 !saveAs-2 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-central-1.2 !saveAs-2 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -3394,8 +3394,8 @@ us-east-1
   'Messages': [
     ]
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-east-1.0 !saveAs-0 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-east-1.0 !saveAs-0 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -3573,8 +3573,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-east-1.0 !saveAs-0 --de
     'State': 'available'
     'RegionName': 'us-east-1'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-east-1.1 !saveAs-1 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-east-1.1 !saveAs-1 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -3757,8 +3757,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-east-1.1 !saveAs-1 --de
     'State': 'available'
     'RegionName': 'us-east-1'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-east-1.2 !saveAs-2 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-east-1.2 !saveAs-2 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -3946,8 +3946,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-east-1.2 !saveAs-2 --de
     'State': 'available'
     'RegionName': 'us-east-1'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-east-1.3 !saveAs-3 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-east-1.3 !saveAs-3 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -4140,8 +4140,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-east-1.3 !saveAs-3 --de
     'State': 'available'
     'RegionName': 'us-east-1'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-east-1.4 !saveAs-4 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-east-1.4 !saveAs-4 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -4339,8 +4339,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-east-1.4 !saveAs-4 --de
     'State': 'available'
     'RegionName': 'us-east-1'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-east-1.5 !saveAs-5 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-east-1.5 !saveAs-5 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -4563,8 +4563,8 @@ us-east-2
   'Messages': [
     ]
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-east-2.0 !saveAs-0 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-east-2.0 !saveAs-0 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -4772,8 +4772,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-east-2.0 !saveAs-0 --de
     'State': 'available'
     'RegionName': 'us-east-2'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-east-2.1 !saveAs-1 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-east-2.1 !saveAs-1 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -4986,8 +4986,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-east-2.1 !saveAs-1 --de
     'State': 'available'
     'RegionName': 'us-east-2'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-east-2.2 !saveAs-2 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-east-2.2 !saveAs-2 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -5219,8 +5219,8 @@ us-west-1
   'Messages': [
     ]
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-west-1.0 !saveAs-0 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-west-1.0 !saveAs-0 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -5443,8 +5443,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-west-1.0 !saveAs-0 --de
     'State': 'available'
     'RegionName': 'us-west-1'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-west-1.1 !saveAs-1 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-west-1.1 !saveAs-1 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -5698,8 +5698,8 @@ us-west-2
   'Messages': [
     ]
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-west-2.0 !saveAs-0 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-west-2.0 !saveAs-0 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -5932,8 +5932,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-west-2.0 !saveAs-0 --de
     'State': 'available'
     'RegionName': 'us-west-2'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-west-2.1 !saveAs-1 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-west-2.1 !saveAs-1 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -6171,8 +6171,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-west-2.1 !saveAs-1 --de
     'State': 'available'
     'RegionName': 'us-west-2'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-west-2.2 !saveAs-2 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-west-2.2 !saveAs-2 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
@@ -6415,8 +6415,8 @@ Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-west-2.2 !saveAs-2 --de
     'State': 'available'
     'RegionName': 'us-west-2'
 
-Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
-Echo (Macro-substituted): yaml --insert MyRootELEMENT,us-west-2.3 !saveAs-3 --delimiter , --single-quote
+	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::REGION}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --single-quote
+	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-west-2.3 !saveAs-3 --delimiter , --single-quote
 'MyRootELEMENT':
   'eu-north-1.0':
     'ZoneName': 'eu-north-1a'
