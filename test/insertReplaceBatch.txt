@@ -1,22 +1,22 @@
-### This is the file 'mapsBatch1.txt'
+### This is the file 'insertReplaceBatch.txt'
 
 makeNewRoot MyRootELEMENT
 saveTo !YAMLROOT
 
-useAsInput @nano.yaml
-yaml --insert paths,/pet,put,consumes @simpleSequence.yaml --delimiter , --no-quote
+useAsInput @inputs/nano.yaml
+yaml --insert paths,/pet,put,consumes @inputs/simpleSequence.yaml --delimiter , --no-quote
 print -
 
-useAsInput @nano.yaml
-yaml --insert paths,/pet,put,consumes,0 @simpleSequence.yaml --delimiter , --no-quote
+useAsInput @inputs/nano.yaml
+yaml --insert paths,/pet,put,consumes,0 @inputs/simpleSequence.yaml --delimiter , --no-quote
 print -
 
-useAsInput @nano.yaml
-yaml --insert paths,/pet,put,consumes,1 @simpleSequence.yaml --delimiter , --no-quote
+useAsInput @inputs/nano.yaml
+yaml --insert paths,/pet,put,consumes,1 @inputs/simpleSequence.yaml --delimiter , --no-quote
 print -
 
-useAsInput @nano.yaml
-yaml --replace paths,/pet,put,consumes,0 @simpleSequence.yaml --delimiter , --no-quote
+useAsInput @inputs/nano.yaml
+yaml --replace paths,/pet,put,consumes,0 @inputs/simpleSequence.yaml --delimiter , --no-quote
 print -
 
 
@@ -45,13 +45,17 @@ saveTo !DUPLICATEROOT ### Do Not contaminate YAMLROOT with a new top-level-eleme
 echo yaml --insert /  !AdditionalRootElement --no-quote
 print -
 
-useAsInput @1kvpair.yaml
+useAsInput @inputs/1kvpair.yaml
 echo yaml --insert /  !AdditionalRootElement --double-quote
 print -
 
-useAsInput @simpleSequence.yaml
+useAsInput @inputs/simpleSequence.yaml
 echo yaml --insert /  !AdditionalRootElement --no-quote
 print -
+
+//--------------------------------------------------
+setProperty AWSCFN.HOME=/Users/Sarma/Documents/Development/src/org.ASUX/AWS/CFN
+echo yaml --insert Resources @${ASUX::AWSCFN.HOME}/AWSCFN.templates-pieces/PublicSubnet.yaml -i test/inputs/Snippet-Resources.yaml 
 
 //--------------------------------------------------
 aws.sdk --list-regions
@@ -59,7 +63,7 @@ aws.sdk --list-regions
 //--------------------------------------------------
 foreach
 	print ${ASUX::foreach.iteration.value}
-	aws.sdk   --describe-AZs      ${ASUX::foreach.iteration.value}
+	aws.sdk   --describe-AZs      ${ASUX::foreach.iteration.value} --no-quote
 	saveTo !AZDETAILS   ### Save the contents of ${ASUX::foreach.iteration.value} into AZDETAILS
 
 	#________ makeNewRoot MyCompositeELEMENT-${ASUX::foreach.index}
@@ -71,7 +75,6 @@ foreach
 	useAsInput !YAMLROOT
 	yaml --insert MyRootELEMENT,MyCompositeELEMENT-${ASUX::foreach.index} !AZDETAILS --delimiter ,   --no-quote
 	saveTo !YAMLROOT
-	#________ print !YAMLROOT 
 end
 print \n
 useAsInput !YAMLROOT 
