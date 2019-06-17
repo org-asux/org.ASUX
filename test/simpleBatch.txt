@@ -3,21 +3,28 @@
 #################### useYAMLLibrary com.esotericsoftware.yamlbeans
 # properties batchLookup=./props.txt
 
-useAsInput @./aws.AZs.json
+setProperty	AWSCFN.HOME=${ASUX::ORGASUXHOME}/AWS/CFN
+print ${ASUX::AWSCFN.HOME}
 
-#---------------------------
-## Outside of this batch-file run:-
-## aws.sdk ec2 describe-availability-zones --region us-east-2 --output json --profile XYZ
-## useAsInput @/tmp/aws.AZs.yaml
-## yaml --read         AvailabilityZones.*.ZoneId
+useAsInput @./inputs/AWS.AZdetails-us-east-1.json
 
-aws.sdk --list-regions
+//---------------------------
+### Outside of this batch-file run:-
+### aws.sdk ec2 describe-availability-zones --region us-east-2 --output json --profile XYZ
+### useAsInput @/tmp/aws.AZs.yaml
+### yaml --read         AvailabilityZones.*.ZoneId
+
+useAsInput @./inputs/aws.regions.yaml
+useAsInput @${ASUX::AWSCFN.HOME}/config/inputs/AWSRegions.yaml
+#______ aws.sdk --list-regions
 
 //--------------------------------------------------
 foreach
 	print ${ASUX::foreach.iteration.value} \n
-	aws.sdk --list-AZs      ${ASUX::foreach.iteration.value}
-	print -
+	setProperty AWSRegion=${ASUX::foreach.iteration.value}
+	#______ aws.sdk --list-AZs      ${ASUX::foreach.iteration.value}
+	useAsInput  @${ASUX::AWSCFN.HOME}/config/inputs/AWS.AZlist-${ASUX::AWSRegion}.yaml
+	#______ print -
 	foreach
 		print AZ no. ${ASUX::foreach.index} is: 
 		print ${ASUX::foreach.iteration.value}
