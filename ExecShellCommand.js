@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var fs = require("fs");  // https://nodejs.org/api/fs.html#fs_fs_accesssync_path_mode
-const { spawnSync } = require('child_process'); // https://nodejs.org/api/child_process.html#child_process_class_childprocess
+const CHILD_PROCESS = require('child_process'); // https://nodejs.org/api/child_process.html#child_process_class_childprocess
 
 // child_process exec() & execFile() - offer a callback, that is invoked when the child process terminates.
 // Spawn() typically is used to fire-n-forget processes.
@@ -20,14 +20,16 @@ const { spawnSync } = require('child_process'); // https://nodejs.org/api/child_
  */
 // This allows other modules to invoke the above function
 exports.executionPiped =
-function( _newWorkingDir, _command, _cmdArgs, _quietlyRunCmd, _bVerbose2, _bExitOnFail ) {
+function( _newWorkingDir, _command, _cmdArgs, _quietlyRunCmd, _bVerbose2, _bExitOnFail, env ) {
 
 	// console.log( `${__filename} : verbose = ${_bVerbose2}`);
 	if (_bVerbose2) { console.log( `${__filename} : about to run command.  "${_command}" with cmdline arguments: ` + _cmdArgs.join(' ') ); }
 
 	//----------------------
 	try { // synchornous version of Javascript's child_process.execFile(...)
-		const cpObj = spawnSync( _command, _cmdArgs, {'cwd': _newWorkingDir, 'timeout': 0, 'env': process.env } );
+		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Deep_Clone
+		var envClone = (env != null) ? env : JSON.parse( JSON.stringify( process.env ) );
+		const cpObj = CHILD_PROCESS.spawnSync( _command, _cmdArgs, {cwd: _newWorkingDir, timeout: 0, env: envClone } );
 						// Why am I explicitly passing process.env?  Because I enhance 'process.env' in org.ASUX/asux.js
 		if ( ! _quietlyRunCmd ) {
 			if (_bVerbose2) console.log( `${__filename} : about to dump output from command (code=${cpObj.status}))\n${cpObj.stdout}\n`+ cpObj.stderr +"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" );
@@ -64,14 +66,28 @@ function( _newWorkingDir, _command, _cmdArgs, _quietlyRunCmd, _bVerbose2, _bExit
  */
 // This allows other modules to invoke the above function
 exports.executeSharingSTDOUT =
-function( _newWorkingDir, _command, _cmdArgs, _quietlyRunCmd, _bVerbose2, _bExitOnFail ) {
+function( _newWorkingDir, _command, _cmdArgs, _quietlyRunCmd, _bVerbose2, _bExitOnFail, env ) {
 
 	if (_bVerbose2) { console.log( `${__filename} : about to run command.  "${_command}" with cmdline arguments: ` + _cmdArgs.join(' ') ); }
 
 	//----------------------
 	try { // synchornous version of Javascript's child_process.execFile(...)
-		const cpObj = spawnSync( _command, _cmdArgs, {'cwd': _newWorkingDir, stdio: 'inherit', 'timeout': 0, 'env': process.env} );
+		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Deep_Clone
+		var envClone = (env != null) ? env : JSON.parse( JSON.stringify( process.env ) );
+		const cpObj = CHILD_PROCESS.spawnSync( _command, _cmdArgs, { cwd: _newWorkingDir, stdio: 'inherit', timeout: 0, env: envClone } );
+		var retCode;
+		if ( cpObj.status == null ) {
+			if ( cpObj.error != null ) {
+				console.log( "!! ERROR in "+ __filename +"\nFailed to run the command '"+ _command +"' from within the folder '"+ _newWorkingDir +"'\n\nSpawnSync()'s return ERROR-Object's DETAILS =\n"+ JSON.stringify(cpObj.error) +"\n" );
+				cpObj.status = 1;
+			} else {
+				console.log( "!! ERROR in "+ __filename +"\n__UNKNOWN__ SERIOUS INTERNAL FAILURE running command '"+ _command +"' from within the folder '"+ _newWorkingDir +"'\nBoth status and error of cpObj are NULL!\n"+ JSON.stringify(cpObj) );
+				cpObj.status = 1;
+			}
+		}
+		if (_bVerbose2) console.log( "!! ERROR in "+ __filename +"\nRunning '"+ _command +"' gave cpObj.status=" + cpObj.status +" .... and cpObj="+ JSON.stringify(cpObj) +" .... and ERROR-ATTR="+ JSON.stringify(cpObj.error) );
 						// Why am I explicitly passing process.env?  Because I enhance 'process.env' in org.ASUX/asux.js
+
 		if ( ! _quietlyRunCmd ) {
 			if (_bVerbose2) console.log( `${__filename} : about to dump output from command (code=${cpObj.status}))` +"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
 			if ( cpObj.stdout ) console.log(cpObj.stdout);
@@ -79,7 +95,7 @@ function( _newWorkingDir, _command, _cmdArgs, _quietlyRunCmd, _bVerbose2, _bExit
 		};
 		return(cpObj.status);
 	} catch (errObj5) {
-		console.error("Error running command ["+ _command + "].  Exit code = "+ errObj5.code +"\n" + errObj5.toString());
+		console.error( "!! ERROR in "+ __filename +"\nException-thrown/Error running command ["+ _command + "].  Exit code = "+ errObj5.code +"\n" + errObj5.toString());
 		if ( _bExitOnFail ) process.exit( errObj5.code );
 		else return(errObj5.code);
 	}
@@ -200,7 +216,7 @@ function wait( _semaphoreMap, _semaphoreKey, _seconds) {
 exports.showFileAttributes =
 function showFileAttributes( _file ) {
 	// ls -la "${_file}"
-	// EXECUTESHELLCMD.executeSharingSTDOUT ( "/tmp", 'ls', [_file], false, process.env.VERBOSE, false, null );
+	// EXECUTE SHELL CMD.execute Sharing STDOUT ( "/tmp", 'ls', [_file], false, process.env.VERBOSE, false, null );
 	const fstats = fs.statSync(_file);
 	var mtime = new Date(fstats.mtime);
 	var unixFilePermissions = '0' + (fstats.mode & parseInt('777', 8)).toString(8);
@@ -220,7 +236,7 @@ function myChdir(_newWorkingDir, originalCWD, _bVerbose2) {
 			bChangedWorkingDir = true;
 		} catch (errObj2) {
 			console.error(`process.chdir: ${errObj2}`);
-			process.exit(99); // too fatal an error.  So, ignoring the value of _bExitOnFail
+			process.exit(99); // too fatal an error.
 		}
 	}
 	;
