@@ -64,12 +64,12 @@ CmdLine
 // Custom HELP output .. must be before .parse() since node's emit() is immediate
 
 CmdLine.on('--help', function(){
-  console.log('')
-  console.log('Examples:');
-  console.log('  $ %s --help', __filename);
-  console.log('  $ %s --version', __filename);
-  console.log('  $ %s --verbose yaml .. ..', __filename);
-  console.log('  $ %s --no-verbose aws cfn .. ..', __filename);
+	console.log('')
+	console.log('Examples:');
+	console.log('  $ %s --help', __filename);
+	console.log('  $ %s --version', __filename);
+	console.log('  $ %s --verbose yaml .. ..', __filename);
+	console.log('  $ %s --no-verbose aws cfn .. ..', __filename);
 });
 
 //==========================
@@ -78,7 +78,7 @@ CmdLine.on('--help', function(){
 
 CmdLine.on('option:verbose', function () {
 	console.log("Yeah.  Going verbose " + this.verbose);
-  process.env.VERBOSE = this.verbose;
+	process.env.VERBOSE = this.verbose;
 });
 
 CmdLine.on('option:properties', function () {
@@ -179,8 +179,8 @@ function runGitPull( _PROJNAME, _DIR_orgASUXSubProject ) {
 		// git pull  >/dev/null 2>&1
 		if (process.env.VERBOSE) console.log( ` OLD Working Directory was: ${process.cwd()}` );
 		if ( bLastRunLongAgo ) {
-				EXECUTESHELLCMD.executionPiped ( __dirname, 'git', ['pull', '--quiet'], true, process.env.VERBOSE, true, null);
-				EXECUTESHELLCMD.executeSharingSTDOUT(  _DIR_orgASUXSubProject, 'git', ['pull', '--quiet'], true, process.env.VERBOSE, true, null );
+				EXECUTESHELLCMD.executionPiped ( __dirname, 'git', ['pull', '--quiet'], true, process.env.VERBOSE, true, process.env);
+				EXECUTESHELLCMD.executeSharingSTDOUT(  _DIR_orgASUXSubProject, 'git', ['pull', '--quiet'], true, process.env.VERBOSE, true, process.env );
 				try {
 					fs.writeFileSync( LASTRUNTIMESTAMP_FILEPATH, currTimeStamp, { mode: 0o755 });
 				} catch (err33) { // a.k.a. if fs.writeFileSync throws err13.code === 'ENOENT' || 'EISDIR')
@@ -248,7 +248,7 @@ function checkIfSubProjectExists( _PROJNAME, _DIR_orgASUXSubProject, _DIR_orgASU
 			console.log( 'git '+ gitpullcmdArgs.join(' ') );
 
 			// use git to get the code for the ./cmdline sub-folder/sub-project
-			const retCode = EXECUTESHELLCMD.executeSharingSTDOUT ( __dirname, 'git', gitpullcmdArgs, false, process.env.VERBOSE, true, null );
+			const retCode = EXECUTESHELLCMD.executeSharingSTDOUT ( __dirname, 'git', gitpullcmdArgs, false, process.env.VERBOSE, true, process.env );
 			if(retCode != 0){
 				// git pull FAILED. Now try to write to an ERROR file, so user can use it to report an issue/bug
 				console.error( __filename +": Internal error: Please contact the project owner, with the above lines\n\n");
@@ -299,7 +299,7 @@ function sendArgs2SubModule( _DIR_orgASUXSubProject ) {
 	// For starters, Get rid of 'node' and 'asux.js' via slice(2)
 	var prms = [];
 	for (var ix in process.argv) {
-    if ( process.argv[ix].match('.*node(.exe)?$') ) continue; // get rid of node.js  or  node.exe (on windows)
+    	if ( process.argv[ix].match('.*node(.exe)?$') ) continue; // get rid of node.js  or  node.exe (on windows)
 		if ( ix < 2 ) continue; // For starters, Get rid of 'node' and 'asux.js'
 		if ( process.argv[ix] == COMMAND ) continue; // Skip 'yaml' or 'aws' or .. ..
 		prms.push( process.argv[ix]);
@@ -310,7 +310,7 @@ function sendArgs2SubModule( _DIR_orgASUXSubProject ) {
 
 	process.env.ORGASUXHOME=__dirname; // for use by cmdline/asux.js .. so it know where this asux.js is.
 
-	process.exitCode = EXECUTESHELLCMD.executeSubModule(  INITIAL_CWD, 'node', prms, false, process.env.VERBOSE, false, null );
+	process.exitCode = EXECUTESHELLCMD.executeSubModule(  INITIAL_CWD, 'node', prms, false, process.env.VERBOSE, false, process.env );
 
 			// Keeping code around .. .. In case I wanted to run the submodule via .. JS require()
 			// var runOrgASUXCmdLine = require( __dirname +"/"+ subdir + "/asux.js");
