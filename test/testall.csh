@@ -222,7 +222,7 @@ diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
 asux.js yaml batch  'aws.sdk --list-regions --double-quote; print -; aws.sdk --list-AZs us-east-1 --single-quote' -i /dev/null    \
-        -o ${OUTPFILE}
+        -o ${OUTPFILE} >! ${OUTPFILE}.stdout
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 

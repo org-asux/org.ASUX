@@ -1,14 +1,24 @@
 ### This is the file 'mapsBatch1.txt'
 
-makeNewRoot MyRootELEMENT
-saveTo !YAMLROOT
+setProperty	AWSCFN.HOME=${ASUX::ORGASUXHOME}/AWS/CFN
+#_____ print ${ASUX::AWSCFN.HOME}
 
-aws.sdk --list-regions
+//--------------------------------------------------
+useAsInput @${ASUX::AWSCFN.HOME}/config/inputs/AWSRegions.yaml
+#_____ aws.sdk --list-regions
+
+makeNewRoot MyRootELEMENT
+saveTo !saveAs-ROOT
+
 
 //--------------------------------------------------
 foreach
 	print ${ASUX::foreach.iteration.value}
-	aws.sdk   --describe-AZs      ${ASUX::foreach.iteration.value}
+	setProperty AWSRegion=${ASUX::foreach.iteration.value}
+
+	#______ aws.sdk --describe-AZs      ${ASUX::foreach.iteration.value} --no-quote
+	useAsInput  @${ASUX::AWSCFN.HOME}/config/inputs/AWS.AZdetails-${ASUX::AWSRegion}.yaml
+
 	saveTo !AZDETAILS   ### Save the contents of ${ASUX::foreach.iteration.value} into AZDETAILS
 
 	makeNewRoot AdditionalRootElement-${ASUX::foreach.index}

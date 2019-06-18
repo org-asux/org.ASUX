@@ -1,473 +1,473 @@
 eu-north-1 
 AZ no. 0 is: 
-'ZoneName': 'eu-north-1a'
-'ZoneId': 'eun1-az1'
-'State': 'available'
-'RegionName': 'eu-north-1'
-'Messages': [
+ZoneName: eu-north-1a
+ZoneId: eun1-az1
+State: available
+RegionName: eu-north-1
+Messages: [
   ]
-ZoneName = 'eu-north-1a' ZoneId = 'eun1-az1' State = 'available' RegionName = 'eu-north-1' 
+ZoneName = eu-north-1a ZoneId = eun1-az1 State = available RegionName = eu-north-1 
 
 AZ no. 1 is: 
-'ZoneName': 'eu-north-1b'
-'ZoneId': 'eun1-az2'
-'State': 'available'
-'RegionName': 'eu-north-1'
-'Messages': [
+ZoneName: eu-north-1b
+ZoneId: eun1-az2
+State: available
+RegionName: eu-north-1
+Messages: [
   ]
-ZoneName = 'eu-north-1b' ZoneId = 'eun1-az2' State = 'available' RegionName = 'eu-north-1' 
+ZoneName = eu-north-1b ZoneId = eun1-az2 State = available RegionName = eu-north-1 
 
 AZ no. 2 is: 
-'ZoneName': 'eu-north-1c'
-'ZoneId': 'eun1-az3'
-'State': 'available'
-'RegionName': 'eu-north-1'
-'Messages': [
+ZoneName: eu-north-1c
+ZoneId: eun1-az3
+State: available
+RegionName: eu-north-1
+Messages: [
   ]
-ZoneName = 'eu-north-1c' ZoneId = 'eun1-az3' State = 'available' RegionName = 'eu-north-1' 
+ZoneName = eu-north-1c ZoneId = eun1-az3 State = available RegionName = eu-north-1 
 
 
 ap-south-1 
 AZ no. 0 is: 
-'ZoneName': 'ap-south-1a'
-'ZoneId': 'aps1-az1'
-'State': 'available'
-'RegionName': 'ap-south-1'
-'Messages': [
+ZoneName: ap-south-1a
+ZoneId: aps1-az1
+State: available
+RegionName: ap-south-1
+Messages: [
   ]
-ZoneName = 'ap-south-1a' ZoneId = 'aps1-az1' State = 'available' RegionName = 'ap-south-1' 
+ZoneName = ap-south-1a ZoneId = aps1-az1 State = available RegionName = ap-south-1 
 
 AZ no. 1 is: 
-'ZoneName': 'ap-south-1b'
-'ZoneId': 'aps1-az3'
-'State': 'available'
-'RegionName': 'ap-south-1'
-'Messages': [
+ZoneName: ap-south-1b
+ZoneId: aps1-az3
+State: available
+RegionName: ap-south-1
+Messages: [
   ]
-ZoneName = 'ap-south-1b' ZoneId = 'aps1-az3' State = 'available' RegionName = 'ap-south-1' 
+ZoneName = ap-south-1b ZoneId = aps1-az3 State = available RegionName = ap-south-1 
 
 AZ no. 2 is: 
-'ZoneName': 'ap-south-1c'
-'ZoneId': 'aps1-az2'
-'State': 'available'
-'RegionName': 'ap-south-1'
-'Messages': [
+ZoneName: ap-south-1c
+ZoneId: aps1-az2
+State: available
+RegionName: ap-south-1
+Messages: [
   ]
-ZoneName = 'ap-south-1c' ZoneId = 'aps1-az2' State = 'available' RegionName = 'ap-south-1' 
+ZoneName = ap-south-1c ZoneId = aps1-az2 State = available RegionName = ap-south-1 
 
 
 eu-west-3 
 AZ no. 0 is: 
-'ZoneName': 'eu-west-3a'
-'ZoneId': 'euw3-az1'
-'State': 'available'
-'RegionName': 'eu-west-3'
-'Messages': [
+ZoneName: eu-west-3a
+ZoneId: euw3-az1
+State: available
+RegionName: eu-west-3
+Messages: [
   ]
-ZoneName = 'eu-west-3a' ZoneId = 'euw3-az1' State = 'available' RegionName = 'eu-west-3' 
+ZoneName = eu-west-3a ZoneId = euw3-az1 State = available RegionName = eu-west-3 
 
 AZ no. 1 is: 
-'ZoneName': 'eu-west-3b'
-'ZoneId': 'euw3-az2'
-'State': 'available'
-'RegionName': 'eu-west-3'
-'Messages': [
+ZoneName: eu-west-3b
+ZoneId: euw3-az2
+State: available
+RegionName: eu-west-3
+Messages: [
   ]
-ZoneName = 'eu-west-3b' ZoneId = 'euw3-az2' State = 'available' RegionName = 'eu-west-3' 
+ZoneName = eu-west-3b ZoneId = euw3-az2 State = available RegionName = eu-west-3 
 
 AZ no. 2 is: 
-'ZoneName': 'eu-west-3c'
-'ZoneId': 'euw3-az3'
-'State': 'available'
-'RegionName': 'eu-west-3'
-'Messages': [
+ZoneName: eu-west-3c
+ZoneId: euw3-az3
+State: available
+RegionName: eu-west-3
+Messages: [
   ]
-ZoneName = 'eu-west-3c' ZoneId = 'euw3-az3' State = 'available' RegionName = 'eu-west-3' 
+ZoneName = eu-west-3c ZoneId = euw3-az3 State = available RegionName = eu-west-3 
 
 
 eu-west-2 
 AZ no. 0 is: 
-'ZoneName': 'eu-west-2a'
-'ZoneId': 'euw2-az2'
-'State': 'available'
-'RegionName': 'eu-west-2'
-'Messages': [
+ZoneName: eu-west-2a
+ZoneId: euw2-az2
+State: available
+RegionName: eu-west-2
+Messages: [
   ]
-ZoneName = 'eu-west-2a' ZoneId = 'euw2-az2' State = 'available' RegionName = 'eu-west-2' 
+ZoneName = eu-west-2a ZoneId = euw2-az2 State = available RegionName = eu-west-2 
 
 AZ no. 1 is: 
-'ZoneName': 'eu-west-2b'
-'ZoneId': 'euw2-az3'
-'State': 'available'
-'RegionName': 'eu-west-2'
-'Messages': [
+ZoneName: eu-west-2b
+ZoneId: euw2-az3
+State: available
+RegionName: eu-west-2
+Messages: [
   ]
-ZoneName = 'eu-west-2b' ZoneId = 'euw2-az3' State = 'available' RegionName = 'eu-west-2' 
+ZoneName = eu-west-2b ZoneId = euw2-az3 State = available RegionName = eu-west-2 
 
 AZ no. 2 is: 
-'ZoneName': 'eu-west-2c'
-'ZoneId': 'euw2-az1'
-'State': 'available'
-'RegionName': 'eu-west-2'
-'Messages': [
+ZoneName: eu-west-2c
+ZoneId: euw2-az1
+State: available
+RegionName: eu-west-2
+Messages: [
   ]
-ZoneName = 'eu-west-2c' ZoneId = 'euw2-az1' State = 'available' RegionName = 'eu-west-2' 
+ZoneName = eu-west-2c ZoneId = euw2-az1 State = available RegionName = eu-west-2 
 
 
 eu-west-1 
 AZ no. 0 is: 
-'ZoneName': 'eu-west-1a'
-'ZoneId': 'euw1-az3'
-'State': 'available'
-'RegionName': 'eu-west-1'
-'Messages': [
+ZoneName: eu-west-1a
+ZoneId: euw1-az3
+State: available
+RegionName: eu-west-1
+Messages: [
   ]
-ZoneName = 'eu-west-1a' ZoneId = 'euw1-az3' State = 'available' RegionName = 'eu-west-1' 
+ZoneName = eu-west-1a ZoneId = euw1-az3 State = available RegionName = eu-west-1 
 
 AZ no. 1 is: 
-'ZoneName': 'eu-west-1b'
-'ZoneId': 'euw1-az1'
-'State': 'available'
-'RegionName': 'eu-west-1'
-'Messages': [
+ZoneName: eu-west-1b
+ZoneId: euw1-az1
+State: available
+RegionName: eu-west-1
+Messages: [
   ]
-ZoneName = 'eu-west-1b' ZoneId = 'euw1-az1' State = 'available' RegionName = 'eu-west-1' 
+ZoneName = eu-west-1b ZoneId = euw1-az1 State = available RegionName = eu-west-1 
 
 AZ no. 2 is: 
-'ZoneName': 'eu-west-1c'
-'ZoneId': 'euw1-az2'
-'State': 'available'
-'RegionName': 'eu-west-1'
-'Messages': [
+ZoneName: eu-west-1c
+ZoneId: euw1-az2
+State: available
+RegionName: eu-west-1
+Messages: [
   ]
-ZoneName = 'eu-west-1c' ZoneId = 'euw1-az2' State = 'available' RegionName = 'eu-west-1' 
+ZoneName = eu-west-1c ZoneId = euw1-az2 State = available RegionName = eu-west-1 
 
 
 ap-northeast-2 
 AZ no. 0 is: 
-'ZoneName': 'ap-northeast-2a'
-'ZoneId': 'apne2-az1'
-'State': 'available'
-'RegionName': 'ap-northeast-2'
-'Messages': [
+ZoneName: ap-northeast-2a
+ZoneId: apne2-az1
+State: available
+RegionName: ap-northeast-2
+Messages: [
   ]
-ZoneName = 'ap-northeast-2a' ZoneId = 'apne2-az1' State = 'available' RegionName = 'ap-northeast-2' 
+ZoneName = ap-northeast-2a ZoneId = apne2-az1 State = available RegionName = ap-northeast-2 
 
 AZ no. 1 is: 
-'ZoneName': 'ap-northeast-2b'
-'ZoneId': 'apne2-az2'
-'State': 'available'
-'RegionName': 'ap-northeast-2'
-'Messages': [
+ZoneName: ap-northeast-2b
+ZoneId: apne2-az2
+State: available
+RegionName: ap-northeast-2
+Messages: [
   ]
-ZoneName = 'ap-northeast-2b' ZoneId = 'apne2-az2' State = 'available' RegionName = 'ap-northeast-2' 
+ZoneName = ap-northeast-2b ZoneId = apne2-az2 State = available RegionName = ap-northeast-2 
 
 AZ no. 2 is: 
-'ZoneName': 'ap-northeast-2c'
-'ZoneId': 'apne2-az3'
-'State': 'available'
-'RegionName': 'ap-northeast-2'
-'Messages': [
+ZoneName: ap-northeast-2c
+ZoneId: apne2-az3
+State: available
+RegionName: ap-northeast-2
+Messages: [
   ]
-ZoneName = 'ap-northeast-2c' ZoneId = 'apne2-az3' State = 'available' RegionName = 'ap-northeast-2' 
+ZoneName = ap-northeast-2c ZoneId = apne2-az3 State = available RegionName = ap-northeast-2 
 
 
 ap-northeast-1 
 AZ no. 0 is: 
-'ZoneName': 'ap-northeast-1a'
-'ZoneId': 'apne1-az4'
-'State': 'available'
-'RegionName': 'ap-northeast-1'
-'Messages': [
+ZoneName: ap-northeast-1a
+ZoneId: apne1-az4
+State: available
+RegionName: ap-northeast-1
+Messages: [
   ]
-ZoneName = 'ap-northeast-1a' ZoneId = 'apne1-az4' State = 'available' RegionName = 'ap-northeast-1' 
+ZoneName = ap-northeast-1a ZoneId = apne1-az4 State = available RegionName = ap-northeast-1 
 
 AZ no. 1 is: 
-'ZoneName': 'ap-northeast-1c'
-'ZoneId': 'apne1-az1'
-'State': 'available'
-'RegionName': 'ap-northeast-1'
-'Messages': [
+ZoneName: ap-northeast-1c
+ZoneId: apne1-az1
+State: available
+RegionName: ap-northeast-1
+Messages: [
   ]
-ZoneName = 'ap-northeast-1c' ZoneId = 'apne1-az1' State = 'available' RegionName = 'ap-northeast-1' 
+ZoneName = ap-northeast-1c ZoneId = apne1-az1 State = available RegionName = ap-northeast-1 
 
 AZ no. 2 is: 
-'ZoneName': 'ap-northeast-1d'
-'ZoneId': 'apne1-az2'
-'State': 'available'
-'RegionName': 'ap-northeast-1'
-'Messages': [
+ZoneName: ap-northeast-1d
+ZoneId: apne1-az2
+State: available
+RegionName: ap-northeast-1
+Messages: [
   ]
-ZoneName = 'ap-northeast-1d' ZoneId = 'apne1-az2' State = 'available' RegionName = 'ap-northeast-1' 
+ZoneName = ap-northeast-1d ZoneId = apne1-az2 State = available RegionName = ap-northeast-1 
 
 
 sa-east-1 
 AZ no. 0 is: 
-'ZoneName': 'sa-east-1a'
-'ZoneId': 'sae1-az1'
-'State': 'available'
-'RegionName': 'sa-east-1'
-'Messages': [
+ZoneName: sa-east-1a
+ZoneId: sae1-az1
+State: available
+RegionName: sa-east-1
+Messages: [
   ]
-ZoneName = 'sa-east-1a' ZoneId = 'sae1-az1' State = 'available' RegionName = 'sa-east-1' 
+ZoneName = sa-east-1a ZoneId = sae1-az1 State = available RegionName = sa-east-1 
 
 AZ no. 1 is: 
-'ZoneName': 'sa-east-1c'
-'ZoneId': 'sae1-az3'
-'State': 'available'
-'RegionName': 'sa-east-1'
-'Messages': [
+ZoneName: sa-east-1c
+ZoneId: sae1-az3
+State: available
+RegionName: sa-east-1
+Messages: [
   ]
-ZoneName = 'sa-east-1c' ZoneId = 'sae1-az3' State = 'available' RegionName = 'sa-east-1' 
+ZoneName = sa-east-1c ZoneId = sae1-az3 State = available RegionName = sa-east-1 
 
 
 ca-central-1 
 AZ no. 0 is: 
-'ZoneName': 'ca-central-1a'
-'ZoneId': 'cac1-az1'
-'State': 'available'
-'RegionName': 'ca-central-1'
-'Messages': [
+ZoneName: ca-central-1a
+ZoneId: cac1-az1
+State: available
+RegionName: ca-central-1
+Messages: [
   ]
-ZoneName = 'ca-central-1a' ZoneId = 'cac1-az1' State = 'available' RegionName = 'ca-central-1' 
+ZoneName = ca-central-1a ZoneId = cac1-az1 State = available RegionName = ca-central-1 
 
 AZ no. 1 is: 
-'ZoneName': 'ca-central-1b'
-'ZoneId': 'cac1-az2'
-'State': 'available'
-'RegionName': 'ca-central-1'
-'Messages': [
+ZoneName: ca-central-1b
+ZoneId: cac1-az2
+State: available
+RegionName: ca-central-1
+Messages: [
   ]
-ZoneName = 'ca-central-1b' ZoneId = 'cac1-az2' State = 'available' RegionName = 'ca-central-1' 
+ZoneName = ca-central-1b ZoneId = cac1-az2 State = available RegionName = ca-central-1 
 
 
 ap-southeast-1 
 AZ no. 0 is: 
-'ZoneName': 'ap-southeast-1a'
-'ZoneId': 'apse1-az1'
-'State': 'available'
-'RegionName': 'ap-southeast-1'
-'Messages': [
+ZoneName: ap-southeast-1a
+ZoneId: apse1-az1
+State: available
+RegionName: ap-southeast-1
+Messages: [
   ]
-ZoneName = 'ap-southeast-1a' ZoneId = 'apse1-az1' State = 'available' RegionName = 'ap-southeast-1' 
+ZoneName = ap-southeast-1a ZoneId = apse1-az1 State = available RegionName = ap-southeast-1 
 
 AZ no. 1 is: 
-'ZoneName': 'ap-southeast-1b'
-'ZoneId': 'apse1-az2'
-'State': 'available'
-'RegionName': 'ap-southeast-1'
-'Messages': [
+ZoneName: ap-southeast-1b
+ZoneId: apse1-az2
+State: available
+RegionName: ap-southeast-1
+Messages: [
   ]
-ZoneName = 'ap-southeast-1b' ZoneId = 'apse1-az2' State = 'available' RegionName = 'ap-southeast-1' 
+ZoneName = ap-southeast-1b ZoneId = apse1-az2 State = available RegionName = ap-southeast-1 
 
 AZ no. 2 is: 
-'ZoneName': 'ap-southeast-1c'
-'ZoneId': 'apse1-az3'
-'State': 'available'
-'RegionName': 'ap-southeast-1'
-'Messages': [
+ZoneName: ap-southeast-1c
+ZoneId: apse1-az3
+State: available
+RegionName: ap-southeast-1
+Messages: [
   ]
-ZoneName = 'ap-southeast-1c' ZoneId = 'apse1-az3' State = 'available' RegionName = 'ap-southeast-1' 
+ZoneName = ap-southeast-1c ZoneId = apse1-az3 State = available RegionName = ap-southeast-1 
 
 
 ap-southeast-2 
 AZ no. 0 is: 
-'ZoneName': 'ap-southeast-2a'
-'ZoneId': 'apse2-az1'
-'State': 'available'
-'RegionName': 'ap-southeast-2'
-'Messages': [
+ZoneName: ap-southeast-2a
+ZoneId: apse2-az1
+State: available
+RegionName: ap-southeast-2
+Messages: [
   ]
-ZoneName = 'ap-southeast-2a' ZoneId = 'apse2-az1' State = 'available' RegionName = 'ap-southeast-2' 
+ZoneName = ap-southeast-2a ZoneId = apse2-az1 State = available RegionName = ap-southeast-2 
 
 AZ no. 1 is: 
-'ZoneName': 'ap-southeast-2b'
-'ZoneId': 'apse2-az3'
-'State': 'available'
-'RegionName': 'ap-southeast-2'
-'Messages': [
+ZoneName: ap-southeast-2b
+ZoneId: apse2-az3
+State: available
+RegionName: ap-southeast-2
+Messages: [
   ]
-ZoneName = 'ap-southeast-2b' ZoneId = 'apse2-az3' State = 'available' RegionName = 'ap-southeast-2' 
+ZoneName = ap-southeast-2b ZoneId = apse2-az3 State = available RegionName = ap-southeast-2 
 
 AZ no. 2 is: 
-'ZoneName': 'ap-southeast-2c'
-'ZoneId': 'apse2-az2'
-'State': 'available'
-'RegionName': 'ap-southeast-2'
-'Messages': [
+ZoneName: ap-southeast-2c
+ZoneId: apse2-az2
+State: available
+RegionName: ap-southeast-2
+Messages: [
   ]
-ZoneName = 'ap-southeast-2c' ZoneId = 'apse2-az2' State = 'available' RegionName = 'ap-southeast-2' 
+ZoneName = ap-southeast-2c ZoneId = apse2-az2 State = available RegionName = ap-southeast-2 
 
 
 eu-central-1 
 AZ no. 0 is: 
-'ZoneName': 'eu-central-1a'
-'ZoneId': 'euc1-az2'
-'State': 'available'
-'RegionName': 'eu-central-1'
-'Messages': [
+ZoneName: eu-central-1a
+ZoneId: euc1-az2
+State: available
+RegionName: eu-central-1
+Messages: [
   ]
-ZoneName = 'eu-central-1a' ZoneId = 'euc1-az2' State = 'available' RegionName = 'eu-central-1' 
+ZoneName = eu-central-1a ZoneId = euc1-az2 State = available RegionName = eu-central-1 
 
 AZ no. 1 is: 
-'ZoneName': 'eu-central-1b'
-'ZoneId': 'euc1-az3'
-'State': 'available'
-'RegionName': 'eu-central-1'
-'Messages': [
+ZoneName: eu-central-1b
+ZoneId: euc1-az3
+State: available
+RegionName: eu-central-1
+Messages: [
   ]
-ZoneName = 'eu-central-1b' ZoneId = 'euc1-az3' State = 'available' RegionName = 'eu-central-1' 
+ZoneName = eu-central-1b ZoneId = euc1-az3 State = available RegionName = eu-central-1 
 
 AZ no. 2 is: 
-'ZoneName': 'eu-central-1c'
-'ZoneId': 'euc1-az1'
-'State': 'available'
-'RegionName': 'eu-central-1'
-'Messages': [
+ZoneName: eu-central-1c
+ZoneId: euc1-az1
+State: available
+RegionName: eu-central-1
+Messages: [
   ]
-ZoneName = 'eu-central-1c' ZoneId = 'euc1-az1' State = 'available' RegionName = 'eu-central-1' 
+ZoneName = eu-central-1c ZoneId = euc1-az1 State = available RegionName = eu-central-1 
 
 
 us-east-1 
 AZ no. 0 is: 
-'ZoneName': 'us-east-1a'
-'ZoneId': 'use1-az6'
-'State': 'available'
-'RegionName': 'us-east-1'
-'Messages': [
+ZoneName: us-east-1a
+ZoneId: use1-az6
+State: available
+RegionName: us-east-1
+Messages: [
   ]
-ZoneName = 'us-east-1a' ZoneId = 'use1-az6' State = 'available' RegionName = 'us-east-1' 
+ZoneName = us-east-1a ZoneId = use1-az6 State = available RegionName = us-east-1 
 
 AZ no. 1 is: 
-'ZoneName': 'us-east-1b'
-'ZoneId': 'use1-az1'
-'State': 'available'
-'RegionName': 'us-east-1'
-'Messages': [
+ZoneName: us-east-1b
+ZoneId: use1-az1
+State: available
+RegionName: us-east-1
+Messages: [
   ]
-ZoneName = 'us-east-1b' ZoneId = 'use1-az1' State = 'available' RegionName = 'us-east-1' 
+ZoneName = us-east-1b ZoneId = use1-az1 State = available RegionName = us-east-1 
 
 AZ no. 2 is: 
-'ZoneName': 'us-east-1c'
-'ZoneId': 'use1-az2'
-'State': 'available'
-'RegionName': 'us-east-1'
-'Messages': [
+ZoneName: us-east-1c
+ZoneId: use1-az2
+State: available
+RegionName: us-east-1
+Messages: [
   ]
-ZoneName = 'us-east-1c' ZoneId = 'use1-az2' State = 'available' RegionName = 'us-east-1' 
+ZoneName = us-east-1c ZoneId = use1-az2 State = available RegionName = us-east-1 
 
 AZ no. 3 is: 
-'ZoneName': 'us-east-1d'
-'ZoneId': 'use1-az4'
-'State': 'available'
-'RegionName': 'us-east-1'
-'Messages': [
+ZoneName: us-east-1d
+ZoneId: use1-az4
+State: available
+RegionName: us-east-1
+Messages: [
   ]
-ZoneName = 'us-east-1d' ZoneId = 'use1-az4' State = 'available' RegionName = 'us-east-1' 
+ZoneName = us-east-1d ZoneId = use1-az4 State = available RegionName = us-east-1 
 
 AZ no. 4 is: 
-'ZoneName': 'us-east-1e'
-'ZoneId': 'use1-az3'
-'State': 'available'
-'RegionName': 'us-east-1'
-'Messages': [
+ZoneName: us-east-1e
+ZoneId: use1-az3
+State: available
+RegionName: us-east-1
+Messages: [
   ]
-ZoneName = 'us-east-1e' ZoneId = 'use1-az3' State = 'available' RegionName = 'us-east-1' 
+ZoneName = us-east-1e ZoneId = use1-az3 State = available RegionName = us-east-1 
 
 AZ no. 5 is: 
-'ZoneName': 'us-east-1f'
-'ZoneId': 'use1-az5'
-'State': 'available'
-'RegionName': 'us-east-1'
-'Messages': [
+ZoneName: us-east-1f
+ZoneId: use1-az5
+State: available
+RegionName: us-east-1
+Messages: [
   ]
-ZoneName = 'us-east-1f' ZoneId = 'use1-az5' State = 'available' RegionName = 'us-east-1' 
+ZoneName = us-east-1f ZoneId = use1-az5 State = available RegionName = us-east-1 
 
 
 us-east-2 
 AZ no. 0 is: 
-'ZoneName': 'us-east-2a'
-'ZoneId': 'use2-az1'
-'State': 'available'
-'RegionName': 'us-east-2'
-'Messages': [
+ZoneName: us-east-2a
+ZoneId: use2-az1
+State: available
+RegionName: us-east-2
+Messages: [
   ]
-ZoneName = 'us-east-2a' ZoneId = 'use2-az1' State = 'available' RegionName = 'us-east-2' 
+ZoneName = us-east-2a ZoneId = use2-az1 State = available RegionName = us-east-2 
 
 AZ no. 1 is: 
-'ZoneName': 'us-east-2b'
-'ZoneId': 'use2-az2'
-'State': 'available'
-'RegionName': 'us-east-2'
-'Messages': [
+ZoneName: us-east-2b
+ZoneId: use2-az2
+State: available
+RegionName: us-east-2
+Messages: [
   ]
-ZoneName = 'us-east-2b' ZoneId = 'use2-az2' State = 'available' RegionName = 'us-east-2' 
+ZoneName = us-east-2b ZoneId = use2-az2 State = available RegionName = us-east-2 
 
 AZ no. 2 is: 
-'ZoneName': 'us-east-2c'
-'ZoneId': 'use2-az3'
-'State': 'available'
-'RegionName': 'us-east-2'
-'Messages': [
+ZoneName: us-east-2c
+ZoneId: use2-az3
+State: available
+RegionName: us-east-2
+Messages: [
   ]
-ZoneName = 'us-east-2c' ZoneId = 'use2-az3' State = 'available' RegionName = 'us-east-2' 
+ZoneName = us-east-2c ZoneId = use2-az3 State = available RegionName = us-east-2 
 
 
 us-west-1 
 AZ no. 0 is: 
-'ZoneName': 'us-west-1a'
-'ZoneId': 'usw1-az3'
-'State': 'available'
-'RegionName': 'us-west-1'
-'Messages': [
+ZoneName: us-west-1a
+ZoneId: usw1-az3
+State: available
+RegionName: us-west-1
+Messages: [
   ]
-ZoneName = 'us-west-1a' ZoneId = 'usw1-az3' State = 'available' RegionName = 'us-west-1' 
+ZoneName = us-west-1a ZoneId = usw1-az3 State = available RegionName = us-west-1 
 
 AZ no. 1 is: 
-'ZoneName': 'us-west-1b'
-'ZoneId': 'usw1-az1'
-'State': 'available'
-'RegionName': 'us-west-1'
-'Messages': [
+ZoneName: us-west-1b
+ZoneId: usw1-az1
+State: available
+RegionName: us-west-1
+Messages: [
   ]
-ZoneName = 'us-west-1b' ZoneId = 'usw1-az1' State = 'available' RegionName = 'us-west-1' 
+ZoneName = us-west-1b ZoneId = usw1-az1 State = available RegionName = us-west-1 
 
 
 us-west-2 
 AZ no. 0 is: 
-'ZoneName': 'us-west-2a'
-'ZoneId': 'usw2-az2'
-'State': 'available'
-'RegionName': 'us-west-2'
-'Messages': [
+ZoneName: us-west-2a
+ZoneId: usw2-az2
+State: available
+RegionName: us-west-2
+Messages: [
   ]
-ZoneName = 'us-west-2a' ZoneId = 'usw2-az2' State = 'available' RegionName = 'us-west-2' 
+ZoneName = us-west-2a ZoneId = usw2-az2 State = available RegionName = us-west-2 
 
 AZ no. 1 is: 
-'ZoneName': 'us-west-2b'
-'ZoneId': 'usw2-az1'
-'State': 'available'
-'RegionName': 'us-west-2'
-'Messages': [
+ZoneName: us-west-2b
+ZoneId: usw2-az1
+State: available
+RegionName: us-west-2
+Messages: [
   ]
-ZoneName = 'us-west-2b' ZoneId = 'usw2-az1' State = 'available' RegionName = 'us-west-2' 
+ZoneName = us-west-2b ZoneId = usw2-az1 State = available RegionName = us-west-2 
 
 AZ no. 2 is: 
-'ZoneName': 'us-west-2c'
-'ZoneId': 'usw2-az3'
-'State': 'available'
-'RegionName': 'us-west-2'
-'Messages': [
+ZoneName: us-west-2c
+ZoneId: usw2-az3
+State: available
+RegionName: us-west-2
+Messages: [
   ]
-ZoneName = 'us-west-2c' ZoneId = 'usw2-az3' State = 'available' RegionName = 'us-west-2' 
+ZoneName = us-west-2c ZoneId = usw2-az3 State = available RegionName = us-west-2 
 
 AZ no. 3 is: 
-'ZoneName': 'us-west-2d'
-'ZoneId': 'usw2-az4'
-'State': 'available'
-'RegionName': 'us-west-2'
-'Messages': [
+ZoneName: us-west-2d
+ZoneId: usw2-az4
+State: available
+RegionName: us-west-2
+Messages: [
   ]
-ZoneName = 'us-west-2d' ZoneId = 'usw2-az4' State = 'available' RegionName = 'us-west-2' 
+ZoneName = us-west-2d ZoneId = usw2-az4 State = available RegionName = us-west-2 
 
 
