@@ -39,16 +39,15 @@ function chkMavenInstalled() {
 	var bIsMavenInstalled = false;
 
 	// now .. check if Maven exists & set bIsMavenInstalled to either true or false (it is initiatlized above to undefined)
-	if ( bIsMavenInstalled == undefined ) {
-		const retCode = EXECUTESHELLCMD.executionPiped ( '/tmp', 'mvn', ['--version'], true, process.env.VERBOSE, false, null);
-		if ( retCode != 0 ) {
-			// if (process.env.VERBOSE) 
-			if (process.env.VERBOSE) console.log("Unable to run MAVEN ('mvn' command)");
-			bIsMavenInstalled = false;
-		}else{
-			bIsMavenInstalled = true;
-		}
+	const retCode = EXECUTESHELLCMD.executionPiped ( '/tmp', 'mvn', ['--version'], true, process.env.VERBOSE, false, null);
+	if ( retCode != 0 ) {
+		// if (process.env.VERBOSE) 
+		if (process.env.VERBOSE) console.log("Unable to run MAVEN ('mvn' command)");
+		bIsMavenInstalled = false;
+	}else{
+		bIsMavenInstalled = true;
 	}
+
 	return bIsMavenInstalled;
 
 }; // function chkMavenInstalled()
