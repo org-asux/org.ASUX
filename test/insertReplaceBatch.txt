@@ -1,5 +1,9 @@
 ### This is the file 'insertReplaceBatch.txt'
 
+setProperty	AWSCFN.HOME=${ASUX::ORGASUXHOME}/AWS/CFN
+#_____ print ${ASUX::AWSCFN.HOME}
+
+//--------------------------------------------------
 makeNewRoot MyRootELEMENT
 saveTo !YAMLROOT
 
@@ -31,6 +35,7 @@ useAsInput MyRootELEMENT: ""
 yaml --insert MyRootELEMENT.subElem "dlfkjhasdlfhasdfadsfafsdfasdfasdfasdfasdf"
 print -
 
+//--------------------------------------------------
 useAsInput   '{"AdditionalRootElement": {"State": "available", "Messages": ["A","B","C"], "RegionName": "eu-north-1", "ZoneName": "eu-north-1c", "ZoneId": "eun1-az3"}}'
 print -
 saveTo !AdditionalRootElement
@@ -58,12 +63,17 @@ setProperty AWSCFN.HOME=/Users/Sarma/Documents/Development/src/org.ASUX/AWS/CFN
 echo yaml --insert Resources @${ASUX::AWSCFN.HOME}/AWSCFN.templates-pieces/PublicSubnet.yaml -i test/inputs/Snippet-Resources.yaml 
 
 //--------------------------------------------------
-aws.sdk --list-regions
+useAsInput @${ASUX::AWSCFN.HOME}/config/inputs/AWSRegions.yaml
+#_____ aws.sdk --list-regions
 
 //--------------------------------------------------
 foreach
 	print ${ASUX::foreach.iteration.value}
-	aws.sdk   --describe-AZs      ${ASUX::foreach.iteration.value} --no-quote
+	setProperty AWSRegion=${ASUX::foreach.iteration.value}
+
+	#______ aws.sdk --describe-AZs      ${ASUX::foreach.iteration.value} --no-quote
+	useAsInput  @${ASUX::AWSCFN.HOME}/config/inputs/AWS.AZdetails-${ASUX::AWSRegion}.yaml
+
 	saveTo !AZDETAILS   ### Save the contents of ${ASUX::foreach.iteration.value} into AZDETAILS
 
 	#________ makeNewRoot MyCompositeELEMENT-${ASUX::foreach.index}
