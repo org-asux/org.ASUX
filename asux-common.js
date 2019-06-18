@@ -1,4 +1,9 @@
-// To include this file: copy the 3 lines below
+
+
+
+// DO NOT 'require' this file.
+// To include this file: copy the 3 lines below, into your script.
+
 
 // var ORGASUXHOME = process.env.ORGASUXHOME ? process.env.ORGASUXHOME : "/invalid/path/to/parentProject/org.ASUX";
 // file-included - Not a 'require'
@@ -10,6 +15,10 @@
 var CmdLine = require('commander'); // https://github.com/tj/commander.js/
 var os = require('os');     // https://nodejs.org/api/os.html
 var PATH = require('path'); // to help process the script-file details.
+
+// DO NOT DO THIS --> var fs = require("fs");     // https://nodejs.org/api/fs.html#fs_fs_accesssync_path_mode 
+// This file is to be INCLUDED (not via Require)
+// For this file to be 'included' (pay attention to this word 'included'), the other file must 'require("fs")' !!!!!!
 
 //--------------------------
 var ORGASUXHOME = process.env.ORGASUXHOME ? process.env.ORGASUXHOME : "/invalid/path/to/parentProject/org.ASUX";
@@ -257,7 +266,8 @@ function genDependencyCLASSPATH( _DependenciesFile, _bIsMavenInstalled ) {
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //========================================================================
 
-function copyCmdLineArgs( _COMMAND ) {
+function copyCmdLineArgs( _COMMAND, _bInsertDoubleHyphen, _bAddCmd2Params ) {
+	if (process.env.VERBOSE) { console.log( "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! copyCmdLineArgs( " + _COMMAND +", "+ _bInsertDoubleHyphen +" )" ); }
 	// In Unix shell, If there are spaces inside the variables, then "$@" retains the spaces, while "$*" does not
 	// The following lines of code are the JS-quivalent of shell's      ./cmdline/asux $@
   	// Get rid of 'node' '--verbose'(optionally) and 'asux.js'.. .. and finally the 'yaml/asux' command
@@ -269,7 +279,8 @@ function copyCmdLineArgs( _COMMAND ) {
 
 
 	if (process.env.VERBOSE) { console.log( `${__filename} : started off with node ` + process.argv.join(' ') ); }
-	var cmdArgs = process.argv.slice( ( process.argv[0].match('.*node(.exe)?$') )? 2: 1 ); // get rid of BOTH 'node' and 'asux.js' (or.. just asux.sh)
+	const is1stCmdLineArgNodeExecutable = process.argv[0].match('.*node(.exe)?$');
+	var cmdArgs = process.argv.slice( is1stCmdLineArgNodeExecutable ? 2: 1 ); // get rid of BOTH 'node' and 'asux.js'
 
 	var cmdArgs = [];
 	if (process.env.VERBOSE) {
@@ -277,18 +288,26 @@ function copyCmdLineArgs( _COMMAND ) {
 	}
 
 	for (var ix in process.argv) {
+		if (process.env.VERBOSE) { console.log( "copyCmdLineArgs( " + process.argv[ix] +" )" ); }
 		if ( process.argv[ix].match('.*node(.exe)?$') ) continue; // get rid of node.js  or  node.exe (on windows)
 			if ( ix < 2 ) continue; // For starters, Get rid of 'node' and 'asux.js'
 		if ( process.argv[ix].match('--verbose') ) continue; // get rid of node.js  or  node.exe (on windows)
 
 		// Now, JSON's Commander-library only allows 'read' 'list' 'delete' as a command.
 		// But, Java Apache commons-cli REQUIRES double-hyphened command '--read'  '--list' '--delete'
-		if ( process.argv[ix] == _COMMAND ) { // re-insert the COMMAND again - Appropriately, as Java's Apache CLI requires a -- prefixing the command
-			cmdArgs.push( '--'+process.argv[ix]);
+		if ( process.argv[ix] != _COMMAND ) {
+			cmdArgs.push( process.argv[ix] );
 		} else {
-			cmdArgs.push( process.argv[ix]);
-		}
-	} // for ix
+			if ( _bInsertDoubleHyphen && _bAddCmd2Params ) { // re-insert the COMMAND again - Appropriately, as Java's Apache CLI requires a -- prefixing the command
+				cmdArgs.push( '--'+ process.argv[ix] );
+			} else {
+				if ( _bAddCmd2Params ) {
+					cmdArgs.push( process.argv[ix] );
+				}
+				// else _COMMAND will __NOT__ be added to 'cmdArgs'
+			} // if-else
+		} // if-else
+	} // for (ix)
 
 	return cmdArgs;
 }
