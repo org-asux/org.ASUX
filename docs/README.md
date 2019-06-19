@@ -1,4 +1,5 @@
-![Logo](https://drive.google.com/file/d/1zjlUGJ66xQ8prxORzvfHSEF5UZiLH8Oc/view?usp=sharing)
+![Logo](https://drive.google.com/uc?export=view&id=1zjlUGJ66xQ8prxORzvfHSEF5UZiLH8Oc)
+<!-- The best way to embed a Google-Drive image is to find the IMAGE-File's ID in GoogleDocs and prepend that ID with 'https://drive.google.com/uc?export=view&id=' -->
 
 # *.. bringing UN\*X principles & patterns to the world of Application-Servers and 'Cloud'*
 
