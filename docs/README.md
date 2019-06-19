@@ -1,4 +1,4 @@
-![Logo](https://s3.us-east-2.amazonaws.com/org.asux/ASUX.org-Logo-picturetopeople.org.png)
+![Logo](https://drive.google.com/file/d/1zjlUGJ66xQ8prxORzvfHSEF5UZiLH8Oc/view?usp=sharing)
 
 # *.. bringing UN\*X principles & patterns to the world of Application-Servers and 'Cloud'*
 
