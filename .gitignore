@@ -26,3 +26,4 @@ AWS-SDK
 org.ASUX.AWS
 org.ASUX.AWS.CFN
 org.ASUX.AWS-SDK
+test-ExecCmd.js
