@@ -143,10 +143,10 @@ diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js yaml  $YAMLLIB  macro "UNKNOWN=value;KEY2=VALUE222" --double-quote  --inputfile inputs/nano.yaml \
+asux.js yaml  $YAMLLIB  macroyaml "UNKNOWN=value;KEY2=VALUE222" --double-quote  --inputfile inputs/nano.yaml \
         -o ${OUTPFILE}
 diff ${OUTPFILE} inputs/nano.yaml
-asux.js yaml  $YAMLLIB  macro @inputs/props.txt  --inputfile inputs/nano.yaml \
+asux.js yaml  $YAMLLIB  macroyaml @inputs/props.txt  --inputfile inputs/nano.yaml \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
