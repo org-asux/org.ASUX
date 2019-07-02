@@ -2,6 +2,7 @@
 
 ###------------------------------
 echo "Usage: $0 [--verbose]"
+echo "Usage: java -DORGASUXHOME=/mnt/development/src/org.ASUX  -cp /var/build/org.asux-mvn-shade-uber-jar-1.0/org.asux-mvn-shade-uber-jar-1.0.jar org.ASUX.yaml.Cmd --batch @simpleBatch.txt -i /dev/null -o -"
 # if ( $#argv <= 1 ) then
 #     echo "Usage: $0  [--verbose] --delete --yamlpath yaml.regexp.path $YAMLLIB --inputfile /tmp/input.yaml -o /tmp/output.yaml " >>& /dev/stderr
 #     echo Usage: $0 'org.ASUX.yaml.Cmd [--verbose] --delete --double-quote --yamlpath "paths.*.*.responses.200" $YAMLLIB --inputfile $cwd/src/test/my-petstore-micro.yaml -o /tmp/output2.yaml ' >>& /dev/stderr
