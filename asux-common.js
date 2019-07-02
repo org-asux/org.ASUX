@@ -22,7 +22,6 @@ var PATH = require('path'); // to help process the script-file details.
 
 //--------------------------
 var ORGASUXHOME = process.env.ORGASUXHOME ? process.env.ORGASUXHOME : "/invalid/path/to/parentProject/org.ASUX";
-var INITIAL_CWD = process.cwd(); // just in case I mistakenly process.chdir() somewhere below.
 
 // This is the Node.JS script within the same directory - to make it simple to run an external command
 var EXECUTESHELLCMD = require( ORGASUXHOME + "/ExecShellCommand.js");
