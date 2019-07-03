@@ -142,14 +142,16 @@ function runGitPullAll() {
 	runGitPull( PROJNAME_AWSCFN,	DIR_orgASUXAWSCFN	);
 }
 
-// Run 'git pull' at most 1/day on this project as well as sub-projects like org.ASUX.cmdline
+// !!!!!!!! ATTENTION !!!!!!!!!!!! this function gitpull() only will work if the sub-project has been checkedout/pulled once already.
+// Much of this function's logic is to _ONLY_ Run 'git pull' at most 1/day on this project as well as sub-projects like org.ASUX.cmdline
 function runGitPull( _PROJNAME, _DIR_orgASUXSubProject ) {
 
 		// the following code allows me to check when was the last time this script was run.
 		// if more than one day, set a flag.. so that 'daily-update' activities can be kicked off downstream.
 		const currTimeStamp = Date.now() / 1000;
-		var oneDayLater = 24*3600;
-		var lastRunTimeInSecs = "99999999999999";
+		const oneDayInSeconds = 24*3600;
+		var oneDayLater = 0;
+		var lastRunTimeInSecs = 99999999999999;
 		const LASTRUNTIMESTAMP_FILEPATH = LASTRUNTIMESTAMP_FILEPATH_PREFIX +'-'+ _PROJNAME +'.txt';
 		if (process.env.VERBOSE) console.log( "\nLASTRUNTIMESTAMP_FILEPATH='"+LASTRUNTIMESTAMP_FILEPATH+'"' );
 		try {
@@ -161,14 +163,15 @@ function runGitPull( _PROJNAME, _DIR_orgASUXSubProject ) {
 					console.error("Serious Internal-Error! Failed to determine the 'last-run-timestamp' (it is contents of file "+ LASTRUNTIMESTAMP_FILEPATH +").\n Very likely that file does NOT contain time-in-seconds content.");
 					process.exit(1);
 			}
-			if (process.env.VERBOSE) console.log( " oneDayLater="+ oneDayLater );
-			oneDayLater = lastRunTimeInSecs + oneDayLater;
+			if (process.env.VERBOSE) console.log( " oneDayInSeconds="+ oneDayInSeconds );
+			oneDayLater = lastRunTimeInSecs + oneDayInSeconds;
 			if (process.env.VERBOSE) console.log( " lastRunTimeInSecs="+ lastRunTimeInSecs +" oneDayLater="+ oneDayLater );
 			bLastRunLongAgo = ( currTimeStamp > oneDayLater );
 			if (process.env.VERBOSE) console.log( "currTimeStamp= "+ currTimeStamp +" lastRunTimeInSecs="+ lastRunTimeInSecs +" oneDayLater="+ oneDayLater +".   So, bLastRunLongAgo="+ bLastRunLongAgo );
 			if (process.env.VERBOSE) console.log( "you last ran this script "+ (currTimeStamp - lastRunTimeInSecs) +" seconds ago!" );
 		} catch (err33) { // a.k.a. if fs.readFileSync throws err13.code === 'ENOENT' || 'EISDIR')
-			if (process.env.VERBOSE) console.log( __filename +"Internal error: failed to read LASTRUNTIMESTAMP_FILEPATH: ["+ LASTRUNTIMESTAMP_FILEPATH +"]\n"+ err33);
+			// !!!!!!!!!! ATTENTION !!!!!!!!!! You'll get this exception, the 1st time this project is run.. and after EVERY REBOOT.   so.. .. be careful showing the following error-message to the end-user
+			if (process.env.VERBOSE) console.error( __filename +"Non-Fatal Internal ERROR: failed to read LASTRUNTIMESTAMP_FILEPATH: ["+ LASTRUNTIMESTAMP_FILEPATH +"]\n"+ err33);
 		}; // try-catch of fs.readFileSync ( LASTRUNTIMESTAMP_FILEPATH .. )
 
 		//-------------------
@@ -179,8 +182,11 @@ function runGitPull( _PROJNAME, _DIR_orgASUXSubProject ) {
 		// git pull  >/dev/null 2>&1
 		if (process.env.VERBOSE) console.log( ` OLD Working Directory was: ${process.cwd()}` );
 		if ( bLastRunLongAgo ) {
+				// 1st:  check if this project (topmost: org.ASUX.git) is updated.
 				EXECUTESHELLCMD.executionPiped ( __dirname, 'git', ['pull', '--quiet'], true, process.env.VERBOSE, true, process.env);
+				// 2nd:  Now check if the subproject is updated.
 				EXECUTESHELLCMD.executeSharingSTDOUT(  _DIR_orgASUXSubProject, 'git', ['pull', '--quiet'], true, process.env.VERBOSE, true, process.env );
+
 				try {
 					fs.writeFileSync( LASTRUNTIMESTAMP_FILEPATH, currTimeStamp, { mode: 0o755 });
 				} catch (err33) { // a.k.a. if fs.writeFileSync throws err13.code === 'ENOENT' || 'EISDIR')
@@ -241,7 +247,9 @@ function checkIfSubProjectExists( _PROJNAME, _DIR_orgASUXSubProject, _DIR_orgASU
 			console.error( 'Hmmmm.   1st time ever!?   Let me complete initial-setup (1 minute)...\n' );
 			EXECUTESHELLCMD.sleep(5);
 
-			if (process.env.VERBOSE) console.log( `${_DIR_orgASUXSubProject} does Not exist. So.. pulling from remote Git repo.` );
+			if (process.env.VERBOSE) console.log( "Folder"+ _DIR_orgASUXSubProject +" does Not exist. So.. pulling from remote Git repo." );
+			// !!!!!!!!!!!!! ATTENTION !!!!!!!!!!!!!! The folder for Sub-Project does Not exist.
+			// So, we __CANNOT__ take advantage of runGitPull() function above.
 
 			// var gitpullcmdArgs = ['clone', '--quiet', `https://github.com/${ORGNAME}/${_PROJNAME}`];
 			var gitpullcmdArgs = ['clone', `https://github.com/${ORGNAME}/${_PROJNAME}`];
