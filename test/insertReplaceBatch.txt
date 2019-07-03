@@ -64,7 +64,7 @@ echo yaml --insert Resources @${ASUX::AWSCFN.HOME}/AWSCFN.templates-pieces/Publi
 
 //--------------------------------------------------
 useAsInput @${ASUX::AWSCFN.HOME}/config/inputs/AWSRegions.yaml
-#_____ aws.sdk --list-regions
+#_____ aws.sdk --list-regions --no-quote
 
 //--------------------------------------------------
 foreach

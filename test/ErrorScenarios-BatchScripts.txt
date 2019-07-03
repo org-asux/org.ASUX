@@ -7,4 +7,6 @@ yaml batch 'myINVALIDcommand xyz'
 
 #_____ print \n
 
+yaml batch 'useAsInput @INVALIDFileName'
+
 #EoF
