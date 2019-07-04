@@ -1,5 +1,7 @@
 #!/bin/tcsh -f
 
+alias CHDIR "if ( -e \!* ) chdir \!* "
+
 chdir /mnt/development/src/org.ASUX/org.ASUX.common
 mvn clean compiler:compile jar:jar install:install $*
 
@@ -12,13 +14,13 @@ if ( $status == 0 || $#argv > 0 ) then
 		mvn clean compiler:compile jar:jar install:install $*
 
 		if ( $status == 0 || $#argv > 0 ) then
-			chdir /mnt/development/src/org.ASUX/AWS-SDK
-			chdir /mnt/development/src/org.ASUX/org.ASUX.AWS-SDK
+			CHDIR /mnt/development/src/org.ASUX/AWS-SDK
+			CHDIR /mnt/development/src/org.ASUX/org.ASUX.AWS-SDK
 			mvn clean compiler:compile jar:jar install:install $*
 
 			if ( $status == 0 || $#argv > 0 ) then
-				chdir /mnt/development/src/org.ASUX/AWS/CFN
-				chdir /mnt/development/src/org.ASUX/org.ASUX.AWS.CFN
+				CHDIR /mnt/development/src/org.ASUX/AWS/CFN
+				CHDIR /mnt/development/src/org.ASUX/org.ASUX.AWS.CFN
 				mvn clean compiler:compile jar:jar install:install $*
 			endif
 		endif
