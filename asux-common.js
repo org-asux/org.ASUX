@@ -66,199 +66,218 @@ function chkMavenInstalled() {
 
 function genDependencyCLASSPATH( _DependenciesFile, _bIsMavenInstalled ) {
 
-	var bAnyChanges2JARs = false;
+	const JARFOLDER			=	ORGASUXHOME  +'/lib';
+	const MAVENLOCALREPO	=	os.homedir() +'/.m2/repository';
+	const UBERJARFILENAME	=	"org.asux-mvn-shade-uber-jar-1.0.jar";
+	const UBERJARFILEPATH	=	JARFOLDER +"/"+ UBERJARFILENAME;
+
+	var bAnyChanges2JARs = false; // Basically, we need to _FIGURE OUT_ whether any JAR changes triggered any MVN downloads.. so that we can help end-user make sense of what git/mvn will dump on screen.
+
 	try {
 
-		if (process.env.VERBOSE) console.log( `checking if ${_DependenciesFile} exists or not.. .. ` );
-		const dataBuffer = fs.readFileSync( _DependenciesFile ); // the default-FLAGs are === {encoding: "utf-8", flag: "r"}
-		const data = dataBuffer.toString();
-		if (process.env.VERBOSE) console.log( __filename +" file contents of _DependenciesFile: ["+ _DependenciesFile +"]\n"+ data +"\n");
+		// 1st check if the uber-jar exists..
+		if (process.env.VERBOSE) console.log( `checking if ${UBERJARFILEPATH} exists or not.. .. ` );
+		fs.accessSync( UBERJARFILEPATH, fs.constants.R_OK ); // will throw.
+		// Ok. JAR file already exists ~/.m2
+		if (process.env.VERBOSE) console.log( __filename +" We can access the UBERJARFILEPATH: ["+ UBERJARFILEPATH +"]");
+		CLASSPATH=`${CLASSPATH}${CLASSPATHSEPARATOR}${UBERJARFILEPATH}`;
+		console.log( __filename +": CLASSPATH = ["+ CLASSPATH +"]");
+		return CLASSPATH;
+
+	} catch (err11) { // a.k.a. if fs.readFileSync throws err13.code === 'ENOENT' || 'EISDIR')
+		if (process.env.VERBOSE) console.log( __filename +"Internal error: failed to access UBERJARFILEPATH: ["+ UBERJARFILEPATH +"]\n"+ err11);
 
 		try {
+			if (process.env.VERBOSE) console.log( `checking if ${_DependenciesFile} exists or not.. .. ` );
+			const dataBuffer = fs.readFileSync( _DependenciesFile ); // the default-FLAGs are === {encoding: "utf-8", flag: "r"}
+			const data = dataBuffer.toString();
+			if (process.env.VERBOSE) console.log( __filename +" file contents of _DependenciesFile: ["+ _DependenciesFile +"]\n"+ data +"\n");
 
-			const lines = data.split('\n');
-			for (var ix in lines) {
-				const line = lines[ix];
-				if (process.env.VERBOSE) console.log( __filename +" file contents of DependenciesFile: line #"+ ix +" = ["+ line +"]");
-				if ( line.match('^#') ) continue;
-				if ( line.match('^[\s\S]*$') ) continue;
-				if (process.env.VERBOSE) console.log( __filename +" file contents of DependenciesFile: line #"+ ix +" = ["+ line +"]");
+			try {
 
-				// ______________________
-				// function replStrFunc (match, p1, p2, p3, offset, string) { return match; }
-				// outStr1WPrefix = outStr1WPrefix.replace(/^[^\n][^\n]*\n/mg, replStrFunc);
-				const MAVENLOCALREPO=os.homedir()+'/.m2/repository';
-				const REGEXP='^(.*):(.*):jar:([0-9]*\.[0-9.]*)';  // https://flaviocopes.com/javascript-regular-expressions/
-				let [ lineReturnedAsIs, groupId, artifactId, version ] = line.match(REGEXP);
-				// const groupId = line.replace( REGEXP, "$1");
-				// const artifactId = line.replace( REGEXP, "$2");
-				// const version = line.replace( REGEXP, "$3");
+				const lines = data.split('\n');
+				for (var ix in lines) {
+					const line = lines[ix];
+					if (process.env.VERBOSE) console.log( __filename +" file contents of DependenciesFile: line #"+ ix +" = ["+ line +"]");
+					if ( line.match('^#') ) continue;
+					if ( line.match('^[\s\S]*$') ) continue;
+					if (process.env.VERBOSE) console.log( __filename +" file contents of DependenciesFile: line #"+ ix +" = ["+ line +"]");
 
-				const folderpath=groupId.replace( new RegExp('\\.', 'g'), '/');
-				const MVNfolderpath=MAVENLOCALREPO +'/'+ folderpath +'/'+ artifactId +'/'+ version;
-				const JARFileName = artifactId +'-'+ version +".jar";
-				const MVNJARFilePath=MVNfolderpath +'/'+ JARFileName;
-				// const JARFOLDER=__dirname+'/../lib';
-				const JARFOLDER=ORGASUXHOME+'/lib';
-				const LocalJARFilePath=`${JARFOLDER}/${groupId}.${artifactId}.${JARFileName}`;
-				// const S3FileName=`${groupId}.${artifactId}.${artifactId}-${version}.jar`;
-				// const URL1 = `https://s3.amazonaws.com/org.asux.cmdline/${S3FileName}`;
+					// ______________________
+					// function replStrFunc (match, p1, p2, p3, offset, string) { return match; }
+					// outStr1WPrefix = outStr1WPrefix.replace(/^[^\n][^\n]*\n/mg, replStrFunc);
+					const REGEXP='^(.*):(.*):jar:([0-9]*\.[0-9.]*)';  // https://flaviocopes.com/javascript-regular-expressions/
+					let [ lineReturnedAsIs, groupId, artifactId, version ] = line.match(REGEXP);
+					// const groupId = line.replace( REGEXP, "$1");
+					// const artifactId = line.replace( REGEXP, "$2");
+					// const version = line.replace( REGEXP, "$3");
 
-				if (process.env.VERBOSE) console.log( __filename +": ["+ groupId +'.'+ artifactId +':'+ version +"]");
-				if (process.env.VERBOSE) console.log( __filename +": ["+ folderpath +'\t\t'+ MVNfolderpath +'\t\t'+ MVNJARFilePath +"]");
+					const folderpath=groupId.replace( new RegExp('\\.', 'g'), '/');
+					const MVNfolderpath=MAVENLOCALREPO +'/'+ folderpath +'/'+ artifactId +'/'+ version;
+					const JARFileName = artifactId +'-'+ version +".jar";
+					const MVNJARFilePath=MVNfolderpath +'/'+ JARFileName;
+					// const JARFOLDER=__dirname+'/../lib';
+					const LocalJARFilePath=`${JARFOLDER}/${groupId}.${artifactId}.${JARFileName}`;
+					// const S3FileName=`${groupId}.${artifactId}.${artifactId}-${version}.jar`;
+					// const URL1 = `https://s3.amazonaws.com/org.asux.cmdline/${S3FileName}`;
 
-				// ______________________
-				if ( _bIsMavenInstalled ) {
+					if (process.env.VERBOSE) console.log( __filename +": ["+ groupId +'.'+ artifactId +':'+ version +"]");
+					if (process.env.VERBOSE) console.log( __filename +": ["+ folderpath +'\t\t'+ MVNfolderpath +'\t\t'+ MVNJARFilePath +"]");
 
-					var bJARFileExists = false;
+					// ______________________
+					if ( _bIsMavenInstalled ) {
 
-					// Let's see if the project's JAR File is already in ~/.m2/repository
-					try {
-						// if (process.env.VERBOSE) ÷console.log( `checking if ${MVNJARFilePath} exists or not.. .. ` );
-						fs.accessSync( MVNJARFilePath, fs.constants.R_OK ); // will throw.
-						// Ok. JAR file already exists ~/.m2
-						if (process.env.VERBOSE) EXECUTESHELLCMD.showFileAttributes ( MVNJARFilePath );  // ls -la "${MVNJARFilePath}"
-						CLASSPATH=`${CLASSPATH}${CLASSPATHSEPARATOR}${MVNJARFilePath}`;
-						if (process.env.VERBOSE) console.log( __filename +": CLASSPATH = ["+ CLASSPATH +"]");
-						bJARFileExists = true;
-					} catch (err12) { // a.k.a. if fs.accessSync throws err12.code === 'ENOENT')
+						var bJARFileExists = false;
 
+						// Let's see if the project's JAR File is already in ~/.m2/repository
 						try {
-							if (process.env.VERBOSE) console.log( `checking if ${LocalJARFilePath} already downloaded or not.. .. ` );
-							fs.accessSync( LocalJARFilePath, fs.constants.R_OK | fs.constants.W_OK ); // will throw.
-							// Ok. JAR file already exists in local file system
-							if (process.env.VERBOSE) EXECUTESHELLCMD.showFileAttributes ( LocalJARFilePath );  // ls -la "${LocalJARFilePath}"
-							CLASSPATH=`${CLASSPATH}${CLASSPATHSEPARATOR}${LocalJARFilePath}`;
-							if (process.env.VERBOSE) console.log( __filename +": after adding LocalJARFile.. .. CLASSPATH = ["+ CLASSPATH +"]");
-							bJARFileExists = true;
-						} catch (err15) { // a.k.a. if fs.accessSync throws err15.code === 'ENOENT')
-							// if we're here, JAR is NEITHER in ~/.m2/repository - NOR in /tmpdist
-							// Just let program-pointer fall thru to code below (with bJARFileExists === false)
-							// do NOTHING inside this catch()
-							bJARFileExists = false; // re-inforce this value, which is default @ variable definition
-						} // try-catch err15 for accessSync( LocalJARFilePath )
-
-					} // try-catch err12 for accessSync( MVNJARFilePath )
-
-					if (  ! bJARFileExists ) {
-
-						// So.. MVNJARFilePath does Not exist - - NEITHER in ~/.m2/repository - NOR in /tmpdist
-						bAnyChanges2JARs = true; // well, something will be new once code below executes!
-						console.error( `Hmmm. ${MVNJARFilePath} does Not exist locally.` );
-						const cmdArgs = ['-q', 'org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get', '-DrepoUrl=url', `-Dartifact=${groupId}:${artifactId}:${version}` ];
-						if (process.env.VERBOSE) console.log( __filename + ": About to run mvn "+ cmdArgs.join(' ') );
-			
-						const retCode = EXECUTESHELLCMD.executionPiped ( "/tmp", 'mvn', cmdArgs, true, process.env.VERBOSE, false, null);
-						if ( retCode == 0 ) {
+							// if (process.env.VERBOSE) ÷console.log( `checking if ${MVNJARFilePath} exists or not.. .. ` );
+							fs.accessSync( MVNJARFilePath, fs.constants.R_OK ); // will throw.
+							// Ok. JAR file already exists ~/.m2
+							if (process.env.VERBOSE) EXECUTESHELLCMD.showFileAttributes ( MVNJARFilePath );  // ls -la "${MVNJARFilePath}"
 							CLASSPATH=`${CLASSPATH}${CLASSPATHSEPARATOR}${MVNJARFilePath}`;
-							console.log( __filename +": CLASSPATH = ["+ CLASSPATH +"]");
-						}else{
-							console.error( `MAVEN could NOT download project ${groupId}.${artifactId}:${version} from MAVEN-CENTRAL\n`);
-							console.error( __filename +`: Internal Fatal error. Unable to find ${MVNJARFilePath} or ${LocalJARFilePath}.\n` );
-							process.exit(28);
+							if (process.env.VERBOSE) console.log( __filename +": CLASSPATH = ["+ CLASSPATH +"]");
+							bJARFileExists = true;
+						} catch (err12) { // a.k.a. if fs.accessSync throws err12.code === 'ENOENT')
+
+							try {
+								if (process.env.VERBOSE) console.log( `checking if ${LocalJARFilePath} already downloaded or not.. .. ` );
+								fs.accessSync( LocalJARFilePath, fs.constants.R_OK | fs.constants.W_OK ); // will throw.
+								// Ok. JAR file already exists in local file system
+								if (process.env.VERBOSE) EXECUTESHELLCMD.showFileAttributes ( LocalJARFilePath );  // ls -la "${LocalJARFilePath}"
+								CLASSPATH=`${CLASSPATH}${CLASSPATHSEPARATOR}${LocalJARFilePath}`;
+								if (process.env.VERBOSE) console.log( __filename +": after adding LocalJARFile.. .. CLASSPATH = ["+ CLASSPATH +"]");
+								bJARFileExists = true;
+							} catch (err15) { // a.k.a. if fs.accessSync throws err15.code === 'ENOENT')
+								// if we're here, JAR is NEITHER in ~/.m2/repository - NOR in /tmpdist
+								// Just let program-pointer fall thru to code below (with bJARFileExists === false)
+								// do NOTHING inside this catch()
+								bJARFileExists = false; // re-inforce this value, which is default @ variable definition
+							} // try-catch err15 for accessSync( LocalJARFilePath )
+
+						} // try-catch err12 for accessSync( MVNJARFilePath )
+
+						if (  ! bJARFileExists ) {
+
+							// So.. MVNJARFilePath does Not exist - - NEITHER in ~/.m2/repository - NOR in /tmpdist
+							bAnyChanges2JARs = true; // well, something will be new once code below executes!
+							console.error( `Hmmm. ${MVNJARFilePath} does Not exist locally.` );
+							const cmdArgs = ['-q', 'org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get', '-DrepoUrl=url', `-Dartifact=${groupId}:${artifactId}:${version}` ];
+							if (process.env.VERBOSE) console.log( __filename + ": About to run mvn "+ cmdArgs.join(' ') );
+				
+							const retCode = EXECUTESHELLCMD.executionPiped ( "/tmp", 'mvn', cmdArgs, true, process.env.VERBOSE, false, null);
+							if ( retCode == 0 ) {
+								CLASSPATH=`${CLASSPATH}${CLASSPATHSEPARATOR}${MVNJARFilePath}`;
+								console.log( __filename +": CLASSPATH = ["+ CLASSPATH +"]");
+							}else{
+								console.error( `MAVEN could NOT download project ${groupId}.${artifactId}:${version} from MAVEN-CENTRAL\n`);
+								console.error( __filename +`: Internal Fatal error. Unable to find ${MVNJARFilePath} or ${LocalJARFilePath}.\n` );
+								process.exit(28);
+
+								{ // empty block of COMMENTS only.
+								// OLD CODE - I used to get the JARs from AWS via https.  No longer.  JARs are now in ${ORGASUXHOME}/lib
+								// console.error( "So.. Downloading from S3.  *** Not a secure way to do things ***"  );
+								// EXECUTESHELLCMD.sleep(5);
+								// if we're here, JAR is NEITHER in ~/.m2/repository - NOR in /tmpdist
+
+								// CMDLINE Tip: If the URL does NOT point to an ACTUAL file in S3, /usr/bin/curl will still get a RESPONSE from S3.
+								// In order that we can tell whether a file was downloaded or not.. use "curl -f"
+								// var [ httpStatusCode, errMsg ] = WEBACTIONCMD.getURLAsFileSynchronous( URL1, null, LocalJARFilePath); 
+								// if ( httpStatusCode != 200 ) {
+								//   console.error( __filename + ": Serious internal failure: Failure to download from ["+ URL1 +"] httoCode="+ httpStatusCode +"]");
+								//   console.error( __filename + ": httpMessage = ["+ errMsg +"]");
+								//   process.exit(27);
+								// } else { // if-else httpStatusCode returned 200
+								//   // Either the above get URL command returned a NON-zero error code, or an empty file
+								//   const fstats = fs.statSync(LocalJARFilePath);
+								//   if ( fstats.size <= 0 ) { // file is zero bytes!!!
+								//     console.error( __filename + ": Serious internal failure: zero-byte download ["+ LocalJARFilePath +"] from: "+ URL1 );
+								//     process.exit(28);
+								//   }
+								//   // all ok with LocalJARFilePath
+								//   const cmdArgs = ['-q', `install:install-file -Dfile=${LocalJARFilePath}`, `-DgroupId=${groupId}`, `-DartifactId=${artifactId}`, `-Dversion=${version}`, '-Dpackaging=jar', '-DgeneratePom=true' ];
+								//   // if (process.env.VERBOSE) 
+								//   console.log( `${__filename} : in /tmp running 'mvn' with cmdline-arguments:` + cmdArgs.join(' ') );
+								//   const retCode = EXECUTESHELLCMD.executionPiped ( "/tmp", 'mvn', cmdArgs, true, process.env.VERBOSE, false, null);
+								//   if ( retCode == 0 ) {
+								//     CLASSPATH=`${CLASSPATH}${CLASSPATHSEPARATOR}${MVNJARFilePath}`;
+								//     console.log( __filename +": mvn-install succeeded, so using CLASSPATH = ["+ CLASSPATH +"]");
+								//   }else{
+								//     CLASSPATH=`${CLASSPATH}${CLASSPATHSEPARATOR}${LocalJARFilePath}`;
+								//     console.log( __filename +": MVN install FAILED!!!!!!  So.. using LocalJARFile CLASSPATH = ["+ CLASSPATH +"]");
+								//     // console.error( __filename +`Internal Fatal error. Unable to install ${MVNJARFilePath} to ${MAVENLOCALREPO}.` );
+								//     // process.exit(28);
+								//    }
+								// } // if-else httpStatusCode
+								}
+
+							} // if-else retCode
+						} // if ! bJARFileExists
+
+					} else { // if _bIsMavenInstalled
+
+						// ______________________
+						// Let's see if the project is already in LOCAL-filesystem inside /lib folder of parent GIT Project
+						try {
+							if (process.env.VERBOSE) console.log( `checking if ${LocalJARFilePath} exists or not.. .. ` );
+							fs.accessSync( LocalJARFilePath ); // will throw.
+							// Ok. JAR file already exists locally on file-system
+							if (process.env.VERBOSE) EXECUTESHELLCMD.showFileAttributes ( LocalJARFilePath );
+							CLASSPATH=`${CLASSPATH}${CLASSPATHSEPARATOR}${LocalJARFilePath}`;
+							if (process.env.VERBOSE) console.log( __filename +": CLASSPATH = ["+ CLASSPATH +"]");
+						} catch (err14) {			// a.k.a. if  err14.code === 'ENOENT')
+
+							// So.. LocalJARFilePath does *** NOT *** exist in local file system
+							bAnyChanges2JARs = true; // well, something will be new once code below executes!
+							console.error( `\nHmmm. ${LocalJARFilePath} does Not exist.\n${err14.message}\n` );
+							console.error( __filename +`: Internal Fatal error. Unable to find ${LocalJARFilePath} (No mvn).\n` );
+							process.exit(29);
 
 							{ // empty block of COMMENTS only.
 							// OLD CODE - I used to get the JARs from AWS via https.  No longer.  JARs are now in ${ORGASUXHOME}/lib
-							// console.error( "So.. Downloading from S3.  *** Not a secure way to do things ***"  );
-							// EXECUTESHELLCMD.sleep(5);
-							// if we're here, JAR is NEITHER in ~/.m2/repository - NOR in /tmpdist
-
-							// CMDLINE Tip: If the URL does NOT point to an ACTUAL file in S3, /usr/bin/curl will still get a RESPONSE from S3.
-							// In order that we can tell whether a file was downloaded or not.. use "curl -f"
+							// console.error( "Without Maven.. Downloading from S3.  *** Not a secure way to do things ***"  );
+							// // var [ bSuccess, httpStatusCode, httpmsg ] = WEBACTIONCMD.getURLAsFileSynchronous( URL1, null, LocalJARFilePath); 
 							// var [ httpStatusCode, errMsg ] = WEBACTIONCMD.getURLAsFileSynchronous( URL1, null, LocalJARFilePath); 
 							// if ( httpStatusCode != 200 ) {
 							//   console.error( __filename + ": Serious internal failure: Failure to download from ["+ URL1 +"] httoCode="+ httpStatusCode +"]");
 							//   console.error( __filename + ": httpMessage = ["+ errMsg +"]");
-							//   process.exit(27);
+							//   process.exit(29);
 							// } else { // if-else httpStatusCode returned 200
-							//   // Either the above get URL command returned a NON-zero error code, or an empty file
-							//   const fstats = fs.statSync(LocalJARFilePath);
-							//   if ( fstats.size <= 0 ) { // file is zero bytes!!!
-							//     console.error( __filename + ": Serious internal failure: zero-byte download ["+ LocalJARFilePath +"] from: "+ URL1 );
-							//     process.exit(28);
-							//   }
-							//   // all ok with LocalJARFilePath
-							//   const cmdArgs = ['-q', `install:install-file -Dfile=${LocalJARFilePath}`, `-DgroupId=${groupId}`, `-DartifactId=${artifactId}`, `-Dversion=${version}`, '-Dpackaging=jar', '-DgeneratePom=true' ];
-							//   // if (process.env.VERBOSE) 
-							//   console.log( `${__filename} : in /tmp running 'mvn' with cmdline-arguments:` + cmdArgs.join(' ') );
-							//   const retCode = EXECUTESHELLCMD.executionPiped ( "/tmp", 'mvn', cmdArgs, true, process.env.VERBOSE, false, null);
-							//   if ( retCode == 0 ) {
-							//     CLASSPATH=`${CLASSPATH}${CLASSPATHSEPARATOR}${MVNJARFilePath}`;
-							//     console.log( __filename +": mvn-install succeeded, so using CLASSPATH = ["+ CLASSPATH +"]");
-							//   }else{
+							//     // Either the above get URL command returned a NON-zero error code, or an empty file
+							//     const fstats = fs.statSync(LocalJARFilePath);
+							//     if ( fstats.size <= 0 ) { // file is zero bytes!!!
+							//       console.error( __filename + ": Serious internal failure: zero-byte download ["+ LocalJARFilePath +"] from: "+ URL1 );
+							//       process.exit(28);
+							//     }
+							//     // all ok with LocalJARFilePath
 							//     CLASSPATH=`${CLASSPATH}${CLASSPATHSEPARATOR}${LocalJARFilePath}`;
-							//     console.log( __filename +": MVN install FAILED!!!!!!  So.. using LocalJARFile CLASSPATH = ["+ CLASSPATH +"]");
-							//     // console.error( __filename +`Internal Fatal error. Unable to install ${MVNJARFilePath} to ${MAVENLOCALREPO}.` );
-							//     // process.exit(28);
-							//    }
+							//     if (process.env.VERBOSE) console.log( __filename +": CLASSPATH = ["+ CLASSPATH +"]");
 							// } // if-else httpStatusCode
 							}
 
-						} // if-else retCode
-					} // if ! bJARFileExists
+						} // try-catch err14 for accessSync( LocalJARFilePath )
 
-				} else { // if _bIsMavenInstalled
+					} // if-else _bIsMavenInstalled
 
-					// ______________________
-					// Let's see if the project is already in LOCAL-filesystem inside /lib folder of parent GIT Project
-					try {
-						if (process.env.VERBOSE) console.log( `checking if ${LocalJARFilePath} exists or not.. .. ` );
-						fs.accessSync( LocalJARFilePath ); // will throw.
-						// Ok. JAR file already exists locally on file-system
-						if (process.env.VERBOSE) EXECUTESHELLCMD.showFileAttributes ( LocalJARFilePath );
-						CLASSPATH=`${CLASSPATH}${CLASSPATHSEPARATOR}${LocalJARFilePath}`;
-						if (process.env.VERBOSE) console.log( __filename +": CLASSPATH = ["+ CLASSPATH +"]");
-					} catch (err14) {			// a.k.a. if  err14.code === 'ENOENT')
+				} // for-LOOP (var ix in lines) <<--- !!!! <<--- !!!! <<--- !!!! <<--- !!!! <<--- !!!! 
 
-						// So.. LocalJARFilePath does *** NOT *** exist in local file system
-						bAnyChanges2JARs = true; // well, something will be new once code below executes!
-						console.error( `\nHmmm. ${LocalJARFilePath} does Not exist.\n${err14.message}\n` );
-						console.error( __filename +`: Internal Fatal error. Unable to find ${LocalJARFilePath} (No mvn).\n` );
-						process.exit(29);
+			} catch (err13) { // a.k.a. if fs.readFileSync throws err13.code === 'ENOENT' || 'EISDIR')
+				console.error( __filename +"Internal error: failed to read DependenciesFile: ["+ DependenciesFile +"]\n"+ err13);
+				process.exit(23);
+			}; // try-catch of fs.readFileSync ( DependenciesFile .. )
 
-						{ // empty block of COMMENTS only.
-						// OLD CODE - I used to get the JARs from AWS via https.  No longer.  JARs are now in ${ORGASUXHOME}/lib
-						// console.error( "Without Maven.. Downloading from S3.  *** Not a secure way to do things ***"  );
-						// // var [ bSuccess, httpStatusCode, httpmsg ] = WEBACTIONCMD.getURLAsFileSynchronous( URL1, null, LocalJARFilePath); 
-						// var [ httpStatusCode, errMsg ] = WEBACTIONCMD.getURLAsFileSynchronous( URL1, null, LocalJARFilePath); 
-						// if ( httpStatusCode != 200 ) {
-						//   console.error( __filename + ": Serious internal failure: Failure to download from ["+ URL1 +"] httoCode="+ httpStatusCode +"]");
-						//   console.error( __filename + ": httpMessage = ["+ errMsg +"]");
-						//   process.exit(29);
-						// } else { // if-else httpStatusCode returned 200
-						//     // Either the above get URL command returned a NON-zero error code, or an empty file
-						//     const fstats = fs.statSync(LocalJARFilePath);
-						//     if ( fstats.size <= 0 ) { // file is zero bytes!!!
-						//       console.error( __filename + ": Serious internal failure: zero-byte download ["+ LocalJARFilePath +"] from: "+ URL1 );
-						//       process.exit(28);
-						//     }
-						//     // all ok with LocalJARFilePath
-						//     CLASSPATH=`${CLASSPATH}${CLASSPATHSEPARATOR}${LocalJARFilePath}`;
-						//     if (process.env.VERBOSE) console.log( __filename +": CLASSPATH = ["+ CLASSPATH +"]");
-						// } // if-else httpStatusCode
-						}
-
-					} // try-catch err14 for accessSync( LocalJARFilePath )
-
-			  	} // if-else _bIsMavenInstalled
-
-			} // for lineObj of iterator
+			//--------------------
+			if ( bAnyChanges2JARs ) console.log('\n\n'); // well, "setup" output was observed by end-user.. so, put a couple of blank lines for readability.
+			if (process.env.VERBOSE) console.log( __filename +": CLASSPATH = ["+ CLASSPATH +"]");
 
 		} catch (err13) { // a.k.a. if fs.readFileSync throws err13.code === 'ENOENT' || 'EISDIR')
-			console.error( __filename +"Internal error: failed to read DependenciesFile: ["+ DependenciesFile +"]\n"+ err13);
+			console.error( __filename +"Internal error: failed to read _DependenciesFile: ["+ _DependenciesFile +"]\n"+ err13);
 			process.exit(23);
-		}; // try-catch of fs.readFileSync ( DependenciesFile .. )
-
-		  //--------------------
-		if ( bAnyChanges2JARs ) console.log('\n\n'); // well, "setup" output was observed by end-user.. so, put a couple of blank lines for readability.
-		if (process.env.VERBOSE) console.log( __filename +": CLASSPATH = ["+ CLASSPATH +"]");
-
-	} catch (err13) { // a.k.a. if fs.readFileSync throws err13.code === 'ENOENT' || 'EISDIR')
-		console.error( __filename +"Internal error: failed to read _DependenciesFile: ["+ _DependenciesFile +"]\n"+ err13);
-		process.exit(23);
-	}; // try-catch of fs.readFileSync ( _DependenciesFile .. )
+		}; // try-catch of fs.readFileSync ( _DependenciesFile .. )
+	}; // try-catch of fs.accessSync( UBERJARFILEPATH
 
 	return CLASSPATH;
+
 }; // function genDependencyCLASSPATH()
 
 //========================================================================
