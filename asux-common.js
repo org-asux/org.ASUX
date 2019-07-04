@@ -81,7 +81,7 @@ function genDependencyCLASSPATH( _DependenciesFile, _bIsMavenInstalled ) {
 		// Ok. JAR file already exists ~/.m2
 		if (process.env.VERBOSE) console.log( __filename +" We can access the UBERJARFILEPATH: ["+ UBERJARFILEPATH +"]");
 		CLASSPATH=`${CLASSPATH}${CLASSPATHSEPARATOR}${UBERJARFILEPATH}`;
-		console.log( __filename +": CLASSPATH = ["+ CLASSPATH +"]");
+		if (process.env.VERBOSE) console.log( __filename +": CLASSPATH = ["+ CLASSPATH +"]");
 		return CLASSPATH;
 
 	} catch (err11) { // a.k.a. if fs.readFileSync throws err13.code === 'ENOENT' || 'EISDIR')
