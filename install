@@ -78,13 +78,17 @@ fi
 LOGFILE=/tmp/org.ASUX-1st-run-logs.txt
 echo 'completing install.. .. takes a couple of seconds only..'
 
+ln -s ${orgASUXFldr}/.. /mnt/development/src
+### This above link is needed by ${orgASUXFldr}/compile.sh
+### compile.sh _ASSUMES_ the path /mnt/development/src/org.ASUX as === ${orgASUXFldr}
+
 node ${orgASUXFldr}/asux.js install >&2 ${LOGFILE}
 if [ $? -eq 0 ]; then
 	>&2 echo ' '
 	>&2 echo ' '
 	>&2 echo "You are now all ready to run commands!  Try entering the following example:-"
 	>&2 echo ' '
-	>&2 echo "			asux.js yaml read 'paths,/pet' --delimiter , -i ${orgASUXFldr}/test/nano.yaml -o - "
+	>&2 echo "			asux.js yaml read 'paths,/pet' --delimiter , -i ${orgASUXFldr}/test/inputs/nano.yaml -o - "
 	>&2 echo ' '
 	>&2 echo ' '
 else
