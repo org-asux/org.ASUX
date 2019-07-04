@@ -18,12 +18,14 @@ if [ "${SCRIPTFLDR_RELATIVE}" != "." ]; then
 	>&2 echo ' '
 	>&2 echo "ok.  I should assume you are an experienced-enough user of BASH."
 	>&2 echo "If not, you are the user I hate to support .. or, to provide help/advice."
+	sleep 5
 	>&2 echo ' '
 	>&2 echo "Stop this script immediately.. .. if 'git clone https://github.com/org-asux/org.ASUX.git' command did Not create the ${orgASUXFldr} folder .."
 	>&2 echo ' '
 	sleep 5
 else
 	echo '[y] You are following instructions'
+	sleep 1
 fi
 
 ###-------------------
@@ -32,18 +34,26 @@ fi
 command -v node
 if [ $? -ne 0 ]; then
 	>&2 echo ' '
-	>&2 echo "Node.JS (node) is not installed.  You have to do it manually."
-	>&2 echo "ATTENTION !!! Unfortunately, you have to do it MANUALLY.     Enter the following command AS-IS (incl. the DOT/PERIOD) on the Bash/Shell command-line prompt :-"
 	>&2 echo ' '
-	>&2 echo "       . ${orgASUXFldr}/installNodeOnAWSEC2Instance.sh"
+	>&2 echo '*sigh* You have _NOTHING_ on this server :-('
+	>&2 echo 'We have to do a lot of install.. unfortunately!'
+	sleep 5
+	>&2 echo ' '
+	>&2 echo 'Node.JS (node) is not installed.  You _HAVE_ to do it manually.'
+	>&2 echo '!!! ATTENTION !!! Unfortunately, you have to install "node" MANUALLY.'
+	>&2 echo 'Enter the following command __AS-IS__ (incl. the DOT/PERIOD) on the Bash/Shell command-line prompt :-'
 	>&2 echo ' '
 	>&2 echo ' '
-	sleep 2
-	>&2 echo 'ATTENTION !!! After installing node.. .. rerun this "install" again'
+	>&2 echo "       .    ${orgASUXFldr}/installNodeOnAWSEC2Instance.sh"
+	>&2 echo ' '
+	>&2 echo ' '
+	sleep 7
+	>&2 echo '!!! ATTENTION !!! .. .. rerun this "install" again .. After installing node (as shown above)'
 	>&2 echo ' '
 	exit 1
 else
 	echo "[y] verified that Node.JS (node) is installed"
+	sleep 1
 fi
 
 ###-------------------
@@ -52,8 +62,8 @@ fi
 command -v asux.js
 if [ $? -ne 0 ]; then
 	>&2 echo ' '
-	>&2 echo "${orgASUXFldr} is Not in the path.  I can try to append it to your path (in .bashrc)."
-	>&2 echo 'If you do NOT want this script to change your .bashrc, press Cntl-C Now.. ..!!!'
+	>&2 echo "${orgASUXFldr} is Not in the path.  I can _TRY_ to append it to your path (in .bashrc)."
+	>&2 echo 'If .. you do _NOT_ want this script to change your .bashrc, press Cntl-C Now.. ..!!!'
 	>&2 echo ' '
 	read -p 'Otherwise press ENTER key to continue' BLACKHOLEVARIABLE
 	echo ' ' >> ~/.bashrc
@@ -62,25 +72,30 @@ if [ $? -ne 0 ]; then
 	>&2 echo ' '
 	sleep 2
 	>&2 echo "ATTENTION! You have 2 options now."
-	>&2 echo "		(1) Logout and Login again.  Or .."
-	>&2 echo "		(2) Enter the following command AS-IS on the Bash/Shell command-line prompt :-"
-	>&2 echo "				export PATH='${orgASUXFldr}:${PATH}'"
+	>&2 echo "		(1) Logout and Login again.      .. Or .."
+	>&2 echo "		(2) Enter the following command __AS-IS__ on the Bash/Shell command-line prompt :-"
+	>&2 echo '				export PATH='${orgASUXFldr}':${PATH}'
 	>&2 echo ' '
 	sleep 2
-	>&2 echo 'ATTENTION !!! After choosing an option above.. .. rerun this "install" again'
+	>&2 echo 'ATTENTION !!! After choosing an option above.. .. rerun this "install" again (to double-check everything)'
 	>&2 echo ' '
 	exit 1
 else
 	echo '[y] verified that your org.ASUX project is in the PATH ..and can be used in any folder!'
+	sleep 1
 fi
+
+###-------------------
+### The following symbolic-link is important for running compile and regression-tests of the org.ASUX packages
+mkdir -p /mnt/development > /dev/null 2>&1
+ln -s ${orgASUXFldr}/.. /mnt/development/src > /dev/null 2>&1
+### This above link is needed by ${orgASUXFldr}/compile.sh
+### compile.sh _ASSUMES_ the path /mnt/development/src/org.ASUX as === ${orgASUXFldr}
+if [ ! -e /mnt/development/src ]; then echo '[x] ADVANCED-user ONLY: /mnt/development/src could Not created.'; fi
 
 ###-------------------
 LOGFILE=/tmp/org.ASUX-1st-run-logs.txt
 echo 'completing install.. .. takes a couple of seconds only..'
-
-ln -s ${orgASUXFldr}/.. /mnt/development/src
-### This above link is needed by ${orgASUXFldr}/compile.sh
-### compile.sh _ASSUMES_ the path /mnt/development/src/org.ASUX as === ${orgASUXFldr}
 
 node ${orgASUXFldr}/asux.js install >&2 ${LOGFILE}
 if [ $? -eq 0 ]; then
