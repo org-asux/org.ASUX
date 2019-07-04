@@ -85,7 +85,7 @@ function( _newWorkingDir, _command, _cmdArgs, _quietlyRunCmd, _bVerbose2, _bExit
 				cpObj.status = 1;
 			}
 		}
-		if (_bVerbose2) console.log( "!! ERROR in "+ __filename +"\nRunning '"+ _command +"' gave cpObj.status=" + cpObj.status +" .... and cpObj="+ JSON.stringify(cpObj) +" .... and ERROR-ATTR="+ JSON.stringify(cpObj.error) );
+		if (_bVerbose2) console.log( "Within"+ __filename +"\nRunning '"+ _command +"' gave cpObj.status=" + cpObj.status +" .... and cpObj="+ JSON.stringify(cpObj) +" .... and ERROR-ATTR="+ JSON.stringify(cpObj.error) );
 						// Why am I explicitly passing process.env?  Because I enhance 'process.env' in org.ASUX/asux.js
 
 		if ( ! _quietlyRunCmd ) {
