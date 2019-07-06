@@ -44,7 +44,7 @@ if [ $? -ne 0 ]; then
 	>&2 echo 'Enter the following command __AS-IS__ (incl. the DOT/PERIOD) on the Bash/Shell command-line prompt :-'
 	>&2 echo ' '
 	>&2 echo ' '
-	>&2 echo "       .    ${orgASUXFldr}/installNodeOnAWSEC2Instance.sh"
+	>&2 echo "       .    ${orgASUXFldr}/bin/installNodeOnAWSEC2Instance.sh"
 	>&2 echo ' '
 	>&2 echo ' '
 	sleep 7
