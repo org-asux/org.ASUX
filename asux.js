@@ -7,7 +7,7 @@ var fs = require("fs"); 		// https://nodejs.org/api/fs.html#fs_fs_accesssync_pat
 
 //--------------------------------------
 // This is the Node.JS script within the same directory - to make it simple to run an external command
-var EXECUTESHELLCMD = require( __dirname + "/ExecShellCommand.js");
+var EXECUTESHELLCMD = require( __dirname + "/bin/ExecShellCommand.js");
 
 var INITIAL_CWD = process.cwd(); // just in case I mistakenly process.chdir() somewhere below.
 var COMMAND = "unknown"; // will be set based on what the user enters on the commandline.
