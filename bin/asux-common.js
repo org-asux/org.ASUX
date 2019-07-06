@@ -24,8 +24,8 @@ var PATH = require('path'); // to help process the script-file details.
 var ORGASUXHOME = process.env.ORGASUXHOME ? process.env.ORGASUXHOME : "/invalid/path/to/parentProject/org.ASUX";
 
 // This is the Node.JS script within the same directory - to make it simple to run an external command
-var EXECUTESHELLCMD = require( ORGASUXHOME + "/ExecShellCommand.js");
-// var WEBACTIONCMD = require( ORGASUXHOME + "/WebActionCmd.js" );
+var EXECUTESHELLCMD = require( ORGASUXHOME + "/bin/ExecShellCommand.js");
+// var WEBACTIONCMD = require( ORGASUXHOME + "/bin/WebActionCmd.js" );
 // Oh! I never liked using WebActionCmd.js .. ONLY because it relies on sync-request, which pops up firewall alerts on BOTH MacOS and Windows 10
 
 //========================================================================
