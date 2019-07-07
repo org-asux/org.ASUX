@@ -1,8 +1,8 @@
 #!/bin/tcsh -f
 
 echo \
-source $0:h/AllProjectsList.csh-source
-source $0:h/AllProjectsList.csh-source
+source $0:h/ListOfAllProjects.csh-source
+source $0:h/ListOfAllProjects.csh-source
 
 if ( $?IGNOREERRORS ) echo .. hmmm .. ignoring any errors
 
