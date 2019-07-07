@@ -43,7 +43,7 @@ foreach FLDR ( $PROJECTS )
 			git pull
 			### Unlike git-status, We're __NOT__ going to bother whether or Not git-pull worked / worked as expected.
 
-			echo -n '... '; set ANS=$<
+			#___ echo -n '... '; set ANS=$<
 		else
 			echo "FAILED \! git-status"
 			pwd
