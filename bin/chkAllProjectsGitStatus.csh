@@ -7,18 +7,21 @@ pwd
 git status
 
 if ( $status == 0 || $#argv > 0 ) then
+	git pull
 	echo -n '... '; set ANS=$<
 	chdir /mnt/development/src/org.ASUX/org.ASUX.YAML
 	pwd
 	git status
 
 	if ( $status == 0 || $#argv > 0 ) then
+		git pull
 		echo -n '... '; set ANS=$<
 		chdir /mnt/development/src/org.ASUX/org.ASUX.YAML.NodeImpl
 		pwd
 		git status
 
 		if ( $status == 0 || $#argv > 0 ) then
+			git pull
 			echo -n '... '; set ANS=$<
 			CHDIR /mnt/development/src/org.ASUX/AWS-SDK
 			CHDIR /mnt/development/src/org.ASUX/org.ASUX.AWS-SDK
@@ -26,6 +29,7 @@ if ( $status == 0 || $#argv > 0 ) then
 			git status
 
 			if ( $status == 0 || $#argv > 0 ) then
+				git pull
 				echo -n '... '; set ANS=$<
 				CHDIR /mnt/development/src/org.ASUX/AWS/CFN
 				CHDIR /mnt/development/src/org.ASUX/org.ASUX.AWS.CFN
@@ -33,6 +37,7 @@ if ( $status == 0 || $#argv > 0 ) then
 				git status
 
 				if ( $status == 0 || $#argv > 0 ) then
+					git pull
 					echo -n '... '; set ANS=$<
 					chdir /mnt/development/src/org.ASUX
 					pwd
