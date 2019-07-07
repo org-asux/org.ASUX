@@ -1,5 +1,74 @@
 #!/bin/sh
 
+###-------------------
+if [ $# -ge 1 ] && [ "$1" == "--help" ]; then
+	echo ''
+	echo "Simply running $0 will set things up to run the various ASUX.org tools"
+	echo ''
+	echo "You can also use this tool to configure some run-time settings .. (at any time\!).  You can pretend to have no internet connection (a.k.a. offline).  You can also pretent Not to have maven (a.k.a. local)"
+	echo ''
+	echo "Usage: $0 --[no-]intenet | --offline | --online"
+	echo "Usage: $0 --[no-]maven | --[no-]local"
+	exit 0
+fi
+
+###=====================================================================
+###@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+###=====================================================================
+
+if [ $# -ge 1 ]; then
+	SETTINGSCMD="$1"
+	#___ echo "SETTINGSCMD='$SETTINGSCMD'"
+
+	###____________________
+	NOINTERNETFLAGFILENAME="/tmp/org.ASUX--no-internet";
+	NOMAVENFLAGFILENAME="/tmp/org.ASUX--no-maven";
+	NOUBERJARFLAGFILENAME="/tmp/org.ASUX--no-uberjar";
+
+	###____________________
+	if [ "$SETTINGSCMD" == "--offline" ] || [ "$SETTINGSCMD" == "--no-internet" ]; then
+		touch "${NOINTERNETFLAGFILENAME}"
+		echo ''
+		echo "No-Internet: going forward.. .. the scripts within ASUX.org projects will __NOT__ access internet"
+	fi
+	if [ "$SETTINGSCMD" == "--online" ] || [ "$SETTINGSCMD" == "--internet" ]; then
+		\rm -f "${NOINTERNETFLAGFILENAME}"
+		echo ''
+		echo "yeah\! internet-access allowed by scripts"
+	fi
+
+	###____________________
+	if [ "$SETTINGSCMD" == "--no-maven" ] || [ "$SETTINGSCMD" == "--local" ]; then
+		touch "${NOMAVENFLAGFILENAME}"
+		echo ''
+		echo "No-Maven: going forward.. .. the scripts within ASUX.org projects will __NOT__ use Maven command"
+	fi
+	if [ "$SETTINGSCMD" == "--maven" ] || [ "$SETTINGSCMD" == "--no-local" ]; then
+		\rm -f "${NOMAVENFLAGFILENAME}"
+		echo ''
+		echo "yeah\! 'mvn' command can be executed"
+	fi
+
+	###____________________
+	if [ "$SETTINGSCMD" == "--no-uberjar" ]; then
+		touch "${NOUBERJARFLAGFILENAME}"
+		echo ''
+		echo "No-UBERJar: going forward.. .. the JAVA-runtime will __NOT__ use UBERJar in CLASSPATH"
+	fi
+	if [ "$SETTINGSCMD" == "--uberjar" ]; then
+		\rm -f "${NOUBERJARFLAGFILENAME}"
+		echo ''
+		echo "yeah\! UBERJar in CLASSPATH allowed\!"
+	fi
+
+	exit 0
+fi
+
+###=====================================================================
+###@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+###=====================================================================
+
+###-------------------
 ### The following line did NOT work on Windows
 # CmdPath="${BASH_SOURCE[0]}"
 
