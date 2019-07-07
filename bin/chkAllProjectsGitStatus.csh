@@ -1,62 +1,70 @@
 #!/bin/tcsh -f
 
-alias CHDIR "if ( -e \!* ) chdir \!* "
+onintr CLEANUP
 
-CHDIR /mnt/development/src/org.ASUX/org.ASUX.common
-pwd
-git status
+###============================================
 
-if ( $status == 0 || $#argv > 0 ) then
-	git pull
-	echo -n '... '; set ANS=$<
-	CHDIR /mnt/development/src/org.ASUX/org.ASUX.YAML
-	pwd
-	git status
+echo \
+source $0:h/AllProjectsList.csh-source
+source $0:h/AllProjectsList.csh-source
 
-	if ( $status == 0 || $#argv > 0 ) then
-		git pull
-		echo -n '... '; set ANS=$<
-		CHDIR /mnt/development/src/org.ASUX/org.ASUX.YAML.NodeImpl
+if ( $?IGNOREERRORS ) echo .. hmmm .. ignoring any errors
+
+###============================================
+
+set TMPFILE="/tmp/$0:t.$$"
+set TMPFILEtemplate="/tmp/$0:t.template.$$"
+
+### We'll compare the output of 'git status' with this
+cat > "$TMPFILEtemplate" <<EOTXT
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+EOTXT
+
+###============================================
+
+foreach FLDR ( $PROJECTS )
+
+	if ( -e "${FLDR}" ) then
+		chdir "${FLDR}"
 		pwd
-		git status
+		git status >& "${TMPFILE}"
 
-		if ( $status == 0 || $#argv > 0 ) then
-			git pull
-			echo -n '... '; set ANS=$<
-			CHDIR /mnt/development/src/org.ASUX/AWS-SDK
-			CHDIR /mnt/development/src/org.ASUX/org.ASUX.AWS-SDK
-			pwd
-			git status
-
-			if ( $status == 0 || $#argv > 0 ) then
-				git pull
-				echo -n '... '; set ANS=$<
-				CHDIR /mnt/development/src/org.ASUX/AWS/CFN
-				CHDIR /mnt/development/src/org.ASUX/org.ASUX.AWS.CFN
+		if ( $status == 0 || $?IGNOREERRORS ) then
+			diff "${TMPFILE}" "${TMPFILEtemplate}" >& /dev/null
+			if ( $status != 0 ) then
+				cat "${TMPFILE}"
 				pwd
-				git status
-
-				if ( $status == 0 || $#argv > 0 ) then
-					git pull
-					echo -n '... '; set ANS=$<
-					chdir /mnt/development/src/org.ASUX
-					pwd
-					git status
-
-					if ( $status == 0 || $#argv > 0 ) then
-						git pull
-						echo -n '... '; set ANS=$<
-						chdir /mnt/development/src/org.ASUX/cmdline
-						pwd
-						git status
-
-						if ( $status == 0 || $#argv > 0 ) then
-							git pull
-
-						endif
-					endif
-				endif
+				exit $status
 			endif
+
+			git pull
+			### Unlike git-status, We're __NOT__ going to bother whether or Not git-pull worked / worked as expected.
+
+			echo -n '... '; set ANS=$<
+		else
+			echo "FAILED \! git-status"
+			pwd
+			exit 11
 		endif
+
+	else
+		echo ".. ${FLDR}  ... No-Such folder \!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\ .."
 	endif
-endif
+
+end
+
+set EXITSTATUS=$status
+
+##@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+CLEANUP:
+
+\rm -f "${TMPFILEtemplate}"
+\rm -f "${TMPFILE}"
+
+exit $EXITSTATUS
+
+#EoScript

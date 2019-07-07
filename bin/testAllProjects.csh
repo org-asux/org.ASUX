@@ -1,33 +1,29 @@
 #!/bin/tcsh -f
 
-alias CHDIR "if ( -e \!* ) chdir \!* "
+echo \
+source $0:h/AllProjectsList.csh-source
+source $0:h/AllProjectsList.csh-source
 
-chdir /mnt/development/src/org.ASUX/org.ASUX.common
-./test/testall.csh
+if ( $?IGNOREERRORS ) echo .. hmmm .. ignoring any errors
 
-if ( $status == 0 || $#argv > 0 ) then
-	chdir /mnt/development/src/org.ASUX/org.ASUX.YAML
-	## No testing in here.
+###============================================
 
-	if ( $status == 0 || $#argv > 0 ) then
-		chdir /mnt/development/src/org.ASUX/org.ASUX.YAML.NodeImpl
-		## No testing in here.
+foreach FLDR ( $PROJECTS )
 
-		if ( $status == 0 || $#argv > 0 ) then
-			chdir /mnt/development/src/org.ASUX
+	if ( -e "${FLDR}" ) then
+		chdir "${FLDR}"
+		pwd
+
+		if ( -e ./test/testall.csh ) then
 			./test/testall.csh
-
-			if ( $status == 0 || $#argv > 0 ) then
-				CHDIR /mnt/development/src/org.ASUX/AWS-SDK
-				CHDIR /mnt/development/src/org.ASUX/org.ASUX.AWS-SDK
-				./test/testall.csh
-
-				if ( $status == 0 || $#argv > 0 ) then
-					CHDIR /mnt/development/src/org.ASUX/AWS/CFN
-					CHDIR /mnt/development/src/org.ASUX/org.ASUX.AWS.CFN
-					./test/testall.csh
-				endif
-			endif
+		else
+			echo ".. ignoring .. ${FLDR} .. as it does NOT have a test/testall.csh"
 		endif
+
+	else
+		echo ".. ${FLDR}  ... No-Such folder \!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\ .."
 	endif
-endif
+
+end
+
+#EoScript
