@@ -5,8 +5,8 @@ onintr CLEANUP
 ###============================================
 
 echo \
-source $0:h/AllProjectsList.csh-source
-source $0:h/AllProjectsList.csh-source
+source $0:h/ListOfAllProjects.csh-source
+source $0:h/ListOfAllProjects.csh-source
 
 if ( $?IGNOREERRORS ) echo .. hmmm .. ignoring any errors
 
@@ -37,7 +37,7 @@ foreach FLDR ( $PROJECTS )
 			if ( $status != 0 ) then
 				cat "${TMPFILE}"
 				pwd
-				exit $status
+				if (   !   $?IGNOREERRORS ) exit $status
 			endif
 
 			git pull
