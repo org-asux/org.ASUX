@@ -9,6 +9,8 @@ var fs = require("fs"); 		// https://nodejs.org/api/fs.html#fs_fs_accesssync_pat
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //======================================
 
+process.env.ORGASUXHOME=__dirname; // for use by cmdline/asux.js .. so it know where this asux.js is.
+
 // This is the Node.JS script within the same directory - to make it simple to run an external command
 var EXECUTESHELLCMD = require( __dirname + "/bin/ExecShellCommand.js");
 // !!!!!!!!! ATTENTION !!!!!!!!!! following-file is included - Not a 'require'
@@ -264,8 +266,6 @@ function sendArgs2SubModule( _DIR_orgASUXSubProject ) {
 	//--------------------------------------------------------
 	prms.splice( 0, 0, _DIR_orgASUXSubProject +'/asux.js' ); // insert ./asux.js as the 1st cmdline parameter to node.js
 	if (process.env.VERBOSE) { console.log( `${__filename} : running Node.JS with cmdline-arguments:` + prms.join(' ') ); }
-
-	process.env.ORGASUXHOME=__dirname; // for use by cmdline/asux.js .. so it know where this asux.js is.
 
 	process.exitCode = EXECUTESHELLCMD.executeSubModule(  INITIAL_CWD, 'node', prms, false, process.env.VERBOSE, false, process.env );
 
