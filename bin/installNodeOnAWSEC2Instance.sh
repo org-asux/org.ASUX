@@ -37,7 +37,7 @@ echo 'Recommendation: please logout and login again.. or .. (if you do NOT want 
 echo ''; echo ''; echo ''
 sleep 7
 echo ''; echo ''; echo ''
-echo 'Remember to rerun "./install" again!'
+echo "Remember to rerun "./install" again! (in the directory ${SCRIPTFLDR})"
 echo ''; echo ''; echo ''
 
 
