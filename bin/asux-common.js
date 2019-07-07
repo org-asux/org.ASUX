@@ -131,16 +131,45 @@ function chkMavenInstalled() {
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //========================================================================
 
+function chkFlag( _flagFileName ) {
+
+	try {
+		if (process.env.VERBOSE) console.log( `checking if file ${_flagFileName} exists or not.. .. ` );
+		fs.accessSync( _flagFileName, fs.constants.R_OK ); // will throw.
+		// Ok. JAR file already exists!
+		return true;
+	} catch (err11) { // a.k.a. if fs.readFileSync throws err13.code === 'ENOENT' || 'EISDIR')
+		if (process.env.VERBOSE) console.log( `FLAG-file ${_flagFileName} does ___NOT___ exist!` );
+		return false;
+	}
+
+}; // function chkMavenInstalled()
+
+//========================================================================
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//========================================================================
+
 function genDependencyCLASSPATH( _DependenciesFile, _bIsMavenInstalled ) {
 
 	const JARFOLDER			=	ORGASUXHOME  +'/lib';
 	const MAVENLOCALREPO	=	os.homedir() +'/.m2/repository';
-	const UBERJARFILENAME	=	"org.asux-mvn-shade-uber-jar-1.0.jar";
+	const UBERJARFILENAME	=	"org.asux.mvn-shade-uber-jar-1.0.jar";
 	const UBERJARFILEPATH	=	JARFOLDER +"/"+ UBERJARFILENAME;
+
+	const NOINTERNETFLAGFILENAME	="/tmp/org.ASUX--no-internet";
+	const NOMAVENFLAGFILENAME		="/tmp/org.ASUX--no-maven";
+	const NOUBERJARFLAGFILENAME		="/tmp/org.ASUX--no-uberjar";
+	const noInternet		=	chkFlag( NOINTERNETFLAGFILENAME );
+	const noMaven			=	chkFlag( NOMAVENFLAGFILENAME );
+	const doNotUseUberJar	=	chkFlag( NOUBERJARFLAGFILENAME );
 
 	var bAnyChanges2JARs = false; // Basically, we need to _FIGURE OUT_ whether any JAR changes triggered any MVN downloads.. so that we can help end-user make sense of what git/mvn will dump on screen.
 
 	try {
+
+		if ( doNotUseUberJar ) {
+			throw "Flag "+ NOUBERJARFLAGFILENAME + " is set.  So, Not loading the uber-jar"; // pretend that.. accessSync() - 4 lines below -- throw an exception.
+		}	// this above throw will make it look like the UBER-File does Not exist.
 
 		// 1st check if the uber-jar exists..
 		if (process.env.VERBOSE) console.log( `checking if ${UBERJARFILEPATH} exists or not.. .. ` );
@@ -184,7 +213,8 @@ function genDependencyCLASSPATH( _DependenciesFile, _bIsMavenInstalled ) {
 					const JARFileName = artifactId +'-'+ version +".jar";
 					const MVNJARFilePath=MVNfolderpath +'/'+ JARFileName;
 					// const JARFOLDER=__dirname+'/../lib';
-					const LocalJARFilePath=`${JARFOLDER}/${groupId}.${artifactId}.${JARFileName}`;
+					const LocalJARFilePath=`${JARFOLDER}/${groupId}.${JARFileName}`;	// Note: JARFileName already === {$artifactId}-${version}.jar
+					// const LocalJARFilePath=`${JARFOLDER}/${groupId}.${artifactId}.${JARFileName}`;
 					// const S3FileName=`${groupId}.${artifactId}.${artifactId}-${version}.jar`;
 					// const URL1 = `https://s3.amazonaws.com/org.asux.cmdline/${S3FileName}`;
 
@@ -192,7 +222,7 @@ function genDependencyCLASSPATH( _DependenciesFile, _bIsMavenInstalled ) {
 					if (process.env.VERBOSE) console.log( __filename +": ["+ folderpath +'\t\t'+ MVNfolderpath +'\t\t'+ MVNJARFilePath +"]");
 
 					// ______________________
-					if ( _bIsMavenInstalled ) {
+					if ( _bIsMavenInstalled && ! noMaven ) { // whether maven truly is installed, or we're pretending ..
 
 						var bJARFileExists = false;
 
@@ -224,7 +254,7 @@ function genDependencyCLASSPATH( _DependenciesFile, _bIsMavenInstalled ) {
 
 						} // try-catch err12 for accessSync( MVNJARFilePath )
 
-						if (  ! bJARFileExists ) {
+						if (  ! bJARFileExists && ! noInternet ) { // if JARs do not exist, we'll pull ONLY from Maven-central-Repo _ONLY_ if 'noInternet === false'
 
 							// So.. MVNJARFilePath does Not exist - - NEITHER in ~/.m2/repository - NOR in /tmpdist
 							bAnyChanges2JARs = true; // well, something will be new once code below executes!
@@ -281,7 +311,7 @@ function genDependencyCLASSPATH( _DependenciesFile, _bIsMavenInstalled ) {
 							} // if-else retCode
 						} // if ! bJARFileExists
 
-					} else { // if _bIsMavenInstalled
+					} else { // NOT _bIsMavenInstalled
 
 						// ______________________
 						// Let's see if the project is already in LOCAL-filesystem inside /lib folder of parent GIT Project
