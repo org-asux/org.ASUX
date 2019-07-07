@@ -43,6 +43,18 @@ if ( $status == 0 || $#argv > 0 ) then
 					pwd
 					git status
 
+					if ( $status == 0 || $#argv > 0 ) then
+						git pull
+						echo -n '... '; set ANS=$<
+						chdir /mnt/development/src/org.ASUX/cmdline
+						pwd
+						git status
+
+						if ( $status == 0 || $#argv > 0 ) then
+							git pull
+
+						endif
+					endif
 				endif
 			endif
 		endif
