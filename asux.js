@@ -5,9 +5,18 @@ var os = require('os');			// https://nodejs.org/api/os.html
 var PATH = require('path'); // to help process the script-file details.
 var fs = require("fs"); 		// https://nodejs.org/api/fs.html#fs_fs_accesssync_path_mode
 
-//--------------------------------------
+//======================================
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//======================================
+
 // This is the Node.JS script within the same directory - to make it simple to run an external command
 var EXECUTESHELLCMD = require( __dirname + "/bin/ExecShellCommand.js");
+// !!!!!!!!! ATTENTION !!!!!!!!!! following-file is included - Not a 'require'
+eval( fs.readFileSync( './bin/asux-common.js' ) + '' );
+
+//======================================
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//======================================
 
 var INITIAL_CWD = process.cwd(); // just in case I mistakenly process.chdir() somewhere below.
 var COMMAND = "unknown"; // will be set based on what the user enters on the commandline.
@@ -35,6 +44,9 @@ const DIR_orgASUXAWSCFN = __dirname + '/AWS/CFN';
 const DIR_orgASUXAWSCFN_Downloaded = __dirname + '/'+ PROJNAME_AWSCFN;
 
 //======================================
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//======================================
+
 CmdLine
 	.version('1.0', '-v, --version')
 	.usage('[options] <commands ...>')
