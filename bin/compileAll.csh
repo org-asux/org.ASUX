@@ -28,4 +28,8 @@ foreach FLDR ( $PROJECTS )
 
 end
 
+echo ''
+chdir ${ORGASUXFLDR}
+mvn package
+
 #EoScript
