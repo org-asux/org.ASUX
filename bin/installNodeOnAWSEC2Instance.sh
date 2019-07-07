@@ -33,7 +33,12 @@ popd > /dev/null
 
 echo ''; echo ''; echo ''
 echo ''; echo ''; echo ''
-echo 'please logout and login again.. or .. (if you do NOT want to logout, then .. enter the commands in lines 27-28 (in this BASH script) on the terminal'
+echo 'Recommendation: please logout and login again.. or .. (if you do NOT want to logout, then .. enter the commands in lines 27-28 (in this BASH script) on the terminal'
 echo ''; echo ''; echo ''
+sleep 7
+echo ''; echo ''; echo ''
+echo 'Remember to rerun "./install" again!'
+echo ''; echo ''; echo ''
+
 
 
