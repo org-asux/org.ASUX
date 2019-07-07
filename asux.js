@@ -14,7 +14,7 @@ process.env.ORGASUXHOME=__dirname; // for use by cmdline/asux.js .. so it know w
 // This is the Node.JS script within the same directory - to make it simple to run an external command
 var EXECUTESHELLCMD = require( __dirname + "/bin/ExecShellCommand.js");
 // !!!!!!!!! ATTENTION !!!!!!!!!! following-file is included - Not a 'require'
-eval( fs.readFileSync( './bin/asux-common.js' ) + '' );
+eval( fs.readFileSync( __dirname + '/bin/asux-common.js' ) + '' );
 
 //======================================
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
