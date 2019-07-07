@@ -18,13 +18,14 @@ AWS-SDK
 runclass.csh
 org.ASUX.common
 org.ASUX.yaml
-org.ASUX.YAML.CollectionsImpl
+org.ASUX.YAML
 org.ASUX.YAML.NodeImpl
+org.ASUX.YAML.CollectionsImpl
 AWS
 AWS.CFN
 AWS-SDK
 org.ASUX.AWS
-org.ASUX.AWS.CFN
 org.ASUX.AWS-SDK
+org.ASUX.AWS.CFN
 test-ExecCmd.js
 org.asux-mvn-shade-uber-jar-1.0.jar-ORIG
