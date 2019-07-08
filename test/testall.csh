@@ -15,21 +15,26 @@ echo "Usage: $0 [--verbose]"
 #
 # endif
 
-
 ###------------------------------
-which asux >& /dev/null
-if ( $status == 0 ) then
-        set ORGASUXFLDR=`which asux`
-        set ORGASUXFLDR=$ORGASUXFLDR:h
-        setenv ORGASUXFLDR $ORGASUXFLDR
-        echo "ORGASUXFLDR=$ORGASUXFLDR"
-else
-        foreach FLDR ( ~/org.ASUX   ~/github/org.ASUX   ~/github.com/org.ASUX  /mnt/development/src/org.ASUX     /opt/org.ASUX  /tmp/org.ASUX  )
-                if ( -e "${FLDR}/asux" ) then
-                        set ORGASUXFLDR="$FLDR"
-                        set path=( $path "${ORGASUXFLDR}" )
-                endif
-        end
+if (  !   $?ORGASUXFLDR ) then
+        which asux >& /dev/null
+        if ( $status == 0 ) then
+                set ORGASUXFLDR=`which asux`
+                set ORGASUXFLDR=$ORGASUXFLDR:h
+                if ( "${ORGASUXFLDR}" == "." ) set ORGASUXFLDR=$cwd
+                setenv ORGASUXFLDR "${ORGASUXFLDR}"
+                echo "ORGASUXFLDR=$ORGASUXFLDR"
+        else
+                foreach FLDR ( ~/org.ASUX   ~/github/org.ASUX   ~/github.com/org.ASUX  /mnt/development/src/org.ASUX     /opt/org.ASUX  /tmp/org.ASUX  )
+                        set ORIGPATH=$path
+                        if ( -x "${FLDR}/asux" ) then
+                                set ORGASUXFLDR="$FLDR"
+                                set path=( $ORIGPATH "${ORGASUXFLDR}" )
+                                rehash
+                        endif
+                end
+                setenv ORGASUXFLDR "${ORGASUXFLDR}"
+        endif
 endif
 
 ###------------------------------
