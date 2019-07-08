@@ -5,6 +5,8 @@ source $0:h/ListOfAllProjects.csh-source
 if ( $?IGNOREERRORS ) echo .. hmmm .. ignoring any errors
 
 ###============================================
+mkdir -p "${ORGASUXFLDR}/AWS"
+
 set counter=1
 foreach FLDR ( $RENAMED_PROJECTS )
 
@@ -31,6 +33,8 @@ echo ''
 
 echo ''
 echo 'Invoking Maven for each project..'
+sleep 2
+
 foreach FLDR ( $PROJECTS )
 
 	if ( "${FLDR}" == "${ORGASUXFLDR}" ) continue;  ### We'll run mvn - for this topmost project - at the bottom of this script.
