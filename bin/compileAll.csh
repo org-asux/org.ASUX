@@ -14,7 +14,7 @@ foreach FLDR ( $RENAMED_PROJECTS )
 		echo -n .
 	else
 		echo "  missing ${FLDR}"
-		set ORIGNAME=$ORIG_PROJECTNAMES[counter]
+		set ORIGNAME=$ORIG_PROJECTNAMES[$counter]
 		if (  !  -d  "${ORIGNAME}" ) then
 			echo \
 			git clone https://github.com/org-asux/${ORIGNAME}.git
@@ -22,7 +22,7 @@ foreach FLDR ( $RENAMED_PROJECTS )
 		else
 			echo "  ${ORIGNAME} already exists"
 		endif
-		mv ${ORIGNAME} $NEWNAMES[counter]
+		mv ${ORIGNAME} $NEWNAMES[$counter]
 	endif
 
 	@ counter = $counter + 1
