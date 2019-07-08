@@ -59,7 +59,7 @@ echo yaml --insert /  !AdditionalRootElement --no-quote
 print -
 
 //--------------------------------------------------
-setProperty AWSCFN.HOME=/Users/Sarma/Documents/Development/src/org.ASUX/AWS/CFN
+setProperty ?AWSCFN.HOME=${ASUX::ORGASUXHOME}/AWS/CFN
 echo yaml --insert Resources @${ASUX::AWSCFN.HOME}/AWSCFN.templates-pieces/PublicSubnet.yaml -i test/inputs/Snippet-Resources.yaml 
 
 //--------------------------------------------------
