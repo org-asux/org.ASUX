@@ -4,14 +4,43 @@
 ### !!!!!!!!!!!! ATTENTION !!!!!!!!!!!!!
 ### must be sourced into another TCSH script.
 
-if ( ! $?ORGASUXFLDR ) set ORGASUXFLDR=/mnt/development/src/org.ASUX
 
+###---------------------------------------------------
 if ( $?PROJECTS ) then
 	echo "the TCSH variable named 'PROJECTS' is already defined.   It has a value = '${PROJECTS}'"
 	exit 9
 endif
 
-			### ${ORGASUXFLDR}/org.ASUX.AWS.CFN
-set PROJECTS= ( ${ORGASUXFLDR}/org.ASUX.common ${ORGASUXFLDR}/org.ASUX.YAML ${ORGASUXFLDR}/org.ASUX.YAML.NodeImpl  ${ORGASUXFLDR}/AWS/CFN    ${ORGASUXFLDR}/cmdline   ${ORGASUXFLDR}  ${ORGASUXFLDR}/org.ASUX.AWS-SDK  ${ORGASUXFLDR}/AWS-SDK )
+###------------------------------
+if (  !   $?ORGASUXFLDR ) then
+        which asux >& /dev/null
+        if ( $status == 0 ) then
+                set ORGASUXFLDR=`which asux`
+                set ORGASUXFLDR=$ORGASUXFLDR:h
+                if ( "${ORGASUXFLDR}" == "." ) set ORGASUXFLDR=$cwd
+                setenv ORGASUXFLDR "${ORGASUXFLDR}"
+                echo "ORGASUXFLDR=$ORGASUXFLDR"
+        else
+                foreach FLDR ( ~/org.ASUX   ~/github/org.ASUX   ~/github.com/org.ASUX  /mnt/development/src/org.ASUX     /opt/org.ASUX  /tmp/org.ASUX  )
+                        set ORIGPATH=$path
+                        if ( -x "${FLDR}/asux" ) then
+                                set ORGASUXFLDR="$FLDR"
+                                set path=( $ORIGPATH "${ORGASUXFLDR}" )
+                                rehash
+                        endif
+                end
+                setenv ORGASUXFLDR "${ORGASUXFLDR}"
+        endif
+endif
+
+###---------------------------------------------------
+set ASIS_PROJECTS= ( ${ORGASUXFLDR}/org.ASUX.common ${ORGASUXFLDR}/org.ASUX.YAML ${ORGASUXFLDR}/org.ASUX.YAML.NodeImpl  ${ORGASUXFLDR}  )
+
+set RENAMED_PROJECTS= ( ${ORGASUXFLDR}/cmdline   ${ORGASUXFLDR}/AWS-SDK   ${ORGASUXFLDR}/AWS/CFN     )
+set ORIG_PROJECTNAMES= ( org.ASUX.cmdline   org.ASUX.AWS-SDK   org.ASUX.AWS.CFN   )
+set NEWNAMES= ( cmdline   AWS-SDK   AWS/CFN     )
+
+###---------------------------------------------------
+set PROJECTS= ( ${ASIS_PROJECTS} ${RENAMED_PROJECTS} )
 
 ### EoFile
