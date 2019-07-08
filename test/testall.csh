@@ -2,7 +2,7 @@
 
 ###------------------------------
 echo "Usage: $0 [--verbose]"
-echo "Usage: java -DORGASUXHOME=/mnt/development/src/org.ASUX  -cp /var/build/org.asux-mvn-shade-uber-jar-1.0/org.asux-mvn-shade-uber-jar-1.0.jar org.ASUX.yaml.Cmd --batch @simpleBatch.txt -i /dev/null -o -"
+# echo "Usage: java -DORGASUXHOME=/mnt/development/src/org.ASUX  -cp /var/build/org.asux-mvn-shade-uber-jar-1.0/org.asux-mvn-shade-uber-jar-1.0.jar org.ASUX.yaml.Cmd --batch @simpleBatch.txt -i /dev/null -o -"
 # if ( $#argv <= 1 ) then
 #     echo "Usage: $0  [--verbose] --delete --yamlpath yaml.regexp.path $YAMLLIB --inputfile /tmp/input.yaml -o /tmp/output.yaml " >>& /dev/stderr
 #     echo Usage: $0 'org.ASUX.yaml.Cmd [--verbose] --delete --double-quote --yamlpath "paths.*.*.responses.200" $YAMLLIB --inputfile $cwd/src/test/my-petstore-micro.yaml -o /tmp/output2.yaml ' >>& /dev/stderr
@@ -15,13 +15,27 @@ echo "Usage: java -DORGASUXHOME=/mnt/development/src/org.ASUX  -cp /var/build/or
 #
 # endif
 
+
+###------------------------------
+which asux >& /dev/null
+if ( $status == 0 ) then
+        set ORGASUXFLDR=`which asux`
+        set ORGASUXFLDR=$ORGASUXFLDR:h
+        setenv ORGASUXFLDR $ORGASUXFLDR
+        echo "ORGASUXFLDR=$ORGASUXFLDR"
+else
+        foreach FLDR ( ~/org.ASUX   ~/github/org.ASUX   ~/github.com/org.ASUX  /mnt/development/src/org.ASUX     /opt/org.ASUX  /tmp/org.ASUX  )
+                if ( -e "${FLDR}/asux" ) then
+                        set ORGASUXFLDR="$FLDR"
+                        set path=( $path "${ORGASUXFLDR}" )
+                endif
+        end
+endif
+
 ###------------------------------
 # set YAMLLIB=( --yamllibrary com.esotericsoftware.yamlbeans )
 set YAMLLIB=( --yamllibrary NodeImpl )
-set ORGASUXFLDR=/mnt/development/src/org.ASUX
-set path=( $path ${ORGASUXFLDR} )
 set TESTSRCFLDR=${ORGASUXFLDR}/test
-if (  !  $?CLASSPATH ) setenv CLASSPATH ''
 
 ###------------------------------
 if ( $#argv == 1 ) then
@@ -60,9 +74,12 @@ set JARFLDR=${ORGASUXFLDR}/lib
 # set YAMLBEANSJAR=${JARFLDR}/com.esotericsoftware.yamlbeans-yamlbeans-1.13.jar
 # set JUNITJAR=${JARFLDR}/junit.junit.junit-4.8.2.jar
 # set COMMONSCLIJAR=${JARFLDR}/commons-cli-1.4.jar
-# setenv CLASSPATH  ${CLASSPATH}:${COMMONSCLIJAR}:${JUNITJAR}:${YAMLBEANSJAR}:${MYJAR} ## to get the jndi.properties
-
-if ( $?VERBOSE ) echo $CLASSPATH
+# if ( $?CLASSPATH ) then
+#        setenv CLASSPATH  ${CLASSPATH}:${COMMONSCLIJAR}:${JUNITJAR}:${YAMLBEANSJAR}:${MYJAR} ## to get the jndi.properties
+# else
+#        setenv CLASSPATH  ${COMMONSCLIJAR}:${JUNITJAR}:${YAMLBEANSJAR}:${MYJAR} ## to get the jndi.properties
+# endif
+# if ( $?VERBOSE ) echo $CLASSPATH
 
 ###---------------------------------
 
