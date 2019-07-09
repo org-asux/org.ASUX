@@ -5,6 +5,8 @@ source "$0:h/ListOfAllProjects.csh-source"
 if ( $?IGNOREERRORS ) echo .. hmmm .. ignoring any errors
 
 ###============================================
+### First download projects whose FOLDERS get RENAMED (example: org.ASUX.AWS.AWS-SDK becomes simply AWS/AWS-SDK)
+### After downloading them, rename them
 mkdir -p "${ORGASUXFLDR}/AWS"
 
 set counter=1
@@ -26,6 +28,23 @@ foreach FLDR ( $RENAMED_PROJECTS )
 	endif
 
 	@ counter = $counter + 1
+end
+echo ''
+
+###============================================
+### 2nd: download projects whose FOLDERS are RETAINED as-is (as in, the folders do _NOT_ get renamed / moved)
+mkdir -p "${ORGASUXFLDR}/AWS"
+
+foreach FLDR ( $ASIS_PROJECTS )
+
+	if ( -e "${FLDR}" ) then
+		echo -n .
+	else
+		echo "  missing ${FLDR}"
+		echo \
+		git clone https://github.com/org-asux/${ORIGNAME}.git
+		git clone https://github.com/org-asux/${ORIGNAME}.git
+	endif
 end
 echo ''
 
