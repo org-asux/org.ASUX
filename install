@@ -29,36 +29,42 @@ if [ $# -ge 1 ]; then
 	if [ "$SETTINGSCMD" == "--offline" ] || [ "$SETTINGSCMD" == "--no-internet" ]; then
 		touch "${NOINTERNETFLAGFILENAME}"
 		echo ''
-		echo "No-Internet: going forward.. .. the scripts within ASUX.org projects will __NOT__ access internet"
+		echo "NO Internet!!   Going going forward.. .. the scripts within ASUX.org projects will __NOT__ access internet"
+		echo ''
 	fi
 	if [ "$SETTINGSCMD" == "--online" ] || [ "$SETTINGSCMD" == "--internet" ]; then
 		\rm -f "${NOINTERNETFLAGFILENAME}"
 		echo ''
-		echo "yeah\! internet-access allowed by scripts"
+		echo "yeah! internet-access allowed (for asux command)"
+		echo ''
 	fi
 
 	###____________________
 	if [ "$SETTINGSCMD" == "--no-maven" ] || [ "$SETTINGSCMD" == "--local" ]; then
 		touch "${NOMAVENFLAGFILENAME}"
 		echo ''
-		echo "No-Maven: going forward.. .. the scripts within ASUX.org projects will __NOT__ use Maven command"
+		echo "NO Maven!!   Going forward.. .. the scripts within ASUX.org projects will __NOT__ use Maven command"
+		echo ''
 	fi
 	if [ "$SETTINGSCMD" == "--maven" ] || [ "$SETTINGSCMD" == "--no-local" ]; then
 		\rm -f "${NOMAVENFLAGFILENAME}"
 		echo ''
-		echo "yeah\! 'mvn' command can be executed"
+		echo "yeah! 'mvn' command can be invoked (by asux command)"
+		echo ''
 	fi
 
 	###____________________
 	if [ "$SETTINGSCMD" == "--no-uberjar" ]; then
 		touch "${NOUBERJARFLAGFILENAME}"
 		echo ''
-		echo "No-UBERJar: going forward.. .. the JAVA-runtime will __NOT__ use UBERJar in CLASSPATH"
+		echo "NO UBERJar!!   Going forward.. .. the JAVA-runtime will __NOT__ use UBERJar in CLASSPATH"
+		echo ''
 	fi
 	if [ "$SETTINGSCMD" == "--uberjar" ]; then
 		\rm -f "${NOUBERJARFLAGFILENAME}"
 		echo ''
-		echo "yeah\! UBERJar in CLASSPATH allowed\!"
+		echo "yeah! UBERJar in CLASSPATH allowed!"
+		echo ''
 	fi
 
 	exit 0
