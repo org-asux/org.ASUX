@@ -1,6 +1,6 @@
 #!/bin/tcsh -f
 
-source $0:h/ListOfAllProjects.csh-source
+source "$0:h/ListOfAllProjects.csh-source"
 
 if ( $?IGNOREERRORS ) echo .. hmmm .. ignoring any errors
 
@@ -28,6 +28,12 @@ foreach FLDR ( $RENAMED_PROJECTS )
 	@ counter = $counter + 1
 end
 echo ''
+
+###============================================
+
+echo ''
+chdir ${ORGASUXFLDR}
+mvn -f pom-TopLevelParent.xml clean install:install
 
 ###============================================
 
@@ -61,6 +67,6 @@ end
 
 echo ''
 chdir ${ORGASUXFLDR}
-mvn package install:install
+mvn clean package install:install
 
 #EoScript
