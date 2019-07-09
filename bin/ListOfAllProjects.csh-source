@@ -22,7 +22,7 @@ if (  !   $?ORGASUXFLDR ) then
                 echo "ORGASUXFLDR=$ORGASUXFLDR"
         else
                 foreach FLDR ( ~/org.ASUX   ~/github/org.ASUX   ~/github.com/org.ASUX  /mnt/development/src/org.ASUX     /opt/org.ASUX  /tmp/org.ASUX  )
-                        set ORIGPATH=$path
+                        set ORIGPATH=( $path )
                         if ( -x "${FLDR}/asux" ) then
                                 set ORGASUXFLDR="$FLDR"
                                 set path=( $ORIGPATH "${ORGASUXFLDR}" )
