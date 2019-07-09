@@ -35,15 +35,21 @@ echo ''
 ### 2nd: download projects whose FOLDERS are RETAINED as-is (as in, the folders do _NOT_ get renamed / moved)
 mkdir -p "${ORGASUXFLDR}/AWS"
 
-foreach FLDR ( $ASIS_PROJECTS )
+foreach FLDR ( $ORIG_PROJECTNAMES )
 
 	if ( -e "${FLDR}" ) then
 		echo -n .
 	else
-		echo "  missing ${FLDR}"
-		echo \
-		git clone https://github.com/org-asux/${ORIGNAME}.git
-		git clone https://github.com/org-asux/${ORIGNAME}.git
+		if ( "${FLDR}" == "${ORGASUXFLDR}" ) then
+			echo "skipping 'git clone ${ORGASUXFLDR}' for obvious reasons."
+			continue
+		else
+			echo "  missing ${FLDR}"
+			set PROJNAME=$FLDR:t
+			echo \
+			git clone https://github.com/org-asux/${PROJNAME}.git
+			git clone https://github.com/org-asux/${PROJNAME}.git
+		endif
 	endif
 end
 echo ''
