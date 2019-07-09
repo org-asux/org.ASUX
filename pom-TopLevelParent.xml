@@ -1,0 +1,390 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+<!-- REFERENCE: https://maven.apache.org/pom.html -->
+<!-- REFERENCE: http://maven.apache.org/xsd/maven-4.0.0.xsd -->
+<!-- REFERENCE: http://mvnrepository.com/ -->
+<!-- REFERENCE: http://mvnrepository.com/artifact/org.codehaus.mojo/aspectj-maven-plugin/1.8 -->
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.asux</groupId>
+	<artifactId>TopLevelPOM</artifactId>
+
+	<version>1.0</version>
+	<packaging>pom</packaging>
+	<!--  The currently-acceptable core packaging values are: pom, jar, maven-plugin, ejb, war, ear, rar, par -->
+
+	<inceptionYear>2019</inceptionYear>
+	<name>This is a generic PARENT POM file for JAR-file builds under the entire suite of ASUX.org java projects (https://ASUX.org).</name>
+	<url>https://ASUX.org</url>
+
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+        <!-- =========================================================== -->
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+    <properties>
+        <!-- Properties added here are globally useable -->
+        <DEVELOPMENT>/mnt/development</DEVELOPMENT>
+        <TARGETROOT>/var/build</TARGETROOT>
+        <TARGETDIR>${TARGETROOT}/${project.groupId}-${project.artifactId}-${project.version}</TARGETDIR>
+        <!-- default encoding -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>8</java.version>
+        <!-- see http://stackoverflow.com/questions/3017695/how-to-configure-encoding-in-maven -->
+        <!-- see http://maven.apache.org/general.html#encoding-warning -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- to prevent mvn warnings about platform specific encodings ... -->
+    </properties>
+
+    <developers>
+        <developer>
+            <name>Udaybhaskar Sarma Seetamraju</name>
+            <email>tosarma@gmail.com</email>
+            <organization>ASUX.org</organization>
+            <organizationUrl>https://ASUX.org</organizationUrl>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>0</timezone>
+        </developer>
+    </developers>
+
+	<contributors>
+	</contributors>
+
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+        <!-- =========================================================== -->
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+	<!-- The repositories element in settings.xml can be used for ***additional*** IN-HOUSE remote repositories. -->
+
+<!--	COPY the following 5 lines into your SUBORDINATE POM File.
+-	?Do you want to inherit a lot of POM.xml content from parent?
+-	<parent>
+-		<groupId>org.ussmoso</groupId>
+-		<artifactId>TopLevel-SRC-JAVA</artifactId>
+-		<version>1.0</version>
+-	</parent>
+-->
+
+<!-- 
+-	The dependencyManagement element syntax is similar to that of the dependency section.
+-	What it does, however, is allow children to inherit dependency settings,
+-	but not the dependency itself.
+-	Adding a dependency with the dependencyManagement element does not actually add the dependency
+-	to the POM, nor does it add a dependency to the children;
+-	it creates a default configuration for any dependency that a child may choose to add within its own dependency section.
+-	Settings by dependencyManagement also apply to the current POM's dependency configuration
+-	(although configurations overridden inside the dependency element always take precedence).
+-->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.asux</groupId>
+				<artifactId>common</artifactId>
+				<version>1.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.asux</groupId>
+				<artifactId>yaml</artifactId>
+				<version>1.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.asux</groupId>
+				<artifactId>yaml.nodeimpl</artifactId>
+				<version>1.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.asux</groupId>
+				<artifactId>aws-sdk</artifactId>
+				<version>1.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.asux</groupId>
+				<artifactId>aws-cfn</artifactId>
+				<version>1.0</version>
+			</dependency>
+			<dependency>
+				<!-- scope>test</scope -->
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.8.2</version>
+				</dependency>
+			<!-- https://bitbucket.org/asomov/snakeyaml/wiki/Installation -->
+			<dependency>
+				<groupId>org.yaml</groupId>
+				<artifactId>snakeyaml</artifactId>
+				<version>1.24</version>
+			</dependency>
+			<!-- https://mvnrepository.com/artifact/commons-cli/commons-cli -->
+			<dependency>
+				<groupId>commons-cli</groupId>
+				<artifactId>commons-cli</artifactId>
+				<version>1.4</version>
+			</dependency>
+			<!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
+			<dependency>
+				<groupId>com.opencsv</groupId>
+				<artifactId>opencsv</artifactId>
+				<version>4.0</version>
+			</dependency>
+			<!-- https://www.baeldung.com/jackson-object-mapper-tutorial -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>2.9.9</version>
+			</dependency>
+			<dependency>
+				<groupId>software.amazon.awssdk</groupId>
+				<artifactId>s3</artifactId>
+				<version>2.5.32</version>
+			</dependency>
+			<dependency>
+				<groupId>software.amazon.awssdk</groupId>
+				<artifactId>utils</artifactId>
+				<version>2.5.32</version>
+			</dependency>
+			<dependency>
+				<groupId>com.amazonaws</groupId>
+				<artifactId>aws-java-sdk-core</artifactId>
+				<version>1.11.541</version>
+			</dependency>
+			<dependency>
+				<groupId>com.amazonaws</groupId>
+				<artifactId>aws-java-sdk-ec2</artifactId>
+				<version>1.11.541</version>
+			</dependency>
+			<dependency>
+				<groupId>com.amazonaws</groupId>
+				<artifactId>aws-java-sdk-route53</artifactId>
+				<version>1.11.541</version>
+			</dependency>
+			<!-- <dependency>
+				<groupId>software.amazon.awssdk</groupId>
+				<artifactId>s3</artifactId>
+				<version>2.5.32</version>
+			</dependency>
+			<dependency>
+				<groupId>software.amazon.awssdk</groupId>
+				<artifactId>utils</artifactId>
+				<version>2.5.32</version>
+			</dependency> -->
+		</dependencies>
+	</dependencyManagement>
+
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+        <!-- =========================================================== -->
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+	<dependencies>
+	</dependencies>
+
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+        <!-- =========================================================== -->
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+	<build>
+		<directory>${TARGETDIR}</directory>
+		<outputDirectory>${TARGETDIR}/classes</outputDirectory>
+		<testOutputDirectory>${TARGETDIR}/test-classes</testOutputDirectory>
+		<!-- <finalName>${project.groupId}-${project.artifactId}-${project.version}.jar</finalName> -->
+		<!-- sourceDirectory>../../src</sourceDirectory -->
+
+		<filters>
+			<!-- <filter>src/main/filters/${project.groupId}-${project.artifactId}-${project.version}.properties</filter> -->
+			<!-- The "KVname=KVvalue" pairs defined within the filter files replace ${ KVname } strings within resources on build -->
+		</filters>
+
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+        <plugins>
+
+			<plugin>
+				<inherited>true</inherited>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version> <!-- http://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
+				<configuration>
+                    <release>11</release> <!-- to use Java 11 -->
+					<source>11</source>
+					<target>11</target>
+					<compilerArgs>
+						<arg>-Xlint:deprecation</arg>
+						<arg>-Xlint:unchecked</arg>
+						<!-- arg>-Xlint:all,-options,-path</arg -->
+					</compilerArgs>
+					<useIncrementalCompilation>yes</useIncrementalCompilation>
+				</configuration>
+			</plugin>
+
+            <!-- https://winterbe.com/posts/2018/08/29/migrate-maven-projects-to-java-11-jigsaw
+            -  With Java 11, for ensuring failsafe use of OLD plugins we add an additional argLine - -illegal-access=permit to allow all reflection access for third party libraries.
+            -  This is only needed if your dependencies make heavy use of reflection. If you're unsure whether you need this you can add the above cmd-line arg later.
+            -  You'll see warnings like this when a library tries to illegally access classes via setAccessible(true):
+             *      WARNING: Please consider reporting this to the maintainers of org.codehaus.groovy.reflection.CachedClass
+             *      WARNING: Use - -illegal-access=warn to enable warnings of further illegal reflective access operations
+             *      WARNING: All illegal access operations will be denied in a future release
+            -  Keep in mind that later you probably also have to pass the - -illegal-access=permit parameter when starting your application.
+            -->
+<!--
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.0</version>
+                <configuration>
+                    <argLine>
+                        - -illegal-access=permit
+                    </argLine>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.22.0</version>
+                <configuration>
+                    <argLine>
+                        - -illegal-access=permit
+                    </argLine>
+                </configuration>
+            </plugin>
+-->
+
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+            <!-- =========================================================== -->
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+			<plugin>
+				<inherited>true</inherited>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.6</version> <!-- http://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
+				<configuration>
+					<finalName>${project.groupId}-${project.artifactId}-${project.version}</finalName>  <!-- Default value is: ${project.build.finalName} -->
+					<archive>
+						<!-- Generating a manifest classpath -->
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<mainClass>your.pom.did.not.overwrite.Jar-plugin-manifest.from.pom-jar.xml</mainClass>
+							<!-- https://maven.apache.org/shared/maven-archiver/examples/classpath.html#Prefix -->
+							<addClasspath>true</addClasspath> <!-- add the classpath of your project to the manifest -->
+							<!-- Maven style classpaths??? - Use: <classpathLayoutType>{repository | simple}</classpathLayoutType>  -->
+							<!-- classpathPrefix>lib/</classpathPrefix -->
+						</manifest>
+
+						<!-- manifestFile>META-INF/MANIFEST-default.MF</manifestFile -->
+
+<!-- ONLY sample here... This section is MANDATORY  in child POM ... -->
+						<manifestEntries>
+							<Manifest-Version>1.0</Manifest-Version>
+							<ProjectName>${project.artifactId}</ProjectName>
+							<AppName>${project.groupId}-${project.artifactId}</AppName>
+							<AppVersion>${project.version}</AppVersion>
+							<ArtifactFileName>${project.finalName}</ArtifactFileName>
+							<Datetime>${maven.build.timestamp}</Datetime>
+							<Date>Date-only not implemented</Date>
+							<BuildVersion>NOT IMPLEMENTED AUTO-INCR in scripts - ${buildNumber}</BuildVersion>
+							<Built-By>${user.name} - Seetamraju Uday Bhaskar Sarma sarma@ussmoso.com</Built-By>
+						</manifestEntries>
+
+<!-- end Sample -->
+						<!-- For JAR plugins ver# 2.0.1 and previous ONLY!!!! -->
+					</archive>
+					<resource>
+						<directory>blobFilesFolder</directory>
+<!-- it's not a good idea to filter binary files -->
+						<filtering>false</filtering>
+					</resource>
+
+
+					<!-- If you want to filter these deployment descriptors, then ...
+						these <containerConfigXML> and <webXml> tags WILL BE COMPLETELY OVERWRITTEN.
+						Filtered <resource> tags (see example below) are executed AFTER these tags.
+					-->
+					<!-- Only the last containerConfigXML element is effective -->
+					<containerConfigXML>META-INF/${project.groupId}-${project.artifactId}/weblogic.xml</containerConfigXML>
+					<containerConfigXML>src/main/webapp/META-INF/sun-ejb.xml</containerConfigXML>
+					<ejbXml>src/main/webapp/META-INF/${project.groupId}-${project.artifactId}/ejb.xml</ejbXml>
+					<ejbXml>src/main/webapp/META-INF/ejb.xml</ejbXml>
+				</configuration>
+			</plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <sourcepath>src/main/java</sourcepath>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+            <!-- =========================================================== -->
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+<!-- !!!!!!!! ATTENTION !!!!!!!! Do Not add the maven-shade plugin - into this PARENT-POM. -->
+<!-- REASON: I do NOT want any inadvertent 'package' mvn target executed for any reason for ANY project's POM. -->
+            <!-- <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+			</plugin> -->
+
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+            <!-- =========================================================== -->
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+            <!-- https://winterbe.com/posts/2018/08/29/migrate-maven-projects-to-java-11-jigsaw -->
+            <!-- This plugin finds the latest plugin or dependency versions for your maven-modules.
+				Cmdline:- execute this command to find the plugin versions you have to update:
+                            mvn versions:display-plugin-updates
+                You will see a list of plugins used in your project with newer versions available.
+                Update all of those plugins to the lastest stable version.
+                After you've updated your plugin versions make sure that your project still compiles and runs properly.
+            -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <generateBackupPoms>false</generateBackupPoms>
+                </configuration>
+            </plugin>
+
+		</plugins>
+
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+			</testResource>
+		</testResources>
+
+		<!-- unitTest>
+			<includes>
+				<include>**/*Test.java</include>
+			</includes>
+		</unitTest -->
+
+	</build>
+
+    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <!-- =========================================================== -->
+    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+<!--
+ -	<distributionManagement>
+ -		<repository>
+ -			<id>myown-repository</id>
+ -			<name>My OwnRepository</name>
+ -			<url>scp://repository.ussmoso.com/repository/maven2</url>
+ -		</repository>
+ -	</distributionManagement>
+-->
+
+</project>
+
+
