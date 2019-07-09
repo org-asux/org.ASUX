@@ -205,9 +205,9 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version> <!-- http://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
 				<configuration>
-                    <release>11</release> <!-- to use Java 11 -->
-					<source>11</source>
-					<target>11</target>
+                    <release>8</release> <!-- to use Java 11 -->
+					<source>8</source>
+					<target>8</target>
 					<compilerArgs>
 						<arg>-Xlint:deprecation</arg>
 						<arg>-Xlint:unchecked</arg>
