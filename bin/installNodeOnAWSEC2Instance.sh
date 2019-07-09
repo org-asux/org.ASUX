@@ -1,13 +1,14 @@
 #!/bin/bash
 
 
-CmdPath="$0"
+#___ CmdPath="$0"  <<-- Because this file is 'sourced', ${CmdPath} === "-bash"
 #___ echo $CmdPath
 #___ SCRIPTFLDR="$(dirname "$CmdPath")"
-SCRIPTFLDR="$( cd "$(dirname "$0")" ; pwd -P )"
+#___ SCRIPTFLDR="$( cd '$(dirname \"$0\")' ; pwd -P )"  <<-- there is No $0 & No $1
 #___ echo ${SCRIPTFLDR}
-CmdName=`basename "$CmdPath"`
+#___ CmdName=`basename "$CmdPath"`
 #___ echo ${CmdName}
+set SCRIPTFLDR=$PWD
 
 if [ "${CmdName}" == "installNodeOnAWSEC2Instance.sh" ]; then
 
