@@ -205,7 +205,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version> <!-- http://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
 				<configuration>
-                    <release>8</release> <!-- to use Java 11 -->
+                    <!-- release>11</release --> <!-- this flag is supported by Official JDK11 ONLY -->
 					<source>8</source>
 					<target>8</target>
 					<compilerArgs>
