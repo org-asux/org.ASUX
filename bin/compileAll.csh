@@ -35,7 +35,7 @@ echo ''
 ### 2nd: download projects whose FOLDERS are RETAINED as-is (as in, the folders do _NOT_ get renamed / moved)
 mkdir -p "${ORGASUXFLDR}/AWS"
 
-foreach FLDR ( $ORIG_PROJECTNAMES )
+foreach FLDR ( $ASIS_PROJECTS )
 
 	if ( -e "${FLDR}" ) then
 		echo -n .
