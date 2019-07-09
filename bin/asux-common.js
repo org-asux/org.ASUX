@@ -38,19 +38,37 @@ var CLASSPATHSEPARATOR= (process.platform == 'win32')? ';' : ':';
 var TMPDIR="/tmp";  // i do NOT like os.tmpdir().. as I canNOT MANUALLY find files I create there .
 var ORGNAME="org-asux";
 
+const NOINTERNETFLAGFILENAME	="/tmp/org.ASUX--no-internet";
+const NOMAVENFLAGFILENAME		="/tmp/org.ASUX--no-maven";
+const NOUBERJARFLAGFILENAME		="/tmp/org.ASUX--no-uberjar";
+const noInternet		=	chkFlag( NOINTERNETFLAGFILENAME );
+const noMaven			=	chkFlag( NOMAVENFLAGFILENAME );
+const doNotUseUberJar	=	chkFlag( NOUBERJARFLAGFILENAME );
+
 //========================================================================
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //========================================================================
 
 function runGitPullAll() {
+	if ( noInternet ) {
+		if (process.env.VERBOSE) console.log( "noInternet is "+ noInternet +".  So, skipping the runGitPullAll() function completely." );
+		return;
+	}
+
 	runGitPull( PROJNAME_cmdline,	DIR_orgASUXcmdline	);
 	runGitPull( PROJNAME_AWS,		DIR_orgASUXAWS		);
 	runGitPull( PROJNAME_AWSCFN,	DIR_orgASUXAWSCFN	);
 }
 
+//========================================================================
+
 // !!!!!!!! ATTENTION !!!!!!!!!!!! this function gitpull() only will work if the sub-project has been checkedout/pulled once already.
 // Much of this function's logic is to _ONLY_ Run 'git pull' at most 1/day on this project as well as sub-projects like org.ASUX.cmdline
 function runGitPull( _PROJNAME, _DIR_orgASUXSubProject ) {
+		if ( noInternet ) {
+			if (process.env.VERBOSE) console.log( "noInternet is "+ noInternet +".  So, skipping the runGitPull() function completely." );
+			return;
+		}
 
 		// the following code allows me to check when was the last time this script was run.
 		// if more than one day, set a flag.. so that 'daily-update' activities can be kicked off downstream.
@@ -154,34 +172,50 @@ function genDependencyCLASSPATH( _DependenciesFile, _bIsMavenInstalled ) {
 	const JARFOLDER			=	ORGASUXHOME  +'/lib';
 	const MAVENLOCALREPO	=	os.homedir() +'/.m2/repository';
 	const UBERJARFILENAME	=	"org.asux.mvn-shade-uber-jar-1.0.jar";
-	const UBERJARFILEPATH	=	JARFOLDER +"/"+ UBERJARFILENAME;
-
-	const NOINTERNETFLAGFILENAME	="/tmp/org.ASUX--no-internet";
-	const NOMAVENFLAGFILENAME		="/tmp/org.ASUX--no-maven";
-	const NOUBERJARFLAGFILENAME		="/tmp/org.ASUX--no-uberjar";
-	const noInternet		=	chkFlag( NOINTERNETFLAGFILENAME );
-	const noMaven			=	chkFlag( NOMAVENFLAGFILENAME );
-	const doNotUseUberJar	=	chkFlag( NOUBERJARFLAGFILENAME );
+	const UBERJARFILEPATH1	=	MAVENLOCALREPO +"/org/asux/mvn-shade-uber-jar/1.0/"+ (UBERJARFILENAME.replace('org.asux.', ''));
+	const UBERJARFILEPATH2	=	JARFOLDER +"/"+ UBERJARFILENAME;
 
 	var bAnyChanges2JARs = false; // Basically, we need to _FIGURE OUT_ whether any JAR changes triggered any MVN downloads.. so that we can help end-user make sense of what git/mvn will dump on screen.
 
-	try {
+try {
+	if ( doNotUseUberJar ) {
+		const e = "Flag "+ NOUBERJARFLAGFILENAME + " is set.  So, Not loading the uber-jar: "+ UBERJARFILEPATH1; // pretend that.. accessSync() - 4 lines below -- throw an exception.
+		if (process.env.VERBOSE) console.log( __filename + e );
+		throw e;
+	}	// this above throw will make it look like the UBER-File does Not exist.
 
+	// 1st check if the uber-jar exists..
+	if (process.env.VERBOSE) console.log( `checking if ${UBERJARFILEPATH1} exists or not.. .. ` );
+	fs.accessSync( UBERJARFILEPATH1, fs.constants.R_OK ); // will throw.
+
+	// Ok. JAR file already exists in ~/.m2
+	if (process.env.VERBOSE) console.log( __filename +" We can access the UBERJARFILEPATH1: ["+ UBERJARFILEPATH1 +"]");
+	CLASSPATH=`${CLASSPATH}${CLASSPATHSEPARATOR}${UBERJARFILEPATH1}`;
+	if (process.env.VERBOSE) console.log( __filename +": CLASSPATH = ["+ CLASSPATH +"]");
+	return CLASSPATH;
+
+} catch (err11) { // a.k.a. if fs.readFileSync throws err13.code === 'ENOENT' || 'EISDIR')
+	try {
 		if ( doNotUseUberJar ) {
-			throw "Flag "+ NOUBERJARFLAGFILENAME + " is set.  So, Not loading the uber-jar"; // pretend that.. accessSync() - 4 lines below -- throw an exception.
+			const e = "Flag "+ NOUBERJARFLAGFILENAME + " is set.  So, Not loading the uber-jar: "+ UBERJARFILEPATH2; // pretend that.. accessSync() - 4 lines below -- throw an exception.
+			if (process.env.VERBOSE) console.log( __filename + e );
+			throw e;
 		}	// this above throw will make it look like the UBER-File does Not exist.
 
+		if (process.env.VERBOSE) console.log( __filename +"Internal error: failed to access UBERJARFILEPATH1: ["+ UBERJARFILEPATH1 +"]\n"+ err11);
+
 		// 1st check if the uber-jar exists..
-		if (process.env.VERBOSE) console.log( `checking if ${UBERJARFILEPATH} exists or not.. .. ` );
-		fs.accessSync( UBERJARFILEPATH, fs.constants.R_OK ); // will throw.
-		// Ok. JAR file already exists ~/.m2
-		if (process.env.VERBOSE) console.log( __filename +" We can access the UBERJARFILEPATH: ["+ UBERJARFILEPATH +"]");
-		CLASSPATH=`${CLASSPATH}${CLASSPATHSEPARATOR}${UBERJARFILEPATH}`;
+		if (process.env.VERBOSE) console.log( `checking if ${UBERJARFILEPATH2} exists or not.. .. ` );
+		fs.accessSync( UBERJARFILEPATH2, fs.constants.R_OK ); // will throw.
+
+		// Ok. JAR file already exists under ${ORGASUXFLDR}/lib
+		if (process.env.VERBOSE) console.log( __filename +" We can access the UBERJARFILEPATH2: ["+ UBERJARFILEPATH2 +"]");
+		CLASSPATH=`${CLASSPATH}${CLASSPATHSEPARATOR}${UBERJARFILEPATH2}`;
 		if (process.env.VERBOSE) console.log( __filename +": CLASSPATH = ["+ CLASSPATH +"]");
 		return CLASSPATH;
 
 	} catch (err11) { // a.k.a. if fs.readFileSync throws err13.code === 'ENOENT' || 'EISDIR')
-		if (process.env.VERBOSE) console.log( __filename +"Internal error: failed to access UBERJARFILEPATH: ["+ UBERJARFILEPATH +"]\n"+ err11);
+		if (process.env.VERBOSE &&  !   doNotUseUberJar ) console.log( __filename +"Internal error: failed to access UBERJARFILEPATH2: ["+ UBERJARFILEPATH2 +"]\n"+ err11);
 
 		try {
 			if (process.env.VERBOSE) console.log( `checking if ${_DependenciesFile} exists or not.. .. ` );
@@ -371,7 +405,8 @@ function genDependencyCLASSPATH( _DependenciesFile, _bIsMavenInstalled ) {
 			console.error( __filename +"Internal error: failed to read _DependenciesFile: ["+ _DependenciesFile +"]\n"+ err13);
 			process.exit(23);
 		}; // try-catch of fs.readFileSync ( _DependenciesFile .. )
-	}; // try-catch of fs.accessSync( UBERJARFILEPATH
+	}; // try-catch of fs.accessSync( UBERJARFILEPATH2
+}; // try-catch of fs.accessSync( UBERJARFILEPATH1
 
 	return CLASSPATH;
 
