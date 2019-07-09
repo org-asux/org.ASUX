@@ -136,7 +136,7 @@ if [ $? -ne 0 ]; then
 	>&2 echo ' '
 	read -p 'Otherwise press ENTER key to continue' BLACKHOLEVARIABLE
 	echo ' ' >> ~/.bashrc
-	echo 'export PATH="'${orgASUXFldr}'":${PATH}' >> ~/.bashrc
+	echo 'export PATH=.:"'${orgASUXFldr}'":${PATH}' >> ~/.bashrc
 	>&2 echo 'Done!'
 	>&2 echo ' '
 	sleep 2
@@ -166,7 +166,7 @@ if [ ! -e /mnt/development/src ]; then echo '[x] ADVANCED-user ONLY: /mnt/develo
 LOGFILE=/tmp/org.ASUX-1st-run-logs.txt
 echo 'completing install.. .. takes a couple of seconds only..'
 
-node ${orgASUXFldr}/asux.js install >&2 ${LOGFILE}
+node ${orgASUXFldr}/asux.js install > ${LOGFILE} 2>&1
 if [ $? -eq 0 ]; then
 	>&2 echo ' '
 	>&2 echo ' '
