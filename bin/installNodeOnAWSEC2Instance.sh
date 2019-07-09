@@ -24,10 +24,11 @@ if [ "${CmdName}" == "installNodeOnAWSEC2Instance.sh" ]; then
 fi
 
 pushd ~ > /dev/null
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash
+	### https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-up-node-on-ec2-instance.html
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-nvm install 7
+nvm install 10
 npm install commander
 
 popd > /dev/null
