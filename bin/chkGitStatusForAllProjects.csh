@@ -34,10 +34,11 @@ foreach FLDR ( $PROJECTS )
 
 		if ( $status == 0 || $?IGNOREERRORS ) then
 			diff "${TMPFILE}" "${TMPFILEtemplate}" >& /dev/null
-			if ( $status != 0 ) then
+			set EXITSTATUS=$status
+			if ( $EXITSTATUS != 0 ) then
 				cat "${TMPFILE}"
 				pwd
-				if (   !   $?IGNOREERRORS ) exit $status
+				if (   !   $?IGNOREERRORS ) goto CLEANUP
 			endif
 
 			git pull
@@ -47,7 +48,8 @@ foreach FLDR ( $PROJECTS )
 		else
 			echo "FAILED \! git-status"
 			pwd
-			exit 11
+			set EXITSTATUS=11
+			goto CLEANUP
 		endif
 
 	else
