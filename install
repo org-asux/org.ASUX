@@ -169,7 +169,7 @@ ln -s ${orgASUXFldr}/.. /mnt/development/src > /dev/null 2>&1
 if [ ! -e /mnt/development/src ]; then echo '[x] ADVANCED-user ONLY: /mnt/development/src could Not created.'; fi
 
 ###-------------------
-LOGFILE=/tmp/org.ASUX-1st-run-logs.txt
+LOGFILE=/tmp/org.ASUX-install-cmd-logs.txt
 echo 'completing install.. .. takes a couple of seconds only..'
 
 node ${orgASUXFldr}/asux.js install > ${LOGFILE} 2>&1
