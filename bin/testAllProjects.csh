@@ -15,7 +15,7 @@ foreach FLDR ( $PROJECTS )
 		pwd
 
 		if ( -e ./test/testall.csh ) then
-			./test/testall.csh
+			./test/testall.csh $*
 		else
 			echo ".. ignoring .. ${FLDR} .. as it does NOT have a test/testall.csh"
 		endif
