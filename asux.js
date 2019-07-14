@@ -53,6 +53,7 @@ CmdLine
 	.version('1.0', '-v, --version')
 	.usage('[options] <commands ...>')
 	.option('--verbose', 'A value that can be increased by repeating', 0)
+	.option('--offline', 'whether to assume No internet and use cached responses (previously saved)', 0)
 	.option('--properties [propsFile]', 'A JSON file containing Key-value pairs', 0)
 	;
 
@@ -93,6 +94,11 @@ CmdLine.on('--help', function(){
 CmdLine.on('option:verbose', function () {
 	console.log("Yeah.  Going verbose " + this.verbose);
 	process.env.VERBOSE = this.verbose;
+});
+
+CmdLine.on('option:offline', function () {
+	console.log("Yeah.  Going _OFFLINE_ " );
+	process.env.OFFLINE = true;
 });
 
 CmdLine.on('option:properties', function () {
@@ -265,7 +271,7 @@ function sendArgs2SubModule( _DIR_orgASUXSubProject ) {
 	}
 	//--------------------------------------------------------
 	prms.splice( 0, 0, _DIR_orgASUXSubProject +'/asux.js' ); // insert ./asux.js as the 1st cmdline parameter to node.js
-	if (process.env.VERBOSE) { console.log( `${__filename} : running Node.JS with cmdline-arguments:` + prms.join(' ') ); }
+	if (process.env.VERBOSE) { console.log( `${__filename} : running Node.JS with cmdline-arguments:\n` + prms.join('\n') ); }
 
 	process.exitCode = EXECUTESHELLCMD.executeSubModule(  INITIAL_CWD, 'node', prms, false, process.env.VERBOSE, false, process.env );
 
