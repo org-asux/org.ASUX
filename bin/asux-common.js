@@ -45,6 +45,139 @@ const noInternet		=	chkFlag( NOINTERNETFLAGFILENAME );
 const noMaven			=	chkFlag( NOMAVENFLAGFILENAME );
 const doNotUseUberJar	=	chkFlag( NOUBERJARFLAGFILENAME );
 
+//--------------------------------------
+// I'd like most of the 16 lines below to  be 'const' declarations and NOT 'var'.. .. but unfortunately.. when ANOTHER .js file includes this, the 'const' are lost!
+var PROJNAME_cmdline="org.ASUX.cmdline";
+var DIR_orgASUXcmdline = ORGASUXHOME + '/cmdline';
+var DIR_orgASUXcmdline_Downloaded = ORGASUXHOME + '/'+ PROJNAME_cmdline;
+
+var PROJNAME_AWS="org.ASUX.AWS";
+var DIR_orgASUXAWS = ORGASUXHOME + '/AWS';
+var DIR_orgASUXAWS_Downloaded = ORGASUXHOME + '/'+ PROJNAME_AWS;
+
+var PROJNAME_AWSSDK="org.ASUX.AWS-SDK";
+var DIR_orgASUXAWSSDK = ORGASUXHOME + '/AWS/AWS-SDK';
+var DIR_orgASUXAWSSDK_Downloaded = ORGASUXHOME + '/'+ PROJNAME_AWSCFN;
+
+var PROJNAME_AWSCFN="org.ASUX.AWS.CFN";
+var DIR_orgASUXAWSCFN = ORGASUXHOME + '/AWS/CFN';
+var DIR_orgASUXAWSCFN_Downloaded = ORGASUXHOME + '/'+ PROJNAME_AWSCFN;
+
+//============================================================
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//============================================================
+
+function sendArgs2SubModule( _DIR_orgASUXSubProject ) {
+
+	if ( __dirname != process.cwd()  ) {
+		if (process.env.VERBOSE) console.log("you **WERE** in the directory: '%s'", process.cwd() );
+		// process.chdir(  __dirname ); <-- ATTENTION: NO LONGER CORRECT --> Need to stay in the topmost org.ASUX project working folder - to git-fetch sub-projects
+		// if (process.env.VERBOSE) console.log("switched to directory: '%s'", process.cwd());
+	}else{
+		if (process.env.VERBOSE) console.log("You are running from where this Node.JS Script is.  Nice! %s", __dirname );
+	}
+
+	//--------------------
+
+
+	//decison made: Each subfolder of org.ASUX (like org.ASUX.cmdline) will be a standalone project ..
+	// .. as in: subfolder/asux.js is EXPECTING to see cmdline-arguments **as if** it were entered by user on shell-prompt
+
+
+
+	//--------------------
+	// pre-scripts (Before running ./cmdline/asux.js)
+	EXECUTESHELLCMD.runPreScripts(); // ignore any exit code from these PRE-scripts
+
+	//--------------------------------------------------------
+	// In Unix shell, If there are spaces inside the variables, then "$@" retains the spaces, while "$*" does not
+	// The following lines of code are the JS-quivalent of shell's      ./cmdline/asux $@
+	// For starters, Get rid of 'node' and 'asux.js' via slice(2)
+	var prms = [];
+	for (var ix in process.argv) {
+    	if ( process.argv[ix].match('.*node(.exe)?$') ) continue; // get rid of node.js  or  node.exe (on windows)
+		if ( ix < 2 ) continue; // For starters, Get rid of 'node' and 'asux.js'
+		if ( process.argv[ix] == COMMAND ) continue; // Skip 'yaml' or 'aws' or 'aws.cfn' or .. ..
+		prms.push( process.argv[ix]);
+	}
+	//--------------------------------------------------------
+	prms.splice( 0, 0, _DIR_orgASUXSubProject +'/asux.js' ); // insert ./asux.js as the 1st cmdline parameter to node.js
+	if (process.env.VERBOSE) { console.log( `${__filename} : running Node.JS with cmdline-arguments:\n` + prms.join('\n') ); }
+
+	process.exitCode = EXECUTESHELLCMD.executeSubModule(  INITIAL_CWD, 'node', prms, false, process.env.VERBOSE, false, process.env );
+
+			// Keeping code around .. .. In case I wanted to run the submodule via .. JS require()
+			// var runOrgASUXCmdLine = require( __dirname +"/"+ subdir + "/asux.js");
+			// runOrgASUXCmdLine.functionName( prms, callBackFn( __dirname, err11, response ) {
+			//		if(!err11){ console.log(response); }else { console.error(err11); process.exit(err11.code); }
+			// });
+
+	//--------------------
+	EXECUTESHELLCMD.runPostScripts(); // ignore any exit code from these Post-scripts
+
+	// The Node.js process will exit on its own if there is no additional work pending in the event loop.
+	// The process.exitCode property can be set to tell the process which exit code to use when the process exits gracefully.
+
+} // end function sendArgs2CmdlineModule
+
+//============================================================
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//============================================================
+
+function processJavaCmd( _CMD) {
+
+	const bIsMavenInstalled = chkMavenInstalled();
+	const DependenciesFile=__dirname + "/etc/classpaths/"+ CMDGRP +"-cmd.dependencies";
+	const CLASSPATH = genDependencyCLASSPATH( DependenciesFile, bIsMavenInstalled );
+
+	// ${CMDCLASS} is defined inside this properties file
+	const props = require ( `${__dirname}/etc/js-source/${CMDGRP}.js-source` )
+
+	//--------------------
+	// pre-scripts (Before running ./cmdline/asux.js)
+	EXECUTESHELLCMD.runPreScripts(); // ignore any exit code from these PRE-scripts
+
+	//--------------------
+	var cmdArgs = copyCmdLineArgs( _CMD, /* _bInsertDoubleHyphen */ true, /* _bAddCmd2Params */ true );
+	// copyCmdLineArgs() is defined within process.env.ORGASUXHOME/asux-common.js
+
+	cmdArgs.splice( 0, 0, '-cp' ); // insert ./asux.js as JAVA's 1st cmdline parameter
+	cmdArgs.splice( 1, 0, CLASSPATH ); // insert CLASSPATH as JAVA's  2nd cmdline parameter
+    cmdArgs.splice( 2, 0, "-DORGASUXHOME="+process.env.ORGASUXHOME );
+    cmdArgs.splice( 3, 0, "-DAWSHOME="+process.env.AWSHOME );
+    cmdArgs.splice( 4, 0, "-DAWSCFNHOME="+process.env.AWSCFNHOME );
+	cmdArgs.splice( 5, 0, props['CMDCLASS'] ); // insert CMDCLASS=org.ASUX.yaml.Cmd as JAVA's  3rd cmdline parameter
+	if (process.env.VERBOSE) console.log( `${__filename} : within /tmp:\n\tjava ` + cmdArgs.join(' ') +"\n" );
+
+	const retCode = EXECUTESHELLCMD.executeSharingSTDOUT ( INITIAL_CWD, 'java', cmdArgs, true, process.env.VERBOSE, false, null );
+	process.exitCode = retCode;
+
+    //--------------------
+    // OLD CODE.. where this was invoking SHELL-Scripts within {AWSCFNHOME}/bin
+
+    // var cmdArgs = copyCmdLineArgs(  _CMD,  /* _bInsertDoubleHyphen */ false, /* _bAddCmd2Params */ false );
+    // // copyCmdLineArgs() is defined within process.env.ORGASUXHOME/asux-common.js
+    // if (process.env.VERBOSE) console.log( __filename +": Cmd Line params are: '" + cmdArgs.join(' ') +"'" );
+
+    // const scriptFullPath = process.env.AWSCFNHOME+"/bin/"+_CMD +".sh";
+    // const retCode = EXECUTESHELLCMD.executeSharingSTDOUT ( INITIAL_CWD, scriptFullPath, cmdArgs, true, process.env.VERBOSE, false, process.env );
+    // process.exitCode = retCode;
+
+	//--------------------
+	if ( retCode == 0 ) {
+		if (process.env.VERBOSE) console.log( "\n"+ __filename +": Done!");
+		// process.exitCode = 0;
+	}else{
+		if (process.env.VERBOSE) console.error( '\n'+ __filename +": Failed with error-code "+ retCode +" for: java "+ cmdArgs.join(' '));
+        // console.error( '\n'+ __filename +": Failed with error-code "+ retCode +" for: "+ scriptFullPath +" "+ cmdArgs.join(' '));
+        process.exitCode = retCode;
+	}
+
+	//--------------------
+	EXECUTESHELLCMD.runPostScripts(); // ignore any exit code from these Post-scripts
+
+} // end function processJavaCmd
+
 //========================================================================
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //========================================================================

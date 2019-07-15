@@ -32,19 +32,6 @@ var LASTRUNTIMESTAMP_FILEPATH_PREFIX = TMPDIR + "/org.ASUX-asux.js-lastRunTimeSt
 
 var bLastRunLongAgo = true;
 
-//--------------------------------------
-var PROJNAME_cmdline="org.ASUX.cmdline";
-const DIR_orgASUXcmdline = __dirname + '/cmdline';
-const DIR_orgASUXcmdline_Downloaded = __dirname + '/'+ PROJNAME_cmdline;
-
-var PROJNAME_AWS="org.ASUX.AWS";
-const DIR_orgASUXAWS = __dirname + '/AWS';
-const DIR_orgASUXAWS_Downloaded = __dirname + '/'+ PROJNAME_AWS;
-
-var PROJNAME_AWSCFN="org.ASUX.AWS.CFN";
-const DIR_orgASUXAWSCFN = __dirname + '/AWS/CFN';
-const DIR_orgASUXAWSCFN_Downloaded = __dirname + '/'+ PROJNAME_AWSCFN;
-
 //======================================
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //======================================
@@ -97,7 +84,7 @@ CmdLine.on('option:verbose', function () {
 });
 
 CmdLine.on('option:offline', function () {
-	console.log("Yeah.  Going _OFFLINE_ " );
+	if (process.env.VERBOSE) console.log("Yeah.  Going _OFFLINE_ " );
 	process.env.OFFLINE = true;
 });
 
@@ -125,6 +112,8 @@ CmdLine.on('command:yaml', function () {
 CmdLine.on('command:aws', function () {
 	if (process.env.VERBOSE) console.log("Yeah.  processing Amazon-AWS command");
 	COMMAND = 'aws';
+	// console.error( __filename +':\nProcessing ARGS command-line: ', CmdLine.args.join(' ') );
+	// console.error( 'Processing FULL command-line: ', process.argv.join(' ') );
 	verifyInstall();
 	sendArgs2SubModule( DIR_orgASUXAWS );
 });
@@ -136,10 +125,17 @@ CmdLine.on('command:aws.cfn', function () {
 	sendArgs2SubModule( DIR_orgASUXAWSCFN );
 });
 
+CmdLine.on('command:aws.sdk', function () {
+	if (process.env.VERBOSE) console.log("Yeah.  processing Amazon-AWS-CloudFormation command");
+	COMMAND = 'aws.sdk';
+	verifyInstall();
+	sendArgs2SubModule( DIR_orgASUXAWSSDK );
+});
 // Like the 'default' in a switch statement.. .. After all of the above "on" callbacks **FAIL** to trigger, we'll end up here.
 // If we end up here, then .. Show error about unknown command
 CmdLine.on('command:*', function (_cmd) {
-	console.error("Invalid command: "+ _cmd +"\nSee --help for a list of available commands.\n"+ process.argv.join(' '));
+	console.error( __filename +":\nInvalid command: "+ _cmd +"\nSee --help for a list of available commands.\n"+ process.argv.join(' '));
+	console.error( 'FULL command-line: ', process.argv.join(' ') );
 	process.exit(1);
 });
 
@@ -231,63 +227,6 @@ function checkIfSubProjectExists( _PROJNAME, _DIR_orgASUXSubProject, _DIR_orgASU
 
 	} // try-catch err2
 }
-
-//============================================================
-//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-//============================================================
-
-function sendArgs2SubModule( _DIR_orgASUXSubProject ) {
-
-	if ( __dirname != process.cwd()  ) {
-		if (process.env.VERBOSE) console.log("you **WERE** in the directory: '%s'", process.cwd() );
-		// process.chdir(  __dirname ); <-- ATTENTION: NO LONGER CORRECT --> Need to stay in the topmost org.ASUX project working folder - to git-fetch sub-projects
-		// if (process.env.VERBOSE) console.log("switched to directory: '%s'", process.cwd());
-	}else{
-		if (process.env.VERBOSE) console.log("You are running from where this Node.JS Script is.  Nice! %s", __dirname );
-	}
-
-	//--------------------
-
-
-	//decison made: Each subfolder of org.ASUX (like org.ASUX.cmdline) will be a standalone project ..
-	// .. as in: subfolder/asux.js is EXPECTING to see cmdline-arguments **as if** it were entered by user on shell-prompt
-
-
-
-	//--------------------
-	// pre-scripts (Before running ./cmdline/asux.js)
-	EXECUTESHELLCMD.runPreScripts(); // ignore any exit code from these PRE-scripts
-
-	//--------------------------------------------------------
-	// In Unix shell, If there are spaces inside the variables, then "$@" retains the spaces, while "$*" does not
-	// The following lines of code are the JS-quivalent of shell's      ./cmdline/asux $@
-	// For starters, Get rid of 'node' and 'asux.js' via slice(2)
-	var prms = [];
-	for (var ix in process.argv) {
-    	if ( process.argv[ix].match('.*node(.exe)?$') ) continue; // get rid of node.js  or  node.exe (on windows)
-		if ( ix < 2 ) continue; // For starters, Get rid of 'node' and 'asux.js'
-		if ( process.argv[ix] == COMMAND ) continue; // Skip 'yaml' or 'aws' or .. ..
-		prms.push( process.argv[ix]);
-	}
-	//--------------------------------------------------------
-	prms.splice( 0, 0, _DIR_orgASUXSubProject +'/asux.js' ); // insert ./asux.js as the 1st cmdline parameter to node.js
-	if (process.env.VERBOSE) { console.log( `${__filename} : running Node.JS with cmdline-arguments:\n` + prms.join('\n') ); }
-
-	process.exitCode = EXECUTESHELLCMD.executeSubModule(  INITIAL_CWD, 'node', prms, false, process.env.VERBOSE, false, process.env );
-
-			// Keeping code around .. .. In case I wanted to run the submodule via .. JS require()
-			// var runOrgASUXCmdLine = require( __dirname +"/"+ subdir + "/asux.js");
-			// runOrgASUXCmdLine.functionName( prms, callBackFn( __dirname, err11, response ) {
-			//		if(!err11){ console.log(response); }else { console.error(err11); process.exit(err11.code); }
-			// });
-
-	//--------------------
-	EXECUTESHELLCMD.runPostScripts(); // ignore any exit code from these Post-scripts
-
-	// The Node.js process will exit on its own if there is no additional work pending in the event loop.
-	// The process.exitCode property can be set to tell the process which exit code to use when the process exits gracefully.
-
-} // end function sendArgs2CmdlineModule
 
 //============================================================
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
