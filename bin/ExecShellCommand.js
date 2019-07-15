@@ -251,7 +251,7 @@ exports.checkIfExists =
 function checkIfExists(  _scriptOrFolder ) {
 	try {
 		if (process.env.VERBOSE) console.log(__filename + " (Script or Folder): checking if [" + _scriptOrFolder + "] exists or not.. .. ");
-		fs.accessSync( _fileOrFolder, fs.constants.R_OK | fs.constants.X_OK);
+		fs.accessSync( _scriptOrFolder, fs.constants.R_OK | fs.constants.X_OK);
 		return true;
 	} catch (err12) { // a.k.a. if fs.accessSync throws
 		if (process.env.VERBOSE) console.log(__filename + " (Script or Folder): [" + _scriptOrFolder + " does NOT EXIST.");
