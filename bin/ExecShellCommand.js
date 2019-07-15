@@ -241,6 +241,29 @@ function myChdir(_newWorkingDir, originalCWD, _bVerbose2) {
 	}
 	;
 }
+
+//==========================================================
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//==========================================================
+
+// Decided to generalize the repeated code to try running ./pre.js ./pre.sh ./post.js ./post.sh
+exports.checkIfExists = 
+function checkIfExists(  _scriptOrFolder ) {
+	try {
+		if (process.env.VERBOSE) console.log(__filename + " (Script or Folder): checking if [" + _scriptOrFolder + "] exists or not.. .. ");
+		fs.accessSync( _fileOrFolder, fs.constants.R_OK | fs.constants.X_OK);
+		return true;
+	} catch (err12) { // a.k.a. if fs.accessSync throws
+		if (process.env.VERBOSE) console.log(__filename + " (Script or Folder): [" + _scriptOrFolder + " does NOT EXIST.");
+		if (process.env.VERBOSE) console.log(__filename + ": exception details: err8 = " + err12.toString());
+		return false;
+	}
+}
+
+//==========================================================
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//==========================================================
+
 // DO NOT put anything below this line (basically, below the close-parenthesis in the previous line above)
 //EoScript
 //EoScript
