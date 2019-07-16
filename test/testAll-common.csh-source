@@ -57,15 +57,19 @@ set ASUXYAML=${MVNREPO}/org/asux/yaml/1.0/yaml-1.0.jar
 #et ASUXCOLLIMPL=${MVNREPO}/org/asux/collectionsimpl/1.0/org.asux.yaml.collectionsimpl-1.0.jar
 
 # set ASUXAWSSDK=${JARFLDR}/org.asux.aws-sdk-1.0.jar
-#et ASUXAWSSDK=${MVNREPO}/org/asux/aws-sdk/1.0/aws-sdk-1.0.jar
+set ASUXAWSSDK=${MVNREPO}/org/asux/aws-sdk/1.0/aws-sdk-1.0.jar
 # set ASUXAWSCFN=${JARFLDR}/org.asux.aws-cfn.aws-cfn-1.0.jar
-#et ASUXAWSCFN=${MVNREPO}/org/asux/aws-cfn/1.0/aws-cfn-1.0.jar
+set ASUXAWSCFN=${MVNREPO}/org/asux/aws-cfn/1.0/aws-cfn-1.0.jar
 
-# set YAMLBEANSJAR=${JARFLDR}/com.esotericsoftware.yamlbeans-yamlbeans-1.13.jar
-set SNAKEYAMLJAR=${JARFLDR}/org.yaml.snakeyaml-1.24.jar
+#__ set YAMLBEANSJAR=${JARFLDR}/com.esotericsoftware.yamlbeans-yamlbeans-1.13.jar
+set YAMLBEANSJAR=${MVNREPO}/esotericsoftware/yamlbeans/yamlbeans/1.13/yamlbeans-1.13.jar
+#__ set SNAKEYAMLJAR=${JARFLDR}/org.yaml.snakeyaml-1.24.jar
+set SNAKEYAMLJAR=${MVNREPO}/org/yaml/snakeyaml/1.24/snakeyaml-1.24.jar
 
-set JUNITJAR=${JARFLDR}/junit.junit-4.8.2.jar
-set COMMONSCLIJAR=${JARFLDR}/commons-cli.commons-cli-1.4.jar
+#__ set JUNITJAR=${JARFLDR}/junit.junit-4.8.2.jar
+set JUNITJAR=${MVNREPO}/junit/junit/4.8.2/junit-4.8.2.jar
+#__ set COMMONSCLIJAR=${JARFLDR}/commons-cli.commons-cli-1.4.jar
+set COMMONSCLIJAR=${MVNREPO}/commons-cli/commons-cli/1.4/commons-cli-1.4.jar
 
 set OTHERJARS=
 set OTHERJARS=${OTHERJARS}:${JUNITJAR}
