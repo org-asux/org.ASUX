@@ -63,7 +63,7 @@ setProperty ?AWSCFN.HOME=${ASUX::ORGASUXHOME}/AWS/CFN
 echo yaml --insert Resources @${ASUX::AWSCFN.HOME}/AWSCFN.templates-pieces/PublicSubnet.yaml -i test/inputs/Snippet-Resources.yaml 
 
 //--------------------------------------------------
-useAsInput @${ASUX::AWSCFN.HOME}/config/inputs/AWSRegions.yaml
+useAsInput @${ASUX::ORGASUXHOME}/AWS/AWS-SDK/etc/offline-downloads/AWSRegions.yaml
 #_____ aws.sdk --list-regions --no-quote
 
 //--------------------------------------------------
@@ -72,7 +72,7 @@ foreach
 	setProperty AWSRegion=${ASUX::foreach.iteration.value}
 
 	#______ aws.sdk --describe-AZs      ${ASUX::foreach.iteration.value} --no-quote
-	useAsInput  @${ASUX::AWSCFN.HOME}/config/inputs/AWS.AZdetails-${ASUX::AWSRegion}.yaml
+	useAsInput  @${ASUX::ORGASUXHOME}/AWS/AWS-SDK/etc/offline-downloads/AWS.AZdetails-${ASUX::AWSRegion}.yaml
 
 	saveTo !AZDETAILS   ### Save the contents of ${ASUX::foreach.iteration.value} into AZDETAILS
 

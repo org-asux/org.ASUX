@@ -10,7 +10,7 @@ saveTo !saveAs-ROOT
 print user.home = ${ASUX::user.home} \n
 print user.dir = ${ASUX::user.dir} \n
 
-useAsInput @${ASUX::AWSCFN.HOME}/config/inputs/AWSRegions.yaml
+useAsInput @${ASUX::ORGASUXHOME}/AWS/AWS-SDK/etc/offline-downloads/AWSRegions.yaml
 #_____ aws.sdk --list-regions
 print -
 
@@ -20,7 +20,7 @@ foreach
 	setProperty AWSRegion=${ASUX::foreach.iteration.value}
 
 	#______ aws.sdk --describe-AZs      ${ASUX::foreach.iteration.value} --no-quote
-	useAsInput  @${ASUX::AWSCFN.HOME}/config/inputs/AWS.AZdetails-${ASUX::AWSRegion}.yaml
+	useAsInput  @${ASUX::ORGASUXHOME}/AWS/AWS-SDK/etc/offline-downloads/AWS.AZdetails-${ASUX::AWSRegion}.yaml
 
 	#______ ATTENTION: the above aws.sdk command's output is NOT SIMPLE KVPairs.
 	#______ It has an empty ARRAY object called 'Messages'

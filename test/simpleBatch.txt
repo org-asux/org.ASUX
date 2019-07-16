@@ -12,7 +12,7 @@ setProperty	AWSCFN.HOME=${ASUX::ORGASUXHOME}/AWS/CFN
 ### useAsInput @/tmp/aws.AZs.yaml
 ### yaml --read         AvailabilityZones.*.ZoneId
 
-useAsInput @${ASUX::AWSCFN.HOME}/config/inputs/AWSRegions.yaml
+useAsInput @${ASUX::ORGASUXHOME}/AWS/AWS-SDK/etc/offline-downloads/AWSRegions.yaml
 #______ aws.sdk --list-regions
 
 //--------------------------------------------------
@@ -20,7 +20,7 @@ foreach
 	print ${ASUX::foreach.iteration.value} \n
 	setProperty AWSRegion=${ASUX::foreach.iteration.value}
 	#______ aws.sdk --list-AZs      ${ASUX::foreach.iteration.value}
-	useAsInput  @${ASUX::AWSCFN.HOME}/config/inputs/AWS.AZlist-${ASUX::AWSRegion}.yaml
+	useAsInput  @${ASUX::ORGASUXHOME}/AWS/AWS-SDK/etc/offline-downloads/AWS.AZlist-${ASUX::AWSRegion}.yaml
 	#______ print -
 	foreach
 		print AZ no. ${ASUX::foreach.index} is: 
