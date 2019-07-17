@@ -104,6 +104,18 @@ else
 fi
 
 ###-------------------
+### NOTE: This function will __ALSO__ change the PATH for this shell-session
+### NOTE: This function is DUPLICATED in '${orgASUXFldr}/bin/installNodeOnAWSEC2Instance.sh'
+addToPathInBashrc()
+{
+	echo ' ' >> ~/.bashrc
+	echo 'export PATH=.:"'${orgASUXFldr}'":${PATH}' >> ~/.bashrc
+	>&2 echo 'Done!'
+
+	export PATH=.:${orgASUXFldr}:${PATH}	### This will also change the PATH for this shell-session
+}
+
+###-------------------
 ### Check to see if Node.JS (Specifically, the program 'node') exists - in the path.
 
 command -v node
@@ -141,24 +153,28 @@ if [ $? -ne 0 ]; then
 	>&2 echo 'If .. you do _NOT_ want this script to change your .bashrc, press Cntl-C Now.. ..!!!'
 	>&2 echo ' '
 	read -p 'Otherwise press ENTER key to continue' BLACKHOLEVARIABLE
-	echo ' ' >> ~/.bashrc
-	echo 'export PATH=.:"'${orgASUXFldr}'":${PATH}' >> ~/.bashrc
-	>&2 echo 'Done!'
-	>&2 echo ' '
-	sleep 2
-	>&2 echo "ATTENTION! You have 2 options now."
-	>&2 echo "		(1) Logout and Login again.      .. Or .."
-	>&2 echo "		(2) Enter the following command __AS-IS__ on the Bash/Shell command-line prompt :-"
-	>&2 echo '				export PATH='${orgASUXFldr}':${PATH}'
-	>&2 echo ' '
-	sleep 2
-	>&2 echo 'ATTENTION !!! After choosing an option above.. .. rerun this "install" again (to double-check everything)'
-	>&2 echo ' '
-	exit 1
-else
-	echo '[y] verified that your org.ASUX project is in the PATH ..and can be used in any folder!'
-	sleep 1
+
+	addToPathInBashrc   ### This will also change the PATH for this shell-session
+
+	# >&2 echo ' '
+	# sleep 2
+	# >&2 echo "ATTENTION! You have 2 options now."
+	# >&2 echo "		(1) Logout and Login again.      .. Or .."
+	# >&2 echo "		(2) Enter the following command __AS-IS__ on the Bash/Shell command-line prompt :-"
+	# >&2 echo '				export PATH='${orgASUXFldr}':${PATH}'
+	# >&2 echo ' '
+	# sleep 2
+	# >&2 echo 'ATTENTION !!! After choosing an option above.. .. rerun this "install" again (to double-check everything)'
+	# >&2 echo ' '
+	# exit 1
+# else
+# 	echo '[y] verified that your org.ASUX project is in the PATH ..and can be used in any folder!'
+# 	sleep 1
+
 fi
+
+echo '[y] verified that your org.ASUX project is in the PATH ..and can be used in any folder!'
+sleep 1
 
 ###-------------------
 ### The following symbolic-link is important for running compile and regression-tests of the org.ASUX packages
