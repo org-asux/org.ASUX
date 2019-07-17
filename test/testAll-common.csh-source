@@ -44,7 +44,9 @@ alias diff \diff -bB
 ###------------------------------
 set JARFLDR="${ORGASUXFLDR}/lib"
 set MVNREPO=~/.m2/repository
-set UBERJARPATH=${JARFLDR}/org.asux.mvn-shade-uber-jar-1.0.jar
+
+set UBERJARPATH=${MVNREPO}/org/asux/mvn-shade-uber-jar/1.0/mvn-shade-uber-jar-1.0.jar
+if ( ! -e ${ASUXCOMMON} ) set UBERJARPATH=${JARFLDR}/org.asux.mvn-shade-uber-jar-1.0.jar
 
 set ASUXCOMMON=${MVNREPO}/org/asux/common/1.1/common-1.1.jar
 if ( ! -e ${ASUXCOMMON} ) set ASUXCOMMON=${JARFLDR}/org.asux.common.common-1.0.jar
@@ -117,7 +119,9 @@ else
         setenv CLASSPATH ${UBERJARPATH}
 endif
 
-if ( "$VERBOSE" != "" ) echo $CLASSPATH
+if ( "$VERBOSE" != "" ) echo CLASSPATHCOMMON=$CLASSPATHCOMMON
+if ( "$VERBOSE" != "" ) echo CLASSPATHMAVENREPO=$CLASSPATHMAVENREPO
+if ( "$VERBOSE" != "" ) echo CLASSPATH=$CLASSPATH
 
 ###---------------------------------
 set noglob ### Very important to allow us to use '*' character on cmdline arguments
