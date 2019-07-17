@@ -180,6 +180,7 @@ function createAndAccessSlashTmp() {
 function checkIfAllSubProjectsExist() {
 	checkIfSubProjectExists( PROJNAME_cmdline,	DIR_orgASUXcmdline,		DIR_orgASUXcmdline_Downloaded	);
 	checkIfSubProjectExists( PROJNAME_AWS,		DIR_orgASUXAWS,			DIR_orgASUXAWS_Downloaded		);
+	checkIfSubProjectExists( PROJNAME_AWSSDK,	DIR_orgASUXAWSSDK,		DIR_orgASUXAWSSDK_Downloaded	);
 	checkIfSubProjectExists( PROJNAME_AWSCFN,	DIR_orgASUXAWSCFN,		DIR_orgASUXAWSCFN_Downloaded	);
 }
 

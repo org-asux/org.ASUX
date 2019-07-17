@@ -190,6 +190,7 @@ function runGitPullAll() {
 
 	runGitPull( PROJNAME_cmdline,	DIR_orgASUXcmdline	);
 	runGitPull( PROJNAME_AWS,		DIR_orgASUXAWS		);
+	runGitPull( PROJNAME_AWSSDK,	DIR_orgASUXAWSSDK	);
 	runGitPull( PROJNAME_AWSCFN,	DIR_orgASUXAWSCFN	);
 }
 
