@@ -7,7 +7,8 @@ if ( $?IGNOREERRORS ) echo .. hmmm .. ignoring any errors
 ###============================================
 ### First download projects whose FOLDERS get RENAMED (example: org.ASUX.AWS.AWS-SDK becomes simply AWS/AWS-SDK)
 ### After downloading them, rename them
-mkdir -p "${ORGASUXFLDR}/AWS"
+
+#___ mkdir -p "${ORGASUXFLDR}/AWS"
 
 set counter=1
 foreach FLDR ( $RENAMED_PROJECTS )
