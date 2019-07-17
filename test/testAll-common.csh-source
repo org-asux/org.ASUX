@@ -49,10 +49,10 @@ set UBERJARPATH=${MVNREPO}/org/asux/mvn-shade-uber-jar/1.0/mvn-shade-uber-jar-1.
 if ( ! -e ${UBERJARPATH} ) set UBERJARPATH=${JARFLDR}/org.asux.mvn-shade-uber-jar-1.0.jar
 
 set ASUXCOMMON=${MVNREPO}/org/asux/common/1.1/common-1.1.jar
-if ( ! -e ${ASUXCOMMON} ) set ASUXCOMMON=${JARFLDR}/org.asux.common.common-1.0.jar
+if ( ! -e ${ASUXCOMMON} ) set ASUXCOMMON=${JARFLDR}/org.asux.common-1.0.jar
 
 set ASUXYAML=${MVNREPO}/org/asux/yaml/1.0/yaml-1.0.jar
-if ( ! -e ${ASUXYAML} ) set ASUXYAML=${JARFLDR}/org.asux.yaml.yaml-1.0.jar
+if ( ! -e ${ASUXYAML} ) set ASUXYAML=${JARFLDR}/org.asux.yaml-1.0.jar
 
 set ASUXNODEIMPL=${MVNREPO}/org/asux/nodeimpl/1.0/org.asux.yaml.nodeimpl-1.0.jar
 if ( ! -e ${ASUXNODEIMPL} ) set ASUXNODEIMPL=${JARFLDR}/org.asux.yaml.nodeimpl-1.0.jar
@@ -64,7 +64,7 @@ set ASUXAWSSDK=${MVNREPO}/org/asux/aws-sdk/1.0/aws-sdk-1.0.jar
 if ( ! -e ${ASUXAWSSDK} ) set ASUXAWSSDK=${JARFLDR}/org.asux.aws-sdk-1.0.jar
 
 set ASUXAWSCFN=${MVNREPO}/org/asux/aws-cfn/1.0/aws-cfn-1.0.jar
-if ( ! -e ${ASUXAWSCFN} ) set ASUXAWSCFN=${JARFLDR}/org.asux.aws-cfn.aws-cfn-1.0.jar
+if ( ! -e ${ASUXAWSCFN} ) set ASUXAWSCFN=${JARFLDR}/org.asux.aws-cfn-1.0.jar
 
 set YAMLBEANSJAR=${MVNREPO}/esotericsoftware/yamlbeans/yamlbeans/1.13/yamlbeans-1.13.jar
 if ( ! -e ${YAMLBEANSJAR} ) set YAMLBEANSJAR=${JARFLDR}/com.esotericsoftware.yamlbeans-yamlbeans-1.13.jar
