@@ -2,7 +2,7 @@
 
 source "$0:h/ListOfAllProjects.csh-source"
 
-if ( $?IGNOREERRORS ) echo .. hmmm .. ignoring any errors
+if ( $?IGNOREERRORS ) echo .. hmmm .. ignoring any errors ({IGNOREERRORS} is set)
 
 ###============================================
 ### First download projects whose FOLDERS get RENAMED (example: org.ASUX.AWS.AWS-SDK becomes simply AWS/AWS-SDK)
