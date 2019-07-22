@@ -109,7 +109,7 @@ fi
 addToPathInBashrc()
 {
 	echo ' ' >> ~/.bashrc
-	echo 'export PATH=.:"'${orgASUXFldr}'":${PATH}' >> ~/.bashrc
+	echo 'export PATH="'${orgASUXFldr}'":${PATH}' >> ~/.bashrc
 	>&2 echo 'Done!'
 
 	export PATH=.:${orgASUXFldr}:${PATH}	### This will also change the PATH for this shell-session
