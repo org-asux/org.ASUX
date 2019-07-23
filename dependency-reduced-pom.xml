@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <artifactId>TopLevelPOM</artifactId>
+    <groupId>org.asux</groupId>
+    <version>1.0</version>
+    <relativePath>pom-TopLevelParent.xml</relativePath>
+  </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.asux</groupId>
   <artifactId>mvn-shade-uber-jar</artifactId>
@@ -33,74 +39,7 @@
     <url>https://github.com/org-asux/org.ASUX.AWS.CFN.git</url>
   </scm>
   <build>
-    <sourceDirectory>src</sourceDirectory>
-    <outputDirectory>${TARGETDIR}/classes</outputDirectory>
-    <testOutputDirectory>${TARGETDIR}/test-classes</testOutputDirectory>
-    <directory>${TARGETDIR}</directory>
     <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.0</version>
-        <inherited>true</inherited>
-        <configuration>
-          <source>8</source>
-          <target>8</target>
-          <compilerArgs>
-            <arg>-Xlint:deprecation</arg>
-            <arg>-Xlint:unchecked</arg>
-          </compilerArgs>
-          <useIncrementalCompilation>yes</useIncrementalCompilation>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>2.6</version>
-        <inherited>true</inherited>
-        <configuration>
-          <finalName>${project.groupId}-${project.artifactId}-${project.version}</finalName>
-          <archive>
-            <manifest>
-              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-              <mainClass>your.pom.did.not.overwrite.Jar-plugin-manifest.from.pom-jar.xml</mainClass>
-              <addClasspath>true</addClasspath>
-            </manifest>
-            <manifestEntries>
-              <Manifest-Version>1.0</Manifest-Version>
-              <ProjectName>${project.artifactId}</ProjectName>
-              <AppName>${project.groupId}-${project.artifactId}</AppName>
-              <AppVersion>${project.version}</AppVersion>
-              <ArtifactFileName>${project.finalName}</ArtifactFileName>
-              <Datetime>${maven.build.timestamp}</Datetime>
-              <Date>Date-only not implemented</Date>
-              <BuildVersion>NOT IMPLEMENTED AUTO-INCR in scripts - ${buildNumber}</BuildVersion>
-              <Built-By>${user.name} - Seetamraju Uday Bhaskar Sarma sarma@ussmoso.com</Built-By>
-            </manifestEntries>
-          </archive>
-          <resource>
-            <directory>blobFilesFolder</directory>
-            <filtering>false</filtering>
-          </resource>
-          <containerConfigXML>META-INF/${project.groupId}-${project.artifactId}/weblogic.xml</containerConfigXML>
-          <containerConfigXML>src/main/webapp/META-INF/sun-ejb.xml</containerConfigXML>
-          <ejbXml>src/main/webapp/META-INF/${project.groupId}-${project.artifactId}/ejb.xml</ejbXml>
-          <ejbXml>src/main/webapp/META-INF/ejb.xml</ejbXml>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.1.0</version>
-        <executions>
-          <execution>
-            <id>attach-javadocs</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <sourcepath>src/main/java</sourcepath>
-        </configuration>
-      </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
         <version>3.2.1</version>
@@ -111,28 +50,11 @@
               <goal>shade</goal>
             </goals>
             <configuration>
-              <filters>
-                <filter>
-                  <artifact>*:*</artifact>
-                  <excludes>
-                    <exclude>META-INF/*.SF</exclude>
-                    <exclude>META-INF/*.DSA</exclude>
-                    <exclude>META-INF/*.RSA</exclude>
-                  </excludes>
-                </filter>
-              </filters>
+              <filters />
             </configuration>
           </execution>
         </executions>
       </plugin>
     </plugins>
   </build>
-  <properties>
-    <java.version>8</java.version>
-    <DEVELOPMENT>/mnt/development</DEVELOPMENT>
-    <TARGETDIR>${TARGETROOT}/${project.groupId}-${project.artifactId}-${project.version}</TARGETDIR>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <TARGETROOT>/var/build</TARGETROOT>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-  </properties>
 </project>
