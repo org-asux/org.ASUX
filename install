@@ -104,18 +104,6 @@ else
 fi
 
 ###-------------------
-### NOTE: This function will __ALSO__ change the PATH for this shell-session
-### NOTE: This function is DUPLICATED in '${orgASUXFldr}/bin/installNodeOnAWSEC2Instance.sh'
-addToPathInBashrc()
-{
-	echo ' ' >> ~/.bashrc
-	echo 'export PATH="'${orgASUXFldr}'":${PATH}' >> ~/.bashrc
-	>&2 echo 'Done!'
-
-	export PATH=.:${orgASUXFldr}:${PATH}	### This will also change the PATH for this shell-session
-}
-
-###-------------------
 ### Check to see if Node.JS (Specifically, the program 'node') exists - in the path.
 
 command -v node
@@ -153,8 +141,6 @@ if [ $? -ne 0 ]; then
 	>&2 echo 'If .. you do _NOT_ want this script to change your .bashrc, press Cntl-C Now.. ..!!!'
 	>&2 echo ' '
 	read -p 'Otherwise press ENTER key to continue' BLACKHOLEVARIABLE
-
-	addToPathInBashrc   ### This will also change the PATH for this shell-session
 
 	# >&2 echo ' '
 	# sleep 2
