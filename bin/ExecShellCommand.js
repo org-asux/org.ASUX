@@ -246,6 +246,43 @@ function myChdir(_newWorkingDir, originalCWD, _bVerbose2) {
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //==========================================================
 
+// fs.renameSync( "/tmp/a.txt", "/home/users/NewFileName.txt" ) <-- this never works, as it's 2-in-1 that Node.js CANNOT handle.
+// So, it needs to be broken down into 2 steps: Rename into "SOURCE" folder, then move (using fs.renameSync(), which works fine).
+// !!!!!!!!!!!!!!!!!!!! ATTENTION !!!!!!!!!!!!!!!!!!!!!
+// this function will throw (by fs.renameSync());   So .. you better invoke this in a try-catch-block!
+exports.renameAndMove =
+function renameAndMove( _oldPath, _newPath ) {
+
+	// !!!!!!!!!!!!!!!!!!!! ATTENTION !!!!!!!!!!!!!!!!!!!!!
+	// this function will throw (by fs.renameSync());   So .. you better invoke this in a try-catch-block!
+
+	// fs.renameSync( _oldPath, _newPath ); <<-- NEVER WORKED, when renaming + moving a file.
+	const fileOldPathElems = _oldPath.split('/');
+	fileOldPathElems.pop();
+	var sourceFldrPath = "UNDEFINED JavascriptVariable 'sourceFldrPath' in "+ __filename;
+	if ( fileOldPathElems.length <= 0 ) {
+		sourceFldrPath = ".";
+	} else {
+		sourceFldrPath = fileOldPathElems.join('/') + "/.";
+	}
+
+	const fileNewPathElems = _newPath.split('/');
+	const fileNewNameOnly = fileNewPathElems.pop();
+	// const destFldrPath = fileNewPathElems.join('/') + "/.";
+
+	const newFileNameInOldPath = sourceFldrPath +'/'+ fileNewNameOnly;
+
+	if (process.env.VERBOSE) console.log( `about to RENAME ${_oldPath} to ${newFileNameInOldPath} ` );
+	fs.renameSync( _oldPath, newFileNameInOldPath  );
+
+	if (process.env.VERBOSE) console.log( `about to MOVE ${newFileNameInOldPath} to ${_DIR_orgASUXSubProject} ` );
+	fs.renameSync( newFileNameInOldPath, _newPath );
+}
+
+//==========================================================
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//==========================================================
+
 // Decided to generalize the repeated code to try running ./pre.js ./pre.sh ./post.js ./post.sh
 exports.checkIfExists = 
 function checkIfExists(  _scriptOrFolder ) {
