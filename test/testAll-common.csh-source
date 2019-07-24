@@ -50,7 +50,7 @@ set UBERJARPATH=${MVNREPO}/org/asux/mvn-shade-uber-jar/1.0/mvn-shade-uber-jar-1.
 if ( ! -e ${UBERJARPATH} ) set UBERJARPATH=${JARFLDR}/org.asux.mvn-shade-uber-jar-1.0.jar
 
 set ASUXCOMMON=${MVNREPO}/org/asux/common/1.1/common-1.1.jar
-if ( ! -e ${ASUXCOMMON} ) set ASUXCOMMON=${JARFLDR}/org.asux.common-1.0.jar
+if ( ! -e ${ASUXCOMMON} ) set ASUXCOMMON=${JARFLDR}/org.asux.common-1.1.jar
 
 set ASUXYAML=${MVNREPO}/org/asux/yaml/1.0/yaml-1.0.jar
 if ( ! -e ${ASUXYAML} ) set ASUXYAML=${JARFLDR}/org.asux.yaml-1.0.jar
@@ -67,8 +67,16 @@ if ( ! -e ${ASUXAWSSDK} ) set ASUXAWSSDK=${JARFLDR}/org.asux.aws-sdk-1.0.jar
 set ASUXAWSCFN=${MVNREPO}/org/asux/aws-cfn/1.0/aws-cfn-1.0.jar
 if ( ! -e ${ASUXAWSCFN} ) set ASUXAWSCFN=${JARFLDR}/org.asux.aws-cfn-1.0.jar
 
+//--------------------------
+set OTHERASUXORGJARS=
+set OTHERASUXORGJARS=${OTHERASUXORGJARS}:${JARFLDR}/org.asux.aws-sdk.aws-sdk-1.0.jar
+set OTHERASUXORGJARS=${OTHERASUXORGJARS}:${JARFLDR}/org.asux.yaml.nodeimpl.yaml.nodeimpl-1.0.jar
+set OTHERASUXORGJARS=${OTHERASUXORGJARS}:${JARFLDR}/org.asux.yaml.yaml-1.0.jar
+set OTHERASUXORGJARS=${OTHERASUXORGJARS}:${JARFLDR}/org.asux.yaml.collectionsimpl.yaml.collectionsimpl-1.0.jar
+
+//--------------------------
 set YAMLBEANSJAR=${MVNREPO}/esotericsoftware/yamlbeans/yamlbeans/1.13/yamlbeans-1.13.jar
-if ( ! -e ${YAMLBEANSJAR} ) set YAMLBEANSJAR=${JARFLDR}/com.esotericsoftware.yamlbeans-yamlbeans-1.13.jar
+if ( ! -e ${YAMLBEANSJAR} ) set YAMLBEANSJAR=${JARFLDR}/com.esotericsoftware.yamlbeans.yamlbeans-1.13.jar
 set SNAKEYAMLJAR=${MVNREPO}/org/yaml/snakeyaml/1.24/snakeyaml-1.24.jar
 if ( ! -e ${SNAKEYAMLJAR} ) set SNAKEYAMLJAR=${JARFLDR}/org.yaml.snakeyaml-1.24.jar
 
@@ -77,31 +85,30 @@ if ( ! -e ${JUNITJAR} ) set JUNITJAR=${JARFLDR}/junit.junit-4.8.2.jar
 set COMMONSCLIJAR=${MVNREPO}/commons-cli/commons-cli/1.4/commons-cli-1.4.jar
 if ( ! -e ${COMMONSCLIJAR} ) set COMMONSCLIJAR=${JARFLDR}/commons-cli.commons-cli-1.4.jar
 
+//--------------------------
 set OTHERJARS=
 set OTHERJARS=${OTHERJARS}:${JUNITJAR}
 set OTHERJARS=${OTHERJARS}:${SNAKEYAMLJAR}
-#___ set OTHERJARS=${OTHERJARS}:${YAMLBEANSJAR}
+set OTHERJARS=${OTHERJARS}:${YAMLBEANSJAR}
+
+set OTHERJARS=${OTHERJARS}:${COMMONSCLIJAR}
+set OTHERJARS=${OTHERJARS}:${JARFLDR}/commons-beanutils.commons-beanutils-1.9.3.jar
+set OTHERJARS=${OTHERJARS}:${JARFLDR}/commons-codec.commons-codec-1.10.jar
+set OTHERJARS=${OTHERJARS}:${JARFLDR}/commons-collections.commons-collections-3.2.2.jar
+set OTHERJARS=${OTHERJARS}:${JARFLDR}/commons-logging.commons-logging-1.2.jar
+
 set OTHERJARS=${OTHERJARS}:${JARFLDR}/joda-time.joda-time-2.8.1.jar
 set OTHERJARS=${OTHERJARS}:${JARFLDR}/org.apache.commons.commons-lang3-3.6.jar
 set OTHERJARS=${OTHERJARS}:${JARFLDR}/org.apache.commons.commons-text-1.1.jar
 set OTHERJARS=${OTHERJARS}:${JARFLDR}/org.apache.httpcomponents.httpclient-4.5.5.jar
 set OTHERJARS=${OTHERJARS}:${JARFLDR}/org.apache.httpcomponents.httpcore-4.4.10.jar
 
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/org.asux.aws-sdk.aws-sdk-1.0.jar
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/org.asux.yaml.nodeimpl.yaml.nodeimpl-1.0.jar
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/org.asux.yaml.yaml-1.0.jar
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/org.asux.yaml.collectionsimpl.yaml.collectionsimpl-1.0.jar
 set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.opencsv.opencsv-4.0.jar
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/commons-beanutils.commons-beanutils-1.9.3.jar
-set OTHERJARS=${OTHERJARS}:${COMMONSCLIJAR}
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/commons-codec.commons-codec-1.10.jar
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/commons-collections.commons-collections-3.2.2.jar
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/commons-logging.commons-logging-1.2.jar
+
 set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.amazonaws.aws-java-sdk-core-1.11.541.jar
 set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.amazonaws.aws-java-sdk-ec2-1.11.541.jar
 set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.amazonaws.aws-java-sdk-route53-1.11.541.jar
 set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.amazonaws.jmespath-java-1.11.541.jar
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.esotericsoftware.yamlbeans.yamlbeans-1.13.jar
 set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.fasterxml.jackson.core.jackson-annotations-2.9.0.jar
 set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.fasterxml.jackson.core.jackson-annotations-2.9.6.jar
 set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.fasterxml.jackson.core.jackson-core-2.9.9.jar
