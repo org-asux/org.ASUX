@@ -1,14 +1,30 @@
 #!/bin/bash
 
 
-#___ CmdPath="$0"  <<-- Because this file is 'sourced', ${CmdPath} === "-bash"
-#___ echo $CmdPath
-#___ SCRIPTFLDR="$(dirname "$CmdPath")"
-#___ SCRIPTFLDR="$( cd '$(dirname \"$0\")' ; pwd -P )"  <<-- there is No $0 & No $1
-#___ echo ${SCRIPTFLDR}
-#___ CmdName=`basename "$CmdPath"`
-#___ echo ${CmdName}
-set SCRIPTFLDR=$PWD
+###-------------------
+### The following line did NOT work on Windows
+# CmdPath="${BASH_SOURCE[0]}"
+
+CmdPath="$0"
+# echo $CmdPath
+SCRIPTFLDR_RELATIVE="$(dirname "$CmdPath")"
+SCRIPTFULLFLDRPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+echo "SCRIPTFULLFLDRPATH = '${SCRIPTFULLFLDRPATH}'"
+
+# set SCRIPTFLDR=$PWD
+
+###-------------------
+
+if [ "${SCRIPTFLDR_RELATIVE}" != "." ]; then
+	orgASUXFldr="${SCRIPTFULLFLDRPATH}"
+else
+	orgASUXFldr=`pwd`
+fi
+echo "orgASUXFldr = '${orgASUXFldr}''"
+
+###=====================================================================
+###@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+###=====================================================================
 
 if [ "${CmdName}" == "installNodeOnAWSEC2Instance.sh" ]; then
 
@@ -39,10 +55,10 @@ popd > /dev/null
 addToPathInBashrc()
 {
 	echo ' ' >> ~/.bashrc
-	echo 'export PATH=.:"'${orgASUXFldr}'":${PATH}' >> ~/.bashrc
+	echo 'export PATH="'${orgASUXFldr}'":${PATH}' >> ~/.bashrc
 	>&2 echo 'Done!'
 
-	export PATH=.:${orgASUXFldr}:${PATH}	### This will also change the PATH for this shell-session
+	export PATH=${orgASUXFldr}:${PATH}	### This will also change the PATH for this shell-session
 }
 
 ###-------------------
@@ -58,7 +74,7 @@ sleep 7
 >&2 echo ' '
 >&2 read -p 'If you are OK, "install" command will be re-run again.  Press Cntl-C to STOP, or .. Otherwise press ENTER key to continue' BLACKHOLEVARIABLE
 # >&2 echo ''; echo ''; echo ''
-# >&2 echo "Remember to rerun "./install" again! (in the directory ${SCRIPTFLDR})"
+# >&2 echo "Remember to rerun "./install" again! (in the directory ${SCRIPTFULLFLDRPATH})"
 # >&2 echo ''; echo ''; echo ''
 
 ./install
