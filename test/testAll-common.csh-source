@@ -26,8 +26,11 @@ if ( $#argv == 1 && "$1" == "--offline" ) then
         shift
 else
         set OFFLINE=""
-        if ( ! -e ~/.aws/profile ) then
-                echo "AWS login credentials missing in a file ./profile"
+        if ( ( ! -e ~/.aws/profile ) && (  !  $?ASUXORG_AWSNOTRELEVANT))then
+                echo " ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! AWS login credentials missing in a file ./profile ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+                sleep 5
+                echo " ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! AWS login credentials missing in a file ./profile ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+                sleep 5
                 exit 2
         endif
 endif
