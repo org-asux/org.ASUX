@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 var CmdLine = require('commander'); // https://github.com/tj/commander.js/
-var os = require('os');			// https://nodejs.org/api/os.html
-var PATH = require('path'); // to help process the script-file details.
-var fs = require("fs"); 		// https://nodejs.org/api/fs.html#fs_fs_accesssync_path_mode
+var os = require('os');				// https://nodejs.org/api/os.html
+var PATH = require('path'); 		// to help process the script-file details.
+var fs = require("fs"); 			// https://nodejs.org/api/fs.html#fs_fs_accesssync_path_mode
 
 //======================================
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -220,7 +220,14 @@ function checkIfSubProjectExists( _PROJNAME, _DIR_orgASUXSubProject, _DIR_orgASU
 			// about to RENAME org.ASUX.cmdline to just cmdline.   FYI: renameSync Returns undefined ALWAYS.
 			if (process.env.VERBOSE) console.log( `about to RENAME folder ${_PROJNAME} to just ${_DIR_orgASUXSubProject} ` );
 			try {
-				fs.renameSync( _DIR_orgASUXSubProject_Downloaded, _DIR_orgASUXSubProject );
+				// fs.renameSync( _DIR_orgASUXSubProject_Downloaded, _DIR_orgASUXSubProject ); <<-- NEVER WORKED, when renaming + moving a file.
+				const fileNewPathElems = _DIR_orgASUXSubProject.split('/');
+				const fileNewNameOnly = fileNewPathElems.pop();
+				const destFldrPath = fileNewPathElems.join('/') + "/.";
+				fs.renameSync( _DIR_orgASUXSubProject_Downloaded, ORGASUXHOME +'/'+ fileNewNameOnly );
+				fs.renameSync( ORGASUXHOME +'/'+ fileNewNameOnly, destFldrPath );
+				// var FS_MoveFile = require('mv');	// https://github.com/andrewrk/node-mv  // !!!!!!!! WARNING !!!!!!!!!! Asynchronous
+				// FS_MoveFile( _DIR_orgASUXSubProject_Downloaded, _DIR_orgASUXSubProject,  {mkdirp: true, clobber: true}, function(err) { console.error('FS_MoveFile#1 - failed: From: '+ _DIR_orgASUXSubProject_Downloaded +' to '+ _DIR_orgASUXSubProject); } );
 			} catch (err6) { // a.k.a. if fs.mkdirSync throws
 				console.error( __filename +": Internal failure, renaming the folder ["+ _PROJNAME +"]\n"+ err6.toString());
 				process.exit(12);
