@@ -68,11 +68,11 @@ addToPathInBashrc
 ###-------------------
 >&2 echo ''; echo ''; echo ''
 >&2 echo ''; echo ''; echo ''
->&2 echo 'A Recommendation: please logout and login again.. or .. (if you are an ADVANCED-user, then .. enter the commands in lines 27-28 (in this BASH script) on the terminal'
+>&2 echo 'A 3-step Recommendation: Cntl-C, then logout & login again, then re-install'
 >&2 echo ''; echo ''; echo ''
 sleep 7
 >&2 echo ' '
->&2 read -p 'If you are OK, "install" command will be re-run again.  Press Cntl-C to STOP, or .. Otherwise press ENTER key to continue' BLACKHOLEVARIABLE
+>&2 read -p 'If you would like the easy way, let us _TRY_ to continue the "install" command.  Press Cntl-C to STOP (for any reason), or .. Otherwise press ENTER key to continue' BLACKHOLEVARIABLE
 # >&2 echo ''; echo ''; echo ''
 # >&2 echo "Remember to rerun "./install" again! (in the directory ${SCRIPTFULLFLDRPATH})"
 # >&2 echo ''; echo ''; echo ''
