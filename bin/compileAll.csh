@@ -59,7 +59,8 @@ echo ''
 
 echo ''
 chdir ${ORGASUXFLDR}
-mvn -f pom-TopLevelParent.xml clean install:install
+mvn -f pom-TopLevelParent.xml clean package install:install
+mvn -f pom-MavenCentralRepo-TopLevelParent.xml clean package install:install
 
 ###============================================
 
