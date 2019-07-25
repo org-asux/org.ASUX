@@ -7,35 +7,33 @@
 <!-- REFERENCE: http://mvnrepository.com/artifact/org.codehaus.mojo/aspectj-maven-plugin/1.8 -->
 
 	<modelVersion>4.0.0</modelVersion>
+
+	<name>${project.groupId}:${project.artifactId}</name>
 	<groupId>org.asux</groupId>
 	<artifactId>TopLevelPOM</artifactId>
 
-	<version>1.0</version>
+	<version>1.1</version>
 	<packaging>pom</packaging>
 	<!--  The currently-acceptable core packaging values are: pom, jar, maven-plugin, ejb, war, ear, rar, par -->
 
+	<!-- VERSION HISTORY -->
+	<!-- 1.1 added more AWS-SDK jar-dependencies (for IAM and Rt53). Replaced <name> with <description>, and added new <name> -->
+
 	<inceptionYear>2019</inceptionYear>
-	<name>This is a generic PARENT POM file for JAR-file builds under the entire suite of ASUX.org java projects (https://ASUX.org).</name>
+	<description>This is a generic PARENT POM file for JAR-file builds under the entire suite of ASUX.org java projects (https://ASUX.org).</description>
 	<url>https://ASUX.org</url>
 
         <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
         <!-- =========================================================== -->
         <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 
-    <properties>
-        <!-- Properties added here are globally useable -->
-        <DEVELOPMENT>/mnt/development</DEVELOPMENT>
-        <TARGETROOT>/var/build</TARGETROOT>
-        <TARGETDIR>${TARGETROOT}/${project.groupId}-${project.artifactId}-${project.version}</TARGETDIR>
-        <!-- default encoding -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>8</java.version>
-        <!-- see http://stackoverflow.com/questions/3017695/how-to-configure-encoding-in-maven -->
-        <!-- see http://maven.apache.org/general.html#encoding-warning -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <!-- to prevent mvn warnings about platform specific encodings ... -->
-    </properties>
+	<licenses>
+		<license>
+			<name>BSD 3-Clause License</name>
+			<url>https://opensource.org/licenses/BSD-3-Clause</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
     <developers>
         <developer>
@@ -56,6 +54,25 @@
         <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
         <!-- =========================================================== -->
         <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+	<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ATTENTION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+	<!-- These are properties that _ENSURE_ uniformity across all projects -->
+	<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ATTENTION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+
+    <properties>
+        <!-- Properties added here are globally useable -->
+        <DEVELOPMENT>/mnt/development</DEVELOPMENT>
+        <TARGETROOT>/var/build</TARGETROOT>
+        <TARGETDIR>${TARGETROOT}/${project.groupId}-${project.artifactId}-${project.version}</TARGETDIR>
+        <!-- default encoding -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>8</java.version>
+        <!-- see http://stackoverflow.com/questions/3017695/how-to-configure-encoding-in-maven -->
+        <!-- see http://maven.apache.org/general.html#encoding-warning -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- to prevent mvn warnings about platform specific encodings ... -->
+    </properties>
 
 	<!-- The repositories element in settings.xml can be used for ***additional*** IN-HOUSE remote repositories. -->
 
@@ -116,6 +133,12 @@
 				<groupId>org.yaml</groupId>
 				<artifactId>snakeyaml</artifactId>
 				<version>1.24</version>
+			</dependency>
+			<!-- https://mvnrepository.com/artifact/com.esotericsoftware.yamlbeans/yamlbeans -->
+			<dependency>
+				<groupId>com.esotericsoftware.yamlbeans</groupId>
+				<artifactId>yamlbeans</artifactId>
+				<version>1.13</version>
 			</dependency>
 			<!-- https://mvnrepository.com/artifact/commons-cli/commons-cli -->
 			<dependency>
@@ -182,8 +205,16 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-		</dependencies>
-	</dependencyManagement>
+            <dependency>
+                <groupId>software.amazon.awssdk</groupId>
+                <artifactId>bom</artifactId>
+                <version>2.0.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 
         <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
         <!-- =========================================================== -->
@@ -200,13 +231,40 @@
 		<directory>${TARGETDIR}</directory>
 		<outputDirectory>${TARGETDIR}/classes</outputDirectory>
 		<testOutputDirectory>${TARGETDIR}/test-classes</testOutputDirectory>
-		<!-- <finalName>${project.groupId}-${project.artifactId}-${project.version}.jar</finalName> -->
-		<!-- sourceDirectory>../../src</sourceDirectory -->
+		<finalName>${project.groupId}-${project.artifactId}-${project.version}.jar</finalName>
+		<!-- <sourceDirectory>../../src</sourceDirectory -->
 
-		<filters>
-			<!-- <filter>src/main/filters/${project.groupId}-${project.artifactId}-${project.version}.properties</filter> -->
-			<!-- The "KVname=KVvalue" pairs defined within the filter files replace ${ KVname } strings within resources on build -->
-		</filters>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId> <!-- http://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
+					<version>3.8.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.6</version> <!-- http://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>3.1.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.0.2</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-shade-plugin</artifactId>
+					<version>3.2.1</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 
         <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
         <plugins>
@@ -215,11 +273,11 @@
 				<inherited>true</inherited>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.0</version> <!-- http://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
+				<!-- http://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
 				<configuration>
                     <!-- release>11</release --> <!-- this flag is supported by Official JDK11 ONLY -->
-					<source>8</source>
-					<target>8</target>
+					<source>${java.version}</source>	<!-- See <Properties> in {ORGASUXHOME}/pom-TopLevelParent.xml -->
+					<target>${java.version}</target>	<!-- See <Properties> in {ORGASUXHOME}/pom-TopLevelParent.xml -->
 					<compilerArgs>
 						<arg>-Xlint:deprecation</arg>
 						<arg>-Xlint:unchecked</arg>
@@ -264,11 +322,12 @@
             <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
             <!-- =========================================================== -->
             <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
 			<plugin>
 				<inherited>true</inherited>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.6</version> <!-- http://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
+				<!-- http://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
 				<configuration>
 					<finalName>${project.groupId}-${project.artifactId}-${project.version}</finalName>  <!-- Default value is: ${project.build.finalName} -->
 					<archive>
@@ -320,9 +379,9 @@
 			</plugin>
 
             <plugin>
+				<inherited>true</inherited>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.1.0</version>
                 <configuration>
                     <sourcepath>src/main/java</sourcepath>
                 </configuration>
