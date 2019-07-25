@@ -59,9 +59,9 @@
 	</contributors>
 
     <scm>
-		<url>https://github.com/org-asux/org.ASUX.AWS.CFN.git</url>
-		<connection>scm:git:git@github.com:org-asux/org.ASUX.AWS.CFN.git</connection>
-		<developerConnection>scm:git:git@github.com:org-asux/org.ASUX.AWS.CFN.git</developerConnection>
+		<url>https://github.com/org-asux/org.ASUX.git</url>
+		<connection>scm:git:git@github.com:org-asux/org.ASUX.git</connection>
+		<developerConnection>scm:git:git@github.com:org-asux/org.ASUX.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 
@@ -156,13 +156,18 @@
         <!-- sourceDirectory>../../src</sourceDirectory -->
         <!-- <sourceDirectory>src</sourceDirectory> -->
 
-        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+            <!-- =========================================================== -->
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
 		<plugins>
 
             <plugin>
+				<inherited>true</inherited>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.1</version>
+				<version>3.2.1</version>   <!-- !!!!!!!!!!!! Dont know WHY 'mvn package' insists on having version # here, even tho' its listed in Parent-POM's PlugInManagement -->
                 <executions>
                 <execution>
                     <phase>package</phase>
