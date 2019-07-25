@@ -34,9 +34,9 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:git:git@github.com:org-asux/org.ASUX.AWS.CFN.git</connection>
-    <developerConnection>scm:git:git@github.com:org-asux/org.ASUX.AWS.CFN.git</developerConnection>
-    <url>https://github.com/org-asux/org.ASUX.AWS.CFN.git</url>
+    <connection>scm:git:git@github.com:org-asux/org.ASUX.git</connection>
+    <developerConnection>scm:git:git@github.com:org-asux/org.ASUX.git</developerConnection>
+    <url>https://github.com/org-asux/org.ASUX.git</url>
   </scm>
   <build>
     <plugins>
@@ -54,6 +54,7 @@
             </configuration>
           </execution>
         </executions>
+        <inherited>true</inherited>
       </plugin>
     </plugins>
   </build>
