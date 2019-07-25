@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+<!-- REFERENCE: https://maven.apache.org/pom.html -->
+<!-- REFERENCE: http://maven.apache.org/xsd/maven-4.0.0.xsd -->
+<!-- REFERENCE: http://mvnrepository.com/ -->
+<!-- REFERENCE: http://mvnrepository.com/artifact/org.codehaus.mojo/aspectj-maven-plugin/1.8 -->
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>${project.groupId}:${project.artifactId}</name>
+	<groupId>org.asux</groupId>
+	<artifactId>MavenCentralRepo-TopLevelPOM</artifactId>
+
+    <version>1.0</version>
+	<packaging>pom</packaging>
+	<!--  The currently-acceptable core packaging values are: pom, jar, maven-plugin, ejb, war, ear, rar, par -->
+
+    <inceptionYear>2019</inceptionYear>
+    <description>Note: For this POM and it's children use a single goal: shade:shade.  This project is primarily a Non-Java project containing Shell and Node.JS scripts.  But, this project also has a /lib subfolder containing Java-JARs.  This POM file exists to consolidate almost 15 JARs into a single "Uber" Jar.  For details on this overall project, See the org.ASUX project on GitHub for more details.</description>
+	<url>https://github.com/org-asux/org.ASUX</url>
+
+	<parent>
+		<groupId>org.asux</groupId>
+		<artifactId>TopLevelPOM</artifactId>
+		<version>1.0</version>
+		<relativePath>pom-TopLevelParent.xml</relativePath>
+		<!-- EVEN tho' PARENT-POM is in .M2 REPOSITORY... I'm forced to use RELATIVEPATH.  The reason?  The following MAVEN output -->
+<!--
+[WARNING] Some problems were encountered while building the effective model for org.asux:common:jar:1.0
+[WARNING] 'parent.relativePath' of POM org.asux:common:1.0 (/Users/Sarma/Documents/Development/src/org.ASUX/org.ASUX.common/pom.xml) points at org.asux:mvn-shade-uber-jar instead of org.asux:TopLevelPOM, please verify your project structure @ line 17, column 10
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+-->
+	</parent>
+
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+        <!-- =========================================================== -->
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+	<licenses>
+		<license>
+			<name>BSD 3-Clause License</name>
+			<url>https://opensource.org/licenses/BSD-3-Clause</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+    <developers>
+        <developer>
+            <name>Udaybhaskar Sarma Seetamraju</name>
+            <email>tosarma@gmail.com</email>
+            <organization>ASUX.org</organization>
+            <organizationUrl>https://ASUX.org</organizationUrl>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>0</timezone>
+        </developer>
+    </developers>
+
+	<contributors>
+	</contributors>
+
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+        <!-- =========================================================== -->
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+    <!-- https://central.sonatype.org/pages/apache-maven.html -->
+    <!-- to use GPG to sign the software package - before it can be uploaded to Maven's Central Repository -->
+    <!-- https://central.sonatype.org/pages/ossrh-guide.html -->
+    <!-- This relies on the JIRA account from  issues.sonatype.org;  See details in ~/.2m/settings.xml -->
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+            <!-- =========================================================== -->
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+	<build>
+        <!-- <directory>${TARGETDIR}</directory> -->
+        <!-- <outputDirectory>${TARGETDIR}/classes</outputDirectory> -->
+        <!-- <testOutputDirectory>${TARGETDIR}/test-classes</testOutputDirectory> -->
+        <!-- sourceDirectory>../../src</sourceDirectory -->
+        <!-- <sourceDirectory>src</sourceDirectory> -->
+
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.8.2</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>1.6</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>3.0.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.22.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.nuiton</groupId>
+					<artifactId>helper-maven-plugin</artifactId>
+					<version>2.3.2</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+            <!-- =========================================================== -->
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+		<plugins>
+
+            <!-- https://central.sonatype.org/pages/apache-maven.html -->
+            <plugin>
+				<inherited>false</inherited>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+            <plugin>
+				<inherited>false</inherited>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <sourcepath>src/main/java</sourcepath>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- The Maven GPG plugin is used to sign the components with the following configuration.
+             * See https://blog.sonatype.com/2010/01/how-to-generate-pgp-signatures-with-maven/
+             *      $ mvn clean deploy -Dgpg.keyname=D99F0F81840303DE293F4796067DA2CF1C7ADC98  -Dgpg.passphrase='Top-Scret$Pass#Phrase'
+            -->
+            <plugin>
+				<inherited>false</inherited>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Performing a Release Deployment with the Maven Release Plugin -->
+            <!-- https://central.sonatype.org/pages/apache-maven.html#performing-a-release-deployment-with-the-maven-release-plugin -->
+            <!-- you can perform a release deployment to OSSRH with
+                    mvn release:clean release:prepare
+                by answering the prompts for versions and tags, followed by
+                    mvn release:perform
+                This execution will deploy to OSSRH and release to the Central Repository in one go, thanks to the usage of the Nexus Staging Maven Plugin with autoReleaseAfterClose set to true.
+                -->
+            <plugin>
+				<inherited>false</inherited>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <releaseProfiles>release</releaseProfiles>
+                    <goals>deploy</goals>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.8</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+
+        </plugins>
+
+	</build>
+
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+            <!-- =========================================================== -->
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+	<profiles>
+		<profile>
+			<id>release-sign-artifacts</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.nuiton</groupId>
+						<artifactId>helper-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>get-pgp-passphrase</id>
+								<goals>
+									<goal>share-server-secret</goal>
+								</goals>
+								<phase>verify</phase>
+								<configuration>
+									<serverId>${gpg.serverId}</serverId>
+									<usernameOut>${gpg.keyname}</usernameOut>
+									<passwordOut>${gpg.passphrase}</passwordOut>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+</project>
