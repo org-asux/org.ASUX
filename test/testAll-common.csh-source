@@ -30,8 +30,13 @@ else
                 echo " ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! AWS login credentials missing in a file ./profile ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
                 sleep 5
                 echo " ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! AWS login credentials missing in a file ./profile ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! "
+                echo " (to proceed anyways.. you better know what the fuck you're doing ..).. make sure  $?ASUXORG_AWSNOTRELEVANT is true"
                 sleep 5
-                exit 2
+                kill -SIGUSR1 `ps --pid $$ -oppid=`
+                exit 4
+                ### Note: In PARENT (Invoking) Shell-script.. add the following (as a Go-to block)
+                ###		trap "echo exitting because my child killed me.>&2;exit" SIGUSR1
+
         endif
 endif
 
