@@ -98,14 +98,36 @@ CmdLine.on('option:properties', function () {
 CmdLine.on('command:install', function () {
 	if (process.env.VERBOSE) console.log("Yeah.  helping 'install' script verify proper installation");
 	COMMAND = 'install';
-	verifyInstall();
+	verifyInstall( true );
+});
+
+CmdLine.on('command:update', function () {
+	if (process.env.VERBOSE) console.log("Yeah.  helping 'install' script verify proper installation");
+	COMMAND = 'update';
+	verifyInstall( true );
+	var retCode = EXECUTESHELLCMD.executeSharingSTDOUT ( __dirname, 'bin/chkGitStatusForAllProjects.csh', [""], false, process.env.VERBOSE, true, null );
+	if(retCode != 0){
+		console.error( __filename +": Internal error running 'update': Please contact the project owner, with the above output\n\n");
+		process.exit(12);
+	}
+});
+
+CmdLine.on('command:testall', function () {
+	if (process.env.VERBOSE) console.log("Yeah.  helping 'install' script verify proper installation");
+	COMMAND = 'testall';
+	verifyInstall( true );
+	var retCode = EXECUTESHELLCMD.executeSharingSTDOUT ( __dirname, 'bin/testAllProjects.csh', ["--offline"], false, process.env.VERBOSE, true, null );
+	if(retCode != 0){
+		console.error( __filename +": Internal error running 'update': Please contact the project owner, with the above output\n\n");
+		process.exit(12);
+	}
 });
 
 //---------------------------------------
 CmdLine.on('command:yaml', function () {
 	if (process.env.VERBOSE) console.log("Yeah.  processing YAML command");
 	COMMAND = 'yaml';
-	verifyInstall();
+	verifyInstall( false );
 	sendArgs2SubModule( DIR_orgASUXcmdline );
 });
 
@@ -114,21 +136,21 @@ CmdLine.on('command:aws', function () {
 	COMMAND = 'aws';
 	// console.error( __filename +':\nProcessing ARGS command-line: ', CmdLine.args.join(' ') );
 	// console.error( 'Processing FULL command-line: ', process.argv.join(' ') );
-	verifyInstall();
+	verifyInstall( false );
 	sendArgs2SubModule( DIR_orgASUXAWS );
 });
 
 CmdLine.on('command:aws.cfn', function () {
 	if (process.env.VERBOSE) console.log("Yeah.  processing Amazon-AWS-CloudFormation command");
 	COMMAND = 'aws.cfn';
-	verifyInstall();
+	verifyInstall( false );
 	sendArgs2SubModule( DIR_orgASUXAWSCFN );
 });
 
 CmdLine.on('command:aws.sdk', function () {
 	if (process.env.VERBOSE) console.log("Yeah.  processing Amazon-AWS-CloudFormation command");
 	COMMAND = 'aws.sdk';
-	verifyInstall();
+	verifyInstall( false );
 	sendArgs2SubModule( DIR_orgASUXAWSSDK );
 });
 // Like the 'default' in a switch statement.. .. After all of the above "on" callbacks **FAIL** to trigger, we'll end up here.
@@ -146,10 +168,11 @@ CmdLine.parse(process.argv);
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //============================================================
 
-function verifyInstall() {
+function verifyInstall( bInstallOnly ) {
 	runGitPullAll();
 	createAndAccessSlashTmp();
 	checkIfAllSubProjectsExist();
+	if ( bInstallOnly ) console.log("Done.");
 }
 
 //============================================================
