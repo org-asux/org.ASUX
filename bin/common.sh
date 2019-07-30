@@ -37,6 +37,12 @@ if [ -z ${ORGASUXHOME+x} ]; then  ### if [ -z "$var" ]    <-- does NOT distingui
 	### So, you _REALLY_ have to allow those scripts to define ORGASUXHOME
 fi
 
+# ORGASUXHOME=${SCRIPTFULLFLDRPATH}				### /mnt/development/src/org.ASUX/AWS/CFN/bin
+# ORGASUXHOME="$(dirname "$ORGASUXHOME")"		### /mnt/development/src/org.ASUX/AWS/CFN
+# ORGASUXHOME="$(dirname "$ORGASUXHOME")"		### /mnt/development/src/org.ASUX/AWS
+# ORGASUXHOME="$(dirname "$ORGASUXHOME")"		### /mnt/development/src/org.ASUX
+# if [ "${VERBOSE}" == "1" ]; then echo ORGASUXHOME=${ORGASUXHOME}; fi
+
 ###=============================================================
 ###@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ###=============================================================
