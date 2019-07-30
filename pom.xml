@@ -90,10 +90,15 @@
 				<groupId>org.asux</groupId>
 				<artifactId>aws-cfn</artifactId>
 			</dependency>
+			<!-- JUNIT5 junit5 -->
 			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				</dependency>
+				<groupId>org.junit.vintage</groupId>
+				<artifactId>junit-vintage-engine</artifactId>
+			</dependency>
+			<!-- <dependency> OLD J UN IT 4 -->
+				<!-- <groupId>j un it</groupId> -->
+				<!-- <artifactId>j un it</artifactId> -->
+			<!-- </dependency> -->
 			<!-- https://bitbucket.org/asomov/snakeyaml/wiki/Installation -->
 			<dependency>
 				<groupId>org.yaml</groupId>
@@ -211,5 +216,17 @@
         </plugins>
 
 	</build>
+
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+        <!-- =========================================================== -->
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+    <modules>
+        <module>org.asux.common</module>
+    </modules>
+
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+        <!-- =========================================================== -->
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 
 </project>
