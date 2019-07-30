@@ -104,7 +104,7 @@ CmdLine.on('command:install', function () {
 CmdLine.on('command:update', function () {
 	if (process.env.VERBOSE) console.log("Yeah.  helping 'install' script verify proper installation");
 	COMMAND = 'update';
-	verifyInstall( true );
+	verifyInstall( false );
 	var retCode = EXECUTESHELLCMD.executeSharingSTDOUT ( __dirname, 'bin/chkGitStatusForAllProjects.csh', [""], false, process.env.VERBOSE, true, null );
 	if(retCode != 0){
 		console.error( __filename +": Internal error running 'update': Please contact the project owner, with the above output\n\n");
@@ -115,7 +115,7 @@ CmdLine.on('command:update', function () {
 CmdLine.on('command:testall', function () {
 	if (process.env.VERBOSE) console.log("Yeah.  helping 'install' script verify proper installation");
 	COMMAND = 'testall';
-	verifyInstall( true );
+	verifyInstall( false );
 	var retCode = EXECUTESHELLCMD.executeSharingSTDOUT ( __dirname, 'bin/testAllProjects.csh', ["--offline"], false, process.env.VERBOSE, true, null );
 	if(retCode != 0){
 		console.error( __filename +": Internal error running 'update': Please contact the project owner, with the above output\n\n");
