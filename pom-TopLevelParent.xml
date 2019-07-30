@@ -123,11 +123,15 @@
 				<version>1.0</version>
 			</dependency>
 			<dependency>
-				<!-- scope>test</scope -->
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>4.8.2</version>
-				</dependency>
+				<groupId>org.junit.vintage</groupId>
+				<artifactId>junit-vintage-engine</artifactId>
+				<version>5.5.1</version>
+			</dependency>
+			<!-- <dependency> -->
+				<!-- <groupId>j un it</groupId> -->
+				<!-- <artifactId>j un it</artifactId> -->
+				<!-- <version>4.12</version> -->
+			<!-- </dependency> -->
 			<!-- https://bitbucket.org/asomov/snakeyaml/wiki/Installation -->
 			<dependency>
 				<groupId>org.yaml</groupId>
@@ -150,7 +154,7 @@
 			<dependency>
 				<groupId>com.opencsv</groupId>
 				<artifactId>opencsv</artifactId>
-				<version>4.0</version>
+				<version>4.6</version>
 			</dependency>
 			<!-- https://www.baeldung.com/jackson-object-mapper-tutorial -->
 			<dependency>
@@ -158,15 +162,22 @@
 				<artifactId>jackson-databind</artifactId>
 				<version>2.9.9</version>
 			</dependency>
+            <dependency>
+                <groupId>software.amazon.awssdk</groupId>
+                <artifactId>bom</artifactId>
+                <version>2.7.14</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 			<dependency>
 				<groupId>software.amazon.awssdk</groupId>
 				<artifactId>s3</artifactId>
-				<version>2.5.32</version>
+				<version>2.7.14</version>
 			</dependency>
 			<dependency>
 				<groupId>software.amazon.awssdk</groupId>
 				<artifactId>utils</artifactId>
-				<version>2.5.32</version>
+				<version>2.7.14</version>
 			</dependency>
 			<dependency>
 				<groupId>com.amazonaws</groupId>
@@ -188,16 +199,6 @@
 				<artifactId>aws-java-sdk-iam</artifactId>
 				<version>1.11.541</version>
 			</dependency>
-			<!-- <dependency>
-				<groupId>software.amazon.awssdk</groupId>
-				<artifactId>s3</artifactId>
-				<version>2.5.32</version>
-			</dependency>
-			<dependency>
-				<groupId>software.amazon.awssdk</groupId>
-				<artifactId>utils</artifactId>
-				<version>2.5.32</version>
-			</dependency> -->
 			<dependency>
 				<groupId>com.amazonaws</groupId>
 				<artifactId>aws-java-sdk-bom</artifactId>
@@ -205,13 +206,6 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-            <dependency>
-                <groupId>software.amazon.awssdk</groupId>
-                <artifactId>bom</artifactId>
-                <version>2.0.0</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -284,6 +278,9 @@
 						<!-- arg>-Xlint:all,-options,-path</arg -->
 					</compilerArgs>
 					<useIncrementalCompilation>yes</useIncrementalCompilation>
+					<excludes>
+						<exclude>**/module-info.java</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 
@@ -384,6 +381,14 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <sourcepath>src/main/java</sourcepath>
+					<additionalOptions>
+						<option>--add-modules</option>
+						<option>java.xml</option>
+					</additionalOptions>
+					<!-- <excludePackageNames>org.junit.*</excludePackageNames> -->
+					<sourceFileExcludes>
+						<exclude>**/module-info.java</exclude>
+					</sourceFileExcludes>
                 </configuration>
                 <executions>
                     <execution>
