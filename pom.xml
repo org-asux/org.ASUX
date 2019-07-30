@@ -221,9 +221,11 @@
         <!-- =========================================================== -->
         <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 
-    <modules>
-        <module>org.asux.common</module>
-    </modules>
+    <!-- <modules> -->
+        <!-- <module>org.asux.common</module> -->
+    <!-- </modules> -->
+<!-- [ERROR] 'packaging' with value 'jar' is invalid. Aggregator projects require 'pom' as packaging. @ line 11, column 13 -->
+<!-- [ERROR] 'dependencies.dependency.version' for org.junit.vintage:junit-vintage-engine:jar is missing. @ line 94, column 16 -->
 
         <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
         <!-- =========================================================== -->
