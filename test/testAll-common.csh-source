@@ -9,6 +9,8 @@
 set AWSCFNFLDR=${ORGASUXFLDR}/AWS/CFN
 
 
+alias EXITSCRIPT "kill -SIGUSR1 `ps -p $$ -oppid=`; exit \!*"
+        ### On MacOS Shell, 'ps --pid' does _NOT_ work.  Instead using 'ps -p'
 
 ###------------------------------
 echo "Usage: $0 [--verbose] [--offline]"
