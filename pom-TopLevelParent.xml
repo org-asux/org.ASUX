@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 <!-- REFERENCE: https://maven.apache.org/pom.html -->
 <!-- REFERENCE: http://maven.apache.org/xsd/maven-4.0.0.xsd -->
@@ -21,7 +21,7 @@
 
 	<inceptionYear>2019</inceptionYear>
 	<description>This is a generic PARENT POM file for JAR-file builds under the entire suite of ASUX.org java projects (https://ASUX.org).</description>
-	<url>https://ASUX.org</url>
+	<url>https://github.com/org-asux/org.ASUX</url>
 
         <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
         <!-- =========================================================== -->
