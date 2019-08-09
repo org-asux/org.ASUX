@@ -12,9 +12,12 @@
 	<groupId>org.asux</groupId>
 	<artifactId>MavenCentralRepo-TopLevelPOM</artifactId>
 
-    <version>1.0</version>
+    <version>2.0</version>
 	<packaging>pom</packaging>
 	<!--  The currently-acceptable core packaging values are: pom, jar, maven-plugin, ejb, war, ear, rar, par -->
+
+	<!-- VERSION HISTORY -->
+	<!-- 2.0 Fixed a big mistake in having ALL plugins below (outside of PluginsManagement) have inherited=false -->
 
     <inceptionYear>2019</inceptionYear>
     <description>Note: For this POM and it's children use a single goal: shade:shade.  This project is primarily a Non-Java project containing Shell and Node.JS scripts.  But, this project also has a /lib subfolder containing Java-JARs.  This POM file exists to consolidate almost 15 JARs into a single "Uber" Jar.  For details on this overall project, See the org.ASUX project on GitHub for more details.</description>
