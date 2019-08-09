@@ -134,7 +134,7 @@
 
             <!-- https://central.sonatype.org/pages/apache-maven.html -->
             <plugin>
-				<inherited>false</inherited>
+				<inherited>true</inherited>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <executions>
@@ -150,7 +150,7 @@
             <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 
             <plugin>
-				<inherited>false</inherited>
+				<inherited>true</inherited>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
@@ -171,7 +171,7 @@
              *      $ mvn clean deploy -Dgpg.keyname=D99F0F81840303DE293F4796067DA2CF1C7ADC98  -Dgpg.passphrase='Top-Scret$Pass#Phrase'
             -->
             <plugin>
-				<inherited>false</inherited>
+				<inherited>true</inherited>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
                 <executions>
@@ -194,7 +194,7 @@
                 This execution will deploy to OSSRH and release to the Central Repository in one go, thanks to the usage of the Nexus Staging Maven Plugin with autoReleaseAfterClose set to true.
                 -->
             <plugin>
-				<inherited>false</inherited>
+				<inherited>true</inherited>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.5.3</version>
@@ -206,6 +206,7 @@
                 </configuration>
             </plugin>
             <plugin>
+				<inherited>true</inherited>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
                 <version>1.6.8</version>
