@@ -27,6 +27,21 @@
         <!-- =========================================================== -->
         <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 
+	<!-- The repositories element in settings.xml can be used for ***additional*** IN-HOUSE remote repositories. -->
+
+<!--	COPY the following 5 lines into your SUBORDINATE POM File.
+-	?Do you want to inherit a lot of POM.xml content from parent?
+-	<parent>
+-		<groupId>org.asux</groupId>
+-		<artifactId>TopLevelPOM</artifactId>
+-		<version>3.0</version>
+-	</parent>
+-->
+
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+        <!-- =========================================================== -->
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
 	<licenses>
 		<license>
 			<name>BSD 3-Clause License</name>
@@ -74,16 +89,9 @@
         <!-- to prevent mvn warnings about platform specific encodings ... -->
     </properties>
 
-	<!-- The repositories element in settings.xml can be used for ***additional*** IN-HOUSE remote repositories. -->
-
-<!--	COPY the following 5 lines into your SUBORDINATE POM File.
--	?Do you want to inherit a lot of POM.xml content from parent?
--	<parent>
--		<groupId>org.ussmoso</groupId>
--		<artifactId>TopLevel-SRC-JAVA</artifactId>
--		<version>1.0</version>
--	</parent>
--->
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+        <!-- =========================================================== -->
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 
 <!-- 
 -	The dependencyManagement element syntax is similar to that of the dependency section.
@@ -219,14 +227,6 @@
         </dependencies>
     </dependencyManagement>
 
-
-        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-        <!-- =========================================================== -->
-        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-
-	<dependencies>
-	</dependencies>
-
         <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
         <!-- =========================================================== -->
         <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
@@ -268,9 +268,10 @@
 			</plugins>
 		</pluginManagement>
 
-        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+            <!-- =========================================================== -->
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 
-        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
         <plugins>
 
 			<plugin>
@@ -362,7 +363,6 @@
 							<BuildVersion>NOT IMPLEMENTED AUTO-INCR in scripts - ${buildNumber}</BuildVersion>
 							<Built-By>${user.name} - Seetamraju Uday Bhaskar Sarma sarma@ussmoso.com</Built-By>
 						</manifestEntries>
-
 <!-- end Sample -->
 						<!-- For JAR plugins ver# 2.0.1 and previous ONLY!!!! -->
 					</archive>
@@ -371,7 +371,6 @@
 <!-- it's not a good idea to filter binary files -->
 						<filtering>false</filtering>
 					</resource>
-
 
 					<!-- If you want to filter these deployment descriptors, then ...
 						these <containerConfigXML> and <webXml> tags WILL BE COMPLETELY OVERWRITTEN.
@@ -385,16 +384,20 @@
 				</configuration>
 			</plugin>
 
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
             <plugin>
 				<inherited>true</inherited>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <sourcepath>src/main/java</sourcepath>
-					<additionalOptions>
-						<option>--add-modules</option>
-						<option>java.xml</option>
-					</additionalOptions>
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! UNCOMMENT BELOW for Java 11 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+					<!-- <additionalOptions> -->
+						<!-- <option> - - add-modules</option> -->
+<!-- For Java 11 remove the blanks between the double-dashes cmdline-option -->
+						<!-- <option>java.xml</option> -->
+					<!-- </additionalOptions> -->
 					<!-- <excludePackageNames>org.junit.*</excludePackageNames> -->
 					<sourceFileExcludes>
 						<exclude>**/module-info.java</exclude>
@@ -411,8 +414,6 @@
             </plugin>
 
             <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-            <!-- =========================================================== -->
-            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 
 <!-- !!!!!!!! ATTENTION !!!!!!!! Do Not add the maven-shade plugin - into this PARENT-POM. -->
 <!-- REASON: I do NOT want any inadvertent 'package' mvn target executed for any reason for ANY project's POM. -->
@@ -421,8 +422,6 @@
                 <artifactId>maven-shade-plugin</artifactId>
 			</plugin> -->
 
-            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-            <!-- =========================================================== -->
             <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 
             <!-- https://winterbe.com/posts/2018/08/29/migrate-maven-projects-to-java-11-jigsaw -->
@@ -444,6 +443,10 @@
 
 		</plugins>
 
+			<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+            <!-- =========================================================== -->
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
 		<testResources>
 			<testResource>
 				<directory>src/test/resources</directory>
@@ -462,13 +465,13 @@
     <!-- =========================================================== -->
     <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 <!--
- -	<distributionManagement>
- -		<repository>
- -			<id>myown-repository</id>
- -			<name>My OwnRepository</name>
- -			<url>scp://repository.ussmoso.com/repository/maven2</url>
- -		</repository>
- -	</distributionManagement>
+-	<distributionManagement>
+-		<repository>
+-			<id>myown-repository</id>
+-			<name>My OwnRepository</name>
+-			<url>scp://repository.ussmoso.com/repository/maven2</url>
+-		</repository>
+-	</distributionManagement>
 -->
 
 </project>
