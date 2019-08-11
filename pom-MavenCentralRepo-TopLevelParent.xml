@@ -12,32 +12,33 @@
 	<groupId>org.asux</groupId>
 	<artifactId>MavenCentralRepo-TopLevelPOM</artifactId>
 
-    <version>2.0</version>
+    <version>3.0</version>
 	<packaging>pom</packaging>
 	<!--  The currently-acceptable core packaging values are: pom, jar, maven-plugin, ejb, war, ear, rar, par -->
 
 	<!-- VERSION HISTORY -->
+	<!-- 3.0 Fixed a big/stupid assumption that somehow the PARENT-POM of this-pom would be somehow getting into Maven-Central.  So, now copying EVERYTHING from parent-pom in here -->
 	<!-- 2.0 Fixed a big mistake in having ALL plugins below (outside of PluginsManagement) have inherited=false -->
+	<!-- 1.0 Never really tested against Sonatype.org. -->
 
     <inceptionYear>2019</inceptionYear>
-    <description>Note: For this POM and it's children use a single goal: shade:shade.  This project is primarily a Non-Java project containing Shell and Node.JS scripts.  But, this project also has a /lib subfolder containing Java-JARs.  This POM file exists to consolidate almost 15 JARs into a single "Uber" Jar.  For details on this overall project, See the org.ASUX project on GitHub for more details.</description>
+    <description>This is a generic PARENT POM file for JAR-file builds under the entire suite of ASUX.org java projects (https://ASUX.org).</description>
 	<url>https://github.com/org-asux/org.ASUX</url>
 
-	<parent>
-		<groupId>org.asux</groupId>
-		<artifactId>TopLevelPOM</artifactId>
-		<version>1.1</version>
-		<relativePath>pom-TopLevelParent.xml</relativePath>
-		<!-- EVEN tho' PARENT-POM is in .M2 REPOSITORY... I'm forced to use RELATIVEPATH.  The reason?  The following MAVEN output -->
-<!--
-[WARNING] Some problems were encountered while building the effective model for org.asux:common:jar:1.0
-[WARNING] 'parent.relativePath' of POM org.asux:common:1.0 (/Users/Sarma/Documents/Development/src/org.ASUX/org.ASUX.common/pom.xml) points at org.asux:mvn-shade-uber-jar instead of org.asux:TopLevelPOM, please verify your project structure @ line 17, column 10
-[WARNING] 
-[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
-[WARNING] 
-[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+        <!-- =========================================================== -->
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+	<!-- The repositories element in settings.xml can be used for ***additional*** IN-HOUSE remote repositories. -->
+
+<!--	COPY the following 5 lines into your SUBORDINATE POM File.
+-	?Do you want to inherit a lot of POM.xml content from parent?
+-	<parent>
+-		<groupId>org.asux</groupId>
+-		<artifactId>TopLevelPOM</artifactId>
+-		<version>3.0</version>
+-	</parent>
 -->
-	</parent>
 
         <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
         <!-- =========================================================== -->
@@ -71,36 +72,204 @@
         <!-- =========================================================== -->
         <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 
-    <!-- https://central.sonatype.org/pages/apache-maven.html -->
-    <!-- to use GPG to sign the software package - before it can be uploaded to Maven's Central Repository -->
-    <!-- https://central.sonatype.org/pages/ossrh-guide.html -->
-    <!-- This relies on the JIRA account from  issues.sonatype.org;  See details in ~/.2m/settings.xml -->
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
+	<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ATTENTION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+	<!-- These are properties that _ENSURE_ uniformity across all projects -->
+	<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ATTENTION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 
-            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-            <!-- =========================================================== -->
-            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <properties>
+        <!-- Properties added here are globally useable -->
+        <DEVELOPMENT>/mnt/development</DEVELOPMENT>
+        <TARGETROOT>/var/build</TARGETROOT>
+        <TARGETDIR>${TARGETROOT}/${project.groupId}-${project.artifactId}-${project.version}</TARGETDIR>
+        <!-- default encoding -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>8</java.version>
+        <!-- see http://stackoverflow.com/questions/3017695/how-to-configure-encoding-in-maven -->
+        <!-- see http://maven.apache.org/general.html#encoding-warning -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- to prevent mvn warnings about platform specific encodings ... -->
+    </properties>
+
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+        <!-- =========================================================== -->
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+<!-- 
+-	The dependencyManagement element syntax is similar to that of the dependency section.
+-	What it does, however, is allow children to inherit dependency settings,
+-	but not the dependency itself.
+-	Adding a dependency with the dependencyManagement element does not actually add the dependency
+-	to the POM, nor does it add a dependency to the children;
+-	it creates a default configuration for any dependency that a child may choose to add within its own dependency section.
+-	Settings by dependencyManagement also apply to the current POM's dependency configuration
+-	(although configurations overridden inside the dependency element always take precedence).
+-->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.asux</groupId>
+				<artifactId>common</artifactId>
+				<version>1.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.asux</groupId>
+				<artifactId>yaml</artifactId>
+				<version>1.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.asux</groupId>
+				<artifactId>yaml.nodeimpl</artifactId>
+				<version>1.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.asux</groupId>
+				<artifactId>aws-sdk</artifactId>
+				<version>1.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.asux</groupId>
+				<artifactId>aws-cfn</artifactId>
+				<version>1.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.junit.vintage</groupId>
+				<artifactId>junit-vintage-engine</artifactId>
+				<version>5.5.1</version>
+			</dependency>
+			<!-- <dependency> -->
+				<!-- <groupId>j un it</groupId> -->
+				<!-- <artifactId>j un it</artifactId> -->
+				<!-- <version>4.12</version> -->
+			<!-- </dependency> -->
+			<!-- https://bitbucket.org/asomov/snakeyaml/wiki/Installation -->
+			<dependency>
+				<groupId>org.yaml</groupId>
+				<artifactId>snakeyaml</artifactId>
+				<version>1.24</version>
+			</dependency>
+			<!-- https://mvnrepository.com/artifact/com.esotericsoftware.yamlbeans/yamlbeans -->
+			<dependency>
+				<groupId>com.esotericsoftware.yamlbeans</groupId>
+				<artifactId>yamlbeans</artifactId>
+				<version>1.13</version>
+			</dependency>
+			<!-- https://mvnrepository.com/artifact/commons-cli/commons-cli -->
+			<dependency>
+				<groupId>commons-cli</groupId>
+				<artifactId>commons-cli</artifactId>
+				<version>1.4</version>
+			</dependency>
+			<!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
+			<dependency>
+				<groupId>com.opencsv</groupId>
+				<artifactId>opencsv</artifactId>
+				<version>4.6</version>
+			</dependency>
+			<!-- https://www.baeldung.com/jackson-object-mapper-tutorial -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>2.9.9</version>
+			</dependency>
+            <dependency>
+                <groupId>software.amazon.awssdk</groupId>
+                <artifactId>bom</artifactId>
+                <version>2.7.14</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+			<!-- <dependency> -->
+				<!-- <groupId>software.amazon.awssdk</groupId> -->
+				<!-- <artifactId>s3</artifactId> -->
+				<!-- <version>2.7.14</version> -->
+			<!-- </dependency> -->
+			<!-- <dependency> -->
+				<!-- <groupId>software.amazon.awssdk</groupId> -->
+				<!-- <artifactId>utils</artifactId> -->
+				<!-- <version>2.7.14</version> -->
+			<!-- </dependency> -->
+			<dependency>
+				<groupId>com.amazonaws</groupId>
+				<artifactId>aws-java-sdk-s3</artifactId>
+				<version>1.11.541</version>
+			</dependency>
+			<dependency>
+				<groupId>com.amazonaws</groupId>
+				<artifactId>aws-java-sdk-sts</artifactId>
+				<version>1.11.541</version>
+			</dependency>
+			<dependency>
+				<groupId>com.amazonaws</groupId>
+				<artifactId>aws-java-sdk-core</artifactId>
+				<version>1.11.541</version>
+			</dependency>
+			<dependency>
+				<groupId>com.amazonaws</groupId>
+				<artifactId>aws-java-sdk-ec2</artifactId>
+				<version>1.11.541</version>
+			</dependency>
+			<dependency>
+				<groupId>com.amazonaws</groupId>
+				<artifactId>aws-java-sdk-route53</artifactId>
+				<version>1.11.541</version>
+			</dependency>
+			<dependency>
+				<groupId>com.amazonaws</groupId>
+				<artifactId>aws-java-sdk-iam</artifactId>
+				<version>1.11.541</version>
+			</dependency>
+			<dependency>
+				<groupId>com.amazonaws</groupId>
+				<artifactId>aws-java-sdk-bom</artifactId>
+				<version>1.11.541</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+        </dependencies>
+    </dependencyManagement>
+
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+        <!-- =========================================================== -->
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 
 	<build>
-        <!-- <directory>${TARGETDIR}</directory> -->
-        <!-- <outputDirectory>${TARGETDIR}/classes</outputDirectory> -->
-        <!-- <testOutputDirectory>${TARGETDIR}/test-classes</testOutputDirectory> -->
-        <!-- sourceDirectory>../../src</sourceDirectory -->
-        <!-- <sourceDirectory>src</sourceDirectory> -->
-
-        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+		<directory>${TARGETDIR}</directory>
+		<outputDirectory>${TARGETDIR}/classes</outputDirectory>
+		<testOutputDirectory>${TARGETDIR}/test-classes</testOutputDirectory>
+		<finalName>${project.groupId}-${project.artifactId}-${project.version}.jar</finalName>
+		<!-- <sourceDirectory>../../src</sourceDirectory -->
 
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId> <!-- http://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
+					<version>3.8.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.6</version> <!-- http://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>3.1.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.0.2</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-shade-plugin</artifactId>
+					<version>3.2.1</version>
+				</plugin>
+
+                <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
@@ -133,7 +302,175 @@
             <!-- =========================================================== -->
             <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 
-		<plugins>
+        <plugins>
+
+			<plugin>
+				<inherited>true</inherited>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<!-- http://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
+				<configuration>
+                    <!-- release>11</release --> <!-- this flag is supported by Official JDK11 ONLY -->
+					<source>${java.version}</source>	<!-- See <Properties> in {ORGASUXHOME}/pom-TopLevelParent.xml -->
+					<target>${java.version}</target>	<!-- See <Properties> in {ORGASUXHOME}/pom-TopLevelParent.xml -->
+					<compilerArgs>
+						<arg>-Xlint:deprecation</arg>
+						<arg>-Xlint:unchecked</arg>
+						<!-- arg>-Xlint:all,-options,-path</arg -->
+					</compilerArgs>
+					<useIncrementalCompilation>yes</useIncrementalCompilation>
+					<excludes>
+						<exclude>**/module-info.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+
+            <!-- https://winterbe.com/posts/2018/08/29/migrate-maven-projects-to-java-11-jigsaw
+            -  With Java 11, for ensuring failsafe use of OLD plugins we add an additional argLine - -illegal-access=permit to allow all reflection access for third party libraries.
+            -  This is only needed if your dependencies make heavy use of reflection. If you're unsure whether you need this you can add the above cmd-line arg later.
+            -  You'll see warnings like this when a library tries to illegally access classes via setAccessible(true):
+             *      WARNING: Please consider reporting this to the maintainers of org.codehaus.groovy.reflection.CachedClass
+             *      WARNING: Use - -illegal-access=warn to enable warnings of further illegal reflective access operations
+             *      WARNING: All illegal access operations will be denied in a future release
+            -  Keep in mind that later you probably also have to pass the - -illegal-access=permit parameter when starting your application.
+            -->
+<!--
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.0</version>
+                <configuration>
+                    <argLine>
+                        - -illegal-access=permit
+                    </argLine>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.22.0</version>
+                <configuration>
+                    <argLine>
+                        - -illegal-access=permit
+                    </argLine>
+                </configuration>
+            </plugin>
+-->
+
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+            <!-- =========================================================== -->
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+			<plugin>
+				<inherited>true</inherited>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<!-- http://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
+				<configuration>
+					<finalName>${project.groupId}-${project.artifactId}-${project.version}</finalName>  <!-- Default value is: ${project.build.finalName} -->
+					<archive>
+						<!-- Generating a manifest classpath -->
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<mainClass>your.pom.did.not.overwrite.Jar-plugin-manifest.from.pom-jar.xml</mainClass>
+							<!-- https://maven.apache.org/shared/maven-archiver/examples/classpath.html#Prefix -->
+							<addClasspath>true</addClasspath> <!-- add the classpath of your project to the manifest -->
+							<!-- Maven style classpaths??? - Use: <classpathLayoutType>{repository | simple}</classpathLayoutType>  -->
+							<!-- classpathPrefix>lib/</classpathPrefix -->
+						</manifest>
+
+						<!-- manifestFile>META-INF/MANIFEST-default.MF</manifestFile -->
+
+<!-- ONLY sample here... This section is MANDATORY  in child POM ... -->
+						<manifestEntries>
+							<Manifest-Version>1.0</Manifest-Version>
+							<ProjectName>${project.artifactId}</ProjectName>
+							<AppName>${project.groupId}-${project.artifactId}</AppName>
+							<AppVersion>${project.version}</AppVersion>
+							<ArtifactFileName>${project.finalName}</ArtifactFileName>
+							<Datetime>${maven.build.timestamp}</Datetime>
+							<Date>Date-only not implemented</Date>
+							<BuildVersion>NOT IMPLEMENTED AUTO-INCR in scripts - ${buildNumber}</BuildVersion>
+							<Built-By>${user.name} - Seetamraju Uday Bhaskar Sarma sarma@ussmoso.com</Built-By>
+						</manifestEntries>
+<!-- end Sample -->
+						<!-- For JAR plugins ver# 2.0.1 and previous ONLY!!!! -->
+					</archive>
+					<resource>
+						<directory>blobFilesFolder</directory>
+<!-- it's not a good idea to filter binary files -->
+						<filtering>false</filtering>
+					</resource>
+
+
+					<!-- If you want to filter these deployment descriptors, then ...
+						these <containerConfigXML> and <webXml> tags WILL BE COMPLETELY OVERWRITTEN.
+						Filtered <resource> tags (see example below) are executed AFTER these tags.
+					-->
+					<!-- Only the last containerConfigXML element is effective -->
+					<containerConfigXML>META-INF/${project.groupId}-${project.artifactId}/weblogic.xml</containerConfigXML>
+					<containerConfigXML>src/main/webapp/META-INF/sun-ejb.xml</containerConfigXML>
+					<ejbXml>src/main/webapp/META-INF/${project.groupId}-${project.artifactId}/ejb.xml</ejbXml>
+					<ejbXml>src/main/webapp/META-INF/ejb.xml</ejbXml>
+				</configuration>
+			</plugin>
+
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+            <plugin>
+				<inherited>true</inherited>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <sourcepath>src/main/java</sourcepath>
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! UNCOMMENT BELOW for Java 11 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+					<!-- <additionalOptions> -->
+						<!-- <option> - - add-modules</option> -->
+<!-- For Java 11 remove the blanks between the double-dashes cmdline-option -->
+						<!-- <option>java.xml</option> -->
+					<!-- </additionalOptions> -->
+					<!-- <excludePackageNames>org.junit.*</excludePackageNames> -->
+					<sourceFileExcludes>
+						<exclude>**/module-info.java</exclude>
+					</sourceFileExcludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+<!-- !!!!!!!! ATTENTION !!!!!!!! Do Not add the maven-shade plugin - into this PARENT-POM. -->
+<!-- REASON: I do NOT want any inadvertent 'package' mvn target executed for any reason for ANY project's POM. -->
+            <!-- <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+			</plugin> -->
+
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+            <!-- https://winterbe.com/posts/2018/08/29/migrate-maven-projects-to-java-11-jigsaw -->
+            <!-- This plugin finds the latest plugin or dependency versions for your maven-modules.
+				Cmdline:- execute this command to find the plugin versions you have to update:
+                            mvn versions:display-plugin-updates
+                You will see a list of plugins used in your project with newer versions available.
+                Update all of those plugins to the lastest stable version.
+                After you've updated your plugin versions make sure that your project still compiles and runs properly.
+            -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <generateBackupPoms>false</generateBackupPoms>
+                </configuration>
+            </plugin>
 
             <!-- https://central.sonatype.org/pages/apache-maven.html -->
             <plugin>
@@ -151,23 +488,8 @@
             </plugin>
 
             <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-
-            <plugin>
-				<inherited>true</inherited>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <sourcepath>src/main/java</sourcepath>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            <!-- =========================================================== -->
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 
             <!-- The Maven GPG plugin is used to sign the components with the following configuration.
              * See https://blog.sonatype.com/2010/01/how-to-generate-pgp-signatures-with-maven/
@@ -223,11 +545,44 @@
 
         </plugins>
 
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+			</testResource>
+		</testResources>
+
+		<!-- unitTest>
+			<includes>
+				<include>**/*Test.java</include>
+			</includes>
+		</unitTest -->
+
 	</build>
 
-            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-            <!-- =========================================================== -->
-            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+        <!-- =========================================================== -->
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+    <!-- https://central.sonatype.org/pages/apache-maven.html -->
+    <!-- to use GPG to sign the software package - before it can be uploaded to Maven's Central Repository -->
+    <!-- https://central.sonatype.org/pages/ossrh-guide.html -->
+    <!-- This relies on the JIRA account from  issues.sonatype.org;  See details in ~/.2m/settings.xml -->
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+        <!-- =========================================================== -->
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 
 	<profiles>
 		<profile>
