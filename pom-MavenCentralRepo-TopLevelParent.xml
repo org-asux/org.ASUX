@@ -179,11 +179,16 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-			<!-- <dependency> -->
-				<!-- <groupId>software.amazon.awssdk</groupId> -->
-				<!-- <artifactId>s3</artifactId> -->
-				<!-- <version>2.7.14</version> -->
-			<!-- </dependency> -->
+			<dependency>
+				<groupId>software.amazon.awssdk</groupId>
+				<artifactId>auth</artifactId>
+				<version>2.7.14</version>
+			</dependency>
+			<dependency>
+				<groupId>software.amazon.awssdk</groupId>
+				<artifactId>s3</artifactId>
+				<version>2.7.14</version>
+			</dependency>
 			<!-- <dependency> -->
 				<!-- <groupId>software.amazon.awssdk</groupId> -->
 				<!-- <artifactId>utils</artifactId> -->
@@ -192,40 +197,57 @@
 			<dependency>
 				<groupId>com.amazonaws</groupId>
 				<artifactId>aws-java-sdk-s3</artifactId>
-				<version>1.11.541</version>
+				<version>1.11.612</version>
 			</dependency>
 			<dependency>
 				<groupId>com.amazonaws</groupId>
 				<artifactId>aws-java-sdk-sts</artifactId>
-				<version>1.11.541</version>
+				<version>1.11.612</version>
 			</dependency>
 			<dependency>
 				<groupId>com.amazonaws</groupId>
 				<artifactId>aws-java-sdk-core</artifactId>
-				<version>1.11.541</version>
+				<version>1.11.612</version>
 			</dependency>
 			<dependency>
 				<groupId>com.amazonaws</groupId>
 				<artifactId>aws-java-sdk-ec2</artifactId>
-				<version>1.11.541</version>
+				<version>1.11.612</version>
 			</dependency>
 			<dependency>
 				<groupId>com.amazonaws</groupId>
 				<artifactId>aws-java-sdk-route53</artifactId>
-				<version>1.11.541</version>
+				<version>1.11.612</version>
 			</dependency>
 			<dependency>
 				<groupId>com.amazonaws</groupId>
 				<artifactId>aws-java-sdk-iam</artifactId>
-				<version>1.11.541</version>
+				<version>1.11.612</version>
 			</dependency>
 			<dependency>
 				<groupId>com.amazonaws</groupId>
 				<artifactId>aws-java-sdk-bom</artifactId>
-				<version>1.11.541</version>
+				<version>1.11.612</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+
+		<!-- http://www.slf4j.org/codes.html#StaticLoggerBinder -->
+		<!-- ###	(RUNTIME ERROR):   SLF4J: Failed to load class org.slf4j.impl.StaticLoggerBinder -->
+		<!-- ###	This warning message is reported when the org.slf4j.impl.StaticLoggerBinder class could not be loaded into memory. -->
+		<!-- ###	This happens when no appropriate SLF4J binding could be found on the class path. -->
+		<!-- ###	Placing one (and only one) of slf4j-nop.jar slf4j-simple.jar, slf4j-log4j12.jar, slf4j-jdk14.jar or logback-classic.jar on the class path should solve the problem. -->
+		<!-- ###	SINCE 1.6.0 As of SLF4J version 1.6, in the absence of a binding, SLF4J will default to a no-operation (NOP) logger implementation. -->
+		<!-- ###	If you are responsible for packaging an application and do not care about logging, then placing slf4j-nop.jar on the class path of your application will get rid of this warning message. -->
+		<!-- ###	Note that embedded components such as libraries or frameworks should not declare a dependency on any SLF4J binding but only depend on slf4j-api. When a library declares a compile-time dependency on a SLF4J binding, it imposes that binding on the end-user, thus negating SLF4J's purpose. -->
+			<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-simple</artifactId>
+				<version>1.7.28</version>
+				<!-- <scope>test</scope> -->
+			</dependency>
+
         </dependencies>
     </dependencyManagement>
 
