@@ -357,21 +357,27 @@ try {
 			const data = dataBuffer.toString();
 			if (process.env.VERBOSE) console.log( __filename +" file contents of _DependenciesFile: ["+ _DependenciesFile +"]\n"+ data +"\n");
 
+			var line;  // for debugging purposes, it's defined outside the TRY-CATCH below.
 			try {
 
 				const lines = data.split('\n');
 				for (var ix in lines) {
-					const line = lines[ix];
+					line = lines[ix];
 					if (process.env.VERBOSE) console.log( __filename +" file contents of DependenciesFile: line #"+ ix +" = ["+ line +"]");
 					if ( line.match('^#') ) continue;
 					if ( line.match('^[\s\S]*$') ) continue;
 					if (process.env.VERBOSE) console.log( __filename +" file contents of DependenciesFile: line #"+ ix +" = ["+ line +"]");
 
 					// ______________________
-					// function replStrFunc (match, p1, p2, p3, offset, string) { return match; }
 					// outStr1WPrefix = outStr1WPrefix.replace(/^[^\n][^\n]*\n/mg, replStrFunc);
-					const REGEXP='^(.*):(.*):jar:([0-9]*\.[0-9.]*)';  // https://flaviocopes.com/javascript-regular-expressions/
+					// !!!!!!!!!!!!!!!!!!!!!!!! UGH !!!!!!!!!!!!!!!!!!!!!
+					// io.netty:netty-codec-http:jar:4.1.33.Final:runtime
+					// !!!!!!!!!!!!!!!!!!!!!!!! UGH !!!!!!!!!!!!!!!!!!!!!   Need to match the above (which has .FINAL suffix in version #)
+					const REGEXP='\\s*([0-9a-zA-Z.-]+):([^:]+):jar:([0-9]*\\.[0-9.a-zA-Z]*)($|:compile\\s*|:runtime\\s*)';  // https://flaviocopes.com/javascript-regular-expressions/
+					// Prefix "^[-\\+| ]*" does Not work --> const REGEXP='^[-\\+| ]*([0-9a-zA-Z][^:]+):([^:]+):jar:([0-9]*\\.[0-9.a-zA-Z]*)($|:compile\\s*|:runtime\\s*)';  // https://flaviocopes.com/javascript-regular-expressions/
+					// console.log("REGEXP='"+REGEXP+"'");
 					let [ lineReturnedAsIs, groupId, artifactId, version ] = line.match(REGEXP);
+					// console.log( __filename +": For line=["+ line +"]	REGEXP RETURNED: ["+ groupId +'.'+ artifactId +':'+ version +"]");
 					// const groupId = line.replace( REGEXP, "$1");
 					// const artifactId = line.replace( REGEXP, "$2");
 					// const version = line.replace( REGEXP, "$3");
@@ -527,9 +533,9 @@ try {
 				} // for-LOOP (var ix in lines) <<--- !!!! <<--- !!!! <<--- !!!! <<--- !!!! <<--- !!!! 
 
 			} catch (err13) { // a.k.a. if fs.readFileSync throws err13.code === 'ENOENT' || 'EISDIR')
-				console.error( __filename +"Internal error: failed to read DependenciesFile: ["+ DependenciesFile +"]\n"+ err13);
+				console.error( __filename +"Internal error: Failure while reading DependenciesFile: ["+ _DependenciesFile +"] @ line:\n["+ line +"]\n"+ err13);
 				process.exit(23);
-			}; // try-catch of fs.readFileSync ( DependenciesFile .. )
+			}; // reading lines - try-catch
 
 			//--------------------
 			if ( bAnyChanges2JARs ) console.log('\n\n'); // well, "setup" output was observed by end-user.. so, put a couple of blank lines for readability.
