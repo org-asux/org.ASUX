@@ -4,7 +4,7 @@ setProperty	AWSCFN.HOME=${ASUX::ORGASUXHOME}/AWS/CFN
 #_____ print ${ASUX::AWSCFN.HOME}
 
 //--------------------------------------------------
-makeNewRoot MyRootELEMENT
+makeNewRoot MyRootELEMENT --no-quote
 saveTo !saveAs-ROOT
 
 print user.home = ${ASUX::user.home} \n
@@ -37,7 +37,7 @@ foreach
 		## print -
 
 		useAsInput !saveAs-ROOT
-		echo yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --no-quote
+		echo yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
 		saveTo !saveAs-ROOT
 		print -
 	end
