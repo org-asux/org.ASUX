@@ -1,4 +1,4 @@
-- "eu-north-1"
+ !Logging in....  !AWS.SDK.EC2 init. .. - "eu-north-1"
 - "ap-south-1"
 - "eu-west-3"
 - "eu-west-2"
@@ -14,3 +14,4 @@
 - "us-east-2"
 - "us-west-1"
 - "us-west-2"
+ !AWS.SDK.EC2 init.  !AZs. 
