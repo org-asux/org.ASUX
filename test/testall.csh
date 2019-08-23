@@ -160,7 +160,7 @@ diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js ${VERBOSE} ${OFFLINE} $YAMLLIB  yaml  batch @./mapsBatch2.txt --single-quote --inputfile /dev/null  \
+asux.js ${VERBOSE} ${OFFLINE} $YAMLLIB  yaml  batch @./mapsBatch2.txt --double-quote --inputfile /dev/null  \
         -o ${OUTPFILE} >! ${OUTPFILE}.stdout
 # echo -n "sleeping ${DELAY}s .."; sleep ${DELAY} ## waiting for output to catch up..
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
@@ -189,7 +189,7 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js ${VERBOSE} ${OFFLINE} $YAMLLIB  yaml   batch 'print \n' -i /dev/null    \
+asux.js ${VERBOSE} ${OFFLINE} $YAMLLIB  yaml   batch 'print \n' -i /dev/null   --single-quote  \
         -o ${OUTPFILE} >! ${OUTPFILE}.stdout
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
