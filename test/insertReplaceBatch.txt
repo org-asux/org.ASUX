@@ -4,7 +4,7 @@ setProperty	AWSCFN.HOME=${ASUX::ORGASUXHOME}/AWS/CFN
 #_____ print ${ASUX::AWSCFN.HOME}
 
 //--------------------------------------------------
-makeNewRoot MyRootELEMENT
+makeNewRoot MyRootELEMENT --single-quote
 saveTo !YAMLROOT
 
 useAsInput @inputs/nano.yaml
