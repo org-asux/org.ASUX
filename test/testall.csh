@@ -203,13 +203,14 @@ asux.js ${VERBOSE} ${OFFLINE} $YAMLLIB  yaml   batch  'aws.sdk --list-regions --
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 
-# @ TESTNUM = $TESTNUM + 1
-# set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
-# echo $OUTPFILE
-#     \
-        # -o ${OUTPFILE} >! ${OUTPFILE}.stdout
-# diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
-# diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
+# 18
+@ TESTNUM = $TESTNUM + 1
+set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
+echo $OUTPFILE
+asux.js ${VERBOSE} ${OFFLINE} $YAMLLIB  yaml   batch  @sequenceTest1.txt -i /dev/null    \
+        -o ${OUTPFILE} >! ${OUTPFILE}.stdout
+diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
+diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 
 # @ TESTNUM = $TESTNUM + 1
 # set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
