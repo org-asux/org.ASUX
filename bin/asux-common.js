@@ -143,10 +143,21 @@ function processJavaCmd( _CMD) {
 
 	cmdArgs.splice( 0, 0, '-cp' ); // insert ./asux.js as JAVA's 1st cmdline parameter
 	cmdArgs.splice( 1, 0, CLASSPATH ); // insert CLASSPATH as JAVA's  2nd cmdline parameter
-    cmdArgs.splice( 2, 0, "-DORGASUXHOME="+process.env.ORGASUXHOME );
-    cmdArgs.splice( 3, 0, "-DAWSHOME="+process.env.AWSHOME );
-    cmdArgs.splice( 4, 0, "-DAWSCFNHOME="+process.env.AWSCFNHOME );
-	cmdArgs.splice( 5, 0, props['CMDCLASS'] ); // insert CMDCLASS=org.ASUX.yaml.Cmd as JAVA's  3rd cmdline parameter
+	cmdArgs.splice( 2, 0, "-DORGASUXHOME="+process.env.ORGASUXHOME );
+	var ix = 3
+    if ( process.env.AWSHOME ) {
+		cmdArgs.splice( ix, 0, "-DAWSHOME="+process.env.AWSHOME );
+		ix ++;
+	}
+    if ( process.env.AWSCFNHOME ) {
+		cmdArgs.splice( ix, 0, "-DAWSCFNHOME="+process.env.AWSCFNHOME );
+		ix ++;
+	}
+    if ( INITIAL_CWD ) {
+		cmdArgs.splice( ix, 0, "-DCURRENTWORKINGDIRECTORY="+INITIAL_CWD );
+		ix ++;
+	}
+	cmdArgs.splice( ix, 0, props['CMDCLASS'] ); // insert CMDCLASS=org.ASUX.yaml.Cmd as JAVA's  3rd cmdline parameter
 	if (process.env.VERBOSE) console.log( `${__filename} : within /tmp:\n\tjava ` + cmdArgs.join(' ') +"\n" );
 
 	const retCode = EXECUTESHELLCMD.executeSharingSTDOUT ( INITIAL_CWD, 'java', cmdArgs, true, process.env.VERBOSE, false, null );
