@@ -1,6 +1,7 @@
 swagger: "2.0"
 info:
   contact:
+    phone:
     email: sarma@ussmoso.com
     url: http://www.apache.org/licenses/LICENSE-2.0.html
 basePath: /playground
