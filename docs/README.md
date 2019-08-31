@@ -13,7 +13,9 @@ See "Quick-Start" section as well as Examples in above link.
 
 Also, see Javadocs, Wiki links, etc.. .. within the above.
 
-Want to take the project apart? Here's GitHub Project link:   [https://github.com/org-asux/org.ASUX](https://github.com/org-asux/org.ASUX)
+All the gitHub.com Projects are at: [https://github.com/org-asux](https://github.com/org-asux)
+
+Want to take the YAML-based project apart? Here's GitHub Project link to that specific project:   [https://github.com/org-asux/org.ASUX](https://github.com/org-asux/org.ASUX)
 
 # org.ASUX - Summary
 
