@@ -15,7 +15,7 @@ Also, see Javadocs, Wiki links, etc.. .. within the above.
 
 All the gitHub.com Projects are at: [https://github.com/org-asux](https://github.com/org-asux)
 
-Want to take the YAML-based project apart? Here's GitHub Project link to that specific project:   [https://github.com/org-asux/org.ASUX](https://github.com/org-asux/org.ASUX)
+Want to take the YAML-based project apart? Here's GitHub Project link to that specific project:   [https://github.com/org-asux/org.ASUX.YAML](https://github.com/org-asux/org.ASUX.YAML)
 
 # org.ASUX - Summary
 
