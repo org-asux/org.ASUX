@@ -54,10 +54,10 @@ if [ $# -ge 1 ]; then
 	fi
 
 	###____________________
-	if [ "$SETTINGSCMD" == "--no-uberjar" ]; then
+	if [ "$SETTINGSCMD" == "--no-uberjar" ] || [ "$SETTINGSCMD" == "--secure" ]; then
 		touch "${NOUBERJARFLAGFILENAME}"
 		echo ''
-		echo "NO UBERJar!!   Going forward.. .. the JAVA-runtime will __NOT__ use UBERJar in CLASSPATH"
+		echo "NO UBERJar!!   Going forward.. .. the asux-commands will __NOT__ use UBERJar in JAVA-CLASSPATH & fetch JARs from Maven-Central"
 		echo ''
 	fi
 	if [ "$SETTINGSCMD" == "--uberjar" ]; then
@@ -159,8 +159,48 @@ if [ $? -ne 0 ]; then
 
 fi
 
+###-------------------
 echo '[y] verified that your org.ASUX project is in the PATH ..and can be used in any folder!'
 sleep 1
+
+###-------------------
+
+>&2 command -v java > /dev/null
+
+if [ $? -ne 0 ]; then
+	>&2 echo ' '
+	>&2 echo "Please Install Java"
+	>&2 echo 'Example: sudo yum install openjdk8'
+	>&2 echo 'Example: sudo yum install java11'
+	>&2 echo ' '
+	exit 2
+fi
+
+echo '[y] verified that Java8/11 runtime is in your PATH ..and can be used!'
+sleep 1
+
+###-------------------
+
+>&2 command -v mvn > /dev/null
+
+if [ $? -ne 0 ]; then
+	>&2 echo ' '
+	>&2 echo "Maven is missing."
+	>&2 echo 'Example How-to install: sudo yum install maven'
+	>&2 echo ' '
+	ANSWER="?"
+	while [ "$ANSWER" != "y" ] && [ "$ANSWER" != "n" ]
+	do
+		read -p 'Will you guarantee that MAVEN will be available?    y/n  >>' ANSWER
+	done
+	if [ "$ANSWER" != "y" ]; then 
+		touch "${NOMAVENFLAGFILENAME}" ### !!!!!!!!!!! ATTENTION !!!!!!!!!!! make sure to have this line match-up/be-identical to the top of this script.
+		>&2 echo ' '
+		>&2 echo 'Ok.  Your wish.  FYI: No guarantees that the GitHub account that you got this package from is secure.'
+		>&2 echo "                 FYI: With MAVEN, you'll get code securely downloaded from the reputable Maven-Central."
+		>&2 echo ' '
+	fi
+fi
 
 ###-------------------
 ### The following symbolic-link is important for running compile and regression-tests of the org.ASUX packages
