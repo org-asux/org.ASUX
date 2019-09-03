@@ -125,9 +125,22 @@ if [ $? -ne 0 ]; then
 	sleep 7
 	>&2 echo '!!! ATTENTION !!! .. .. rerun this "install" again .. After installing node (as shown above)'
 	>&2 echo ' '
-	exit 1
+	exit 1	### <<------- <<--------
 else
 	echo "[y] verified that Node.JS (node) is installed"
+	NODEVERSION=`node -v`
+	echo "Node version is ${NODEVERSION}"
+	MINIMUM_VERSION="1[012]"	### Either version 10, or 11, or 12 .. .. of Node.JS
+	### expr "${NODEVERSION}" : '^v10\.[0-9]\.[0-9]'
+	expr "${NODEVERSION}" : "^v${MINIMUM_VERSION}\.[0-9]*\.[0-9]*"
+	if [ $? -ne 0 ]; then
+		>&2 echo ' '
+		>&2 echo ' '
+		>&2 echo "Your version of Node is ${NODEVERSION}.  No good.  This software will FAIL to run, unless you have Node 10+"
+		>&2 echo ' '
+		>&2 echo ' '
+		exit 2	### <<------- <<--------
+	fi
 	sleep 1
 fi
 
@@ -173,7 +186,7 @@ if [ $? -ne 0 ]; then
 	>&2 echo 'Example: sudo yum install openjdk8'
 	>&2 echo 'Example: sudo yum install java11'
 	>&2 echo ' '
-	exit 2
+	exit 4	### <<------- <<--------
 fi
 
 echo '[y] verified that Java8/11 runtime is in your PATH ..and can be used!'
