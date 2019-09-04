@@ -57,16 +57,13 @@ echo ''
 
 ###============================================
 
-echo ''
 chdir ${ORGASUXFLDR}
-mvn -f pom-TopLevelParent.xml clean package install:install
-mvn -f pom-MavenCentralRepo-TopLevelParent.xml clean package install:install
+
+echo ''
+echo 'Invoking Maven <targets> for each project.. ..'
+sleep 2
 
 ###============================================
-
-echo ''
-echo 'Invoking Maven for each project..'
-sleep 2
 
 foreach FLDR ( $PROJECTS )
 
