@@ -33,3 +33,5 @@ org.asux-mvn-shade-uber-jar-1.0.jar-ORIG
 .settings
 org.ASUX.artifacts
 org.ASUX.pom
+org.ASUX.language.ANTLR4
+org.ASUX.npm
