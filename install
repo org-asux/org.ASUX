@@ -125,7 +125,7 @@ if [ $? -ne 0 ]; then
 	sleep 7
 	>&2 echo '!!! ATTENTION !!! .. .. rerun this "install" again .. After installing node (as shown above)'
 	>&2 echo ' '
-	exit 1	### <<------- <<--------
+	exit 91	### <<------- <<--------
 else
 	echo "[y] verified that Node.JS (node) is installed"
 	NODEVERSION=`node -v`
@@ -139,7 +139,7 @@ else
 		>&2 echo "Your version of Node is ${NODEVERSION}.  No good.  This software will FAIL to run, unless you have Node 10+"
 		>&2 echo ' '
 		>&2 echo ' '
-		exit 2	### <<------- <<--------
+		exit 92	### <<------- <<--------
 	fi
 	sleep 1
 fi
@@ -165,7 +165,7 @@ if [ $? -ne 0 ]; then
 	# sleep 2
 	# >&2 echo 'ATTENTION !!! After choosing an option above.. .. rerun this "install" again (to double-check everything)'
 	# >&2 echo ' '
-	# exit 1
+	# exit 93
 # else
 # 	echo '[y] verified that your org.ASUX project is in the PATH ..and can be used in any folder!'
 # 	sleep 1
@@ -186,7 +186,7 @@ if [ $? -ne 0 ]; then
 	>&2 echo 'Example: sudo yum install java-1.8.0-openjdk'
 	>&2 echo 'Example: sudo yum install yum install java-1.11.0-openjdk'
 	>&2 echo ' '
-	exit 4	### <<------- <<--------
+	exit 94	### <<------- <<--------
 fi
 
 echo '[y] verified that Java8/11 runtime is in your PATH ..and can be used!'
@@ -239,7 +239,9 @@ if [ $? -eq 0 ]; then
 	>&2 echo ' '
 else
 	>&2 echo "Something went wrong. Please look at the bottom of the file ${LOGFILE}"
+	exit 99
 fi
 
+exit 0
 ### EoScript
 
