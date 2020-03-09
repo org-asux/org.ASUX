@@ -183,8 +183,8 @@ sleep 1
 if [ $? -ne 0 ]; then
 	>&2 echo ' '
 	>&2 echo "Please Install Java"
-	>&2 echo 'Example: sudo yum install openjdk8'
-	>&2 echo 'Example: sudo yum install java11'
+	>&2 echo 'Example: sudo yum install java-1.8.0-openjdk'
+	>&2 echo 'Example: sudo yum install yum install java-1.11.0-openjdk'
 	>&2 echo ' '
 	exit 4	### <<------- <<--------
 fi
@@ -216,12 +216,13 @@ if [ $? -ne 0 ]; then
 fi
 
 ###-------------------
-### The following symbolic-link is important for running compile and regression-tests of the org.ASUX packages
-mkdir -p /mnt/development > /dev/null 2>&1
-ln -s ${orgASUXFldr}/.. /mnt/development/src > /dev/null 2>&1
-### This above link is needed by ${orgASUXFldr}/compile.sh
-### compile.sh _ASSUMES_ the path /mnt/development/src/org.ASUX as === ${orgASUXFldr}
-if [ ! -e /mnt/development/src ]; then echo '[x] ADVANCED-user ONLY: /mnt/development/src could Not created.'; fi
+#___	### The following symbolic-link is important for running compile and regression-tests of the org.ASUX packages
+#___	DEVHOME=/mnt/development
+#___	mkdir -p "${DEVHOME}" > /dev/null 2>&1
+#___	ln -s ${orgASUXFldr}/.. "${DEVHOME}/src" > /dev/null 2>&1
+#___	### This above link is needed by ${orgASUXFldr}/compile.sh
+#___	### compile.sh _ASSUMES_ the path "${DEVHOME}/src/org.ASUX" as === ${orgASUXFldr}
+#___	if [ ! -e "${DEVHOME}/src" ]; then echo '[x] ADVANCED-user ONLY: "${DEVHOME}/src" could Not created.'; fi
 
 ###-------------------
 LOGFILE=/tmp/org.ASUX-install-cmd-logs.txt
