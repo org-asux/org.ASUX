@@ -1,12 +1,23 @@
-useAsInput @/mnt/development/src/org.ASUX/test/inputs/nano.yaml
+setProperty DEVROOT=/mnt/development
+setProperty DEVROOT=/Users/development
+
+useAsInput @${ASUX::DEVROOT}/src/org.ASUX/test/inputs/nano.yaml
 saveTo !UPDATEDNANO
-useAsInput @/mnt/development/src/org.ASUX/test/inputs/simpleSequence.yaml
-foreach
-        useAsInput !UPDATEDNANO
-        verbose on
-        echo yaml --insert 'info,contact,phone,[${ASUX::foreach.index}]' 'new array element' --delimiter ,
-        verbose off
-        print -
-        saveTo !UPDATEDNANO
-end
+print -
+
+// useAsInput @${ASUX::DEVROOT}/src/org.ASUX/test/inputs/simpleSequence.yaml
+// foreach
+//        useAsInput !UPDATEDNANO
+//        verbose off
+//        echo yaml --insert 'info,contact,phone,[${ASUX::foreach.index}]' 'new array element' --delimiter ,
+//        verbose off
+//        print -
+//        saveTo !UPDATEDNANO
+// end
 useAsInput !UPDATEDNANO
+
+verbose off
+echo yaml --insert 'info,contact,phone,[0]' 'new array element No.1' --delimiter ,
+print -
+verbose off
+echo yaml --insert 'info,contact,phone,[1]' '2nd new array element' --delimiter ,
