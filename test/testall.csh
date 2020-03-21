@@ -181,7 +181,7 @@ diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js ${VERBOSE} ${OFFLINE} $YAMLLIB  yaml  table 'paths,/pet,put,parameters' 'name,type' --showStats --delimiter , --no-quote --inputfile inputs/my-petstore-micro.yaml    \
+asux.js ${VERBOSE} ${OFFLINE} $YAMLLIB  yaml  table 'paths,/pet,put,parameters' '../operationId,name,type,schema/ref' --showStats --delimiter , --no-quote --inputfile inputs/my-petstore-micro.yaml    \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
