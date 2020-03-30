@@ -100,7 +100,7 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-asux.js ${VERBOSE} ${OFFLINE} $YAMLLIB  yaml  replace 'paths,/pet,put,parameters,[13],in' 'replaced text by asux.js' --delimiter ,  --double-quote --showStats --inputfile inputs/my-petstore-micro.yaml  \
+asux.js ${VERBOSE} ${OFFLINE} $YAMLLIB  yaml  replace 'paths,/pet,put,parameters,[13],in' '"replaced text by asux.js"' --delimiter ,  --double-quote --showStats --inputfile inputs/my-petstore-micro.yaml  \
         -o ${OUTPFILE} >! ${OUTPFILE}.stdout
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
@@ -127,26 +127,82 @@ asux.js ${VERBOSE} ${OFFLINE} $YAMLLIB  yaml  macroyaml @inputs/props.txt  --inp
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
+###---------------------------------
+# 10
+@ TESTNUM = $TESTNUM + 1
+set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
+echo $OUTPFILE
+asux.js ${VERBOSE} ${OFFLINE} $YAMLLIB  yaml  table 'paths,/pet,put,parameters' '../operationId,name,type,schema/ref' --showStats --delimiter , --no-quote --inputfile inputs/my-petstore-micro.yaml    \
+        -o ${OUTPFILE}
+diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+exit 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ##-------------------------------------------
 # 10
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
+# echo 'MyRootELEMENT: ""' | asux.js $YAMLLIB  yaml   insert MyRootELEMENT.subElem.leafElem '{State: "available", Messages: [A,B,C], RegionName: "eu-north-1", ZoneName: "eu-north-1c", ZoneId: "eun1-az3"}'  --inputfile -  -o -
+asux.js ${VERBOSE} ${OFFLINE} $YAMLLIB  yaml  batch @insertReplaceBatch.txt --double-quote  --inputfile /dev/null    \
+        -o ${OUTPFILE} >! ${OUTPFILE}.stdout
+diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
+diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
+
+# 12
+@ TESTNUM = $TESTNUM + 1
+set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
+echo $OUTPFILE
+echo \
+asux.js ${VERBOSE} ${OFFLINE} $YAMLLIB  yaml  batch @simpleBatch.txt --no-quote --inputfile /dev/null
 asux.js ${VERBOSE} ${OFFLINE} $YAMLLIB  yaml  batch @simpleBatch.txt --no-quote --inputfile /dev/null \
         -o ${OUTPFILE} > /dev/null   ## I have print statements n this BATCH-file, that are put onto stdout.
 # echo -n "sleeping ${DELAY}s .."; sleep ${DELAY} ## waiting for output to catch up..
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
-# 11
+# 13
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
-echo $OUTPFILE
-asux.js ${VERBOSE} ${OFFLINE} $YAMLLIB  yaml  batch 'useAsInput @./inputs/AWS.AZdetails-us-east-1.json' --single-quote --inputfile /dev/null \
-        -o ${OUTPFILE}
-# echo -n "sleeping ${DELAY}s .."; sleep ${DELAY} ## waiting for output to catch up..
-diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
+echo $OUTPFILE is SKIPPED ... ...
+# asux.js ${VERBOSE} ${OFFLINE} $YAMLLIB  yaml  batch 'useAsInput @./inputs/AWS.AZdetails-us-east-1.json' --single-quote --inputfile /dev/null \
+#         -o ${OUTPFILE}
+# # echo -n "sleeping ${DELAY}s .."; sleep ${DELAY} ## waiting for output to catch up..
+# diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
-# 12
+# 14
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
@@ -156,7 +212,7 @@ asux.js ${VERBOSE} ${OFFLINE} $YAMLLIB  yaml  batch @./mapsBatch1.txt --single-q
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 
-# 13
+# 15
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
@@ -167,24 +223,6 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 
 ###---------------------------------
-# 14
-@ TESTNUM = $TESTNUM + 1
-set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
-echo $OUTPFILE
-# echo 'MyRootELEMENT: ""' | asux.js $YAMLLIB  yaml   insert MyRootELEMENT.subElem.leafElem '{State: "available", Messages: [A,B,C], RegionName: "eu-north-1", ZoneName: "eu-north-1c", ZoneId: "eun1-az3"}'  --inputfile -  -o -
-asux.js ${VERBOSE} ${OFFLINE} $YAMLLIB  yaml  batch @insertReplaceBatch.txt --double-quote  --inputfile /dev/null    \
-        -o ${OUTPFILE} >! ${OUTPFILE}.stdout
-diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
-diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
-
-# 15
-@ TESTNUM = $TESTNUM + 1
-set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
-echo $OUTPFILE
-asux.js ${VERBOSE} ${OFFLINE} $YAMLLIB  yaml  table 'paths,/pet,put,parameters' '../operationId,name,type,schema/ref' --showStats --delimiter , --no-quote --inputfile inputs/my-petstore-micro.yaml    \
-        -o ${OUTPFILE}
-diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
-
 # 16
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
