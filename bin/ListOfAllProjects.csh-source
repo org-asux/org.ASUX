@@ -35,11 +35,15 @@ endif
 
 ###---------------------------------------------------
 set ASIS_PROJECTS= ( ${ORGASUXFLDR}/org.ASUX.common      ${ORGASUXFLDR}/org.ASUX.YAML    ${ORGASUXFLDR}/org.ASUX.YAML.NodeImpl    ${ORGASUXFLDR}/org.ASUX.YAML.CollectionsImpl    ${ORGASUXFLDR}  ${ORGASUXFLDR}/org.ASUX.npm    )
+set ASIS_PROJECTS= ( ${ORGASUXFLDR}/org.ASUX.common      ${ORGASUXFLDR}/org.ASUX.YAML    ${ORGASUXFLDR}/org.ASUX.YAML.NodeImpl    ${ORGASUXFLDR}  ${ORGASUXFLDR}/org.ASUX.npm    )
 
 ### !!!!!!!!!!!!! ATTENTION !!!!!!!!!!!!!!! make sure, below 3 lines are IN-SYNC !!!!!!!!!!!!!!!!
 set RENAMED_PROJECTS= ( ${ORGASUXFLDR}/cmdline  ${ORGASUXFLDR}/AWS     ${ORGASUXFLDR}/AWS/AWS-SDK    ${ORGASUXFLDR}/AWS/CFN     )
+set RENAMED_PROJECTS= ( ${ORGASUXFLDR}/cmdline  )
 set ORIG_PROJECTNAMES= ( org.ASUX.cmdline    org.ASUX.AWS     org.ASUX.AWS-SDK   org.ASUX.AWS.CFN     )
+set ORIG_PROJECTNAMES= ( org.ASUX.cmdline   )
 set NEWNAMES= ( cmdline  AWS   AWS/AWS-SDK   AWS/CFN     )
+set NEWNAMES= ( cmdline )
 
 ###---------------------------------------------------
 set PROJECTS= ( ${ASIS_PROJECTS} ${RENAMED_PROJECTS} )
