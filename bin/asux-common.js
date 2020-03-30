@@ -121,7 +121,9 @@ function sendArgs2SubModule( _DIR_orgASUXSubProject ) {
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //============================================================
 
-function processJavaCmd( _CMD) {
+// _CmdFamily ==== 'yaml' or 'aws.sdk' or 'aws.cfn' or .. .. 
+// _CMD === sub-command under the above _CmdFamily
+function processJavaCmd( _CmdFamily, _CMD) {
 
 	const bIsMavenInstalled = chkMavenInstalled();
 	const DependenciesFile=__dirname + "/etc/classpaths/"+ CMDGRP +"-cmd.dependencies";
@@ -135,12 +137,12 @@ function processJavaCmd( _CMD) {
 	EXECUTESHELLCMD.runPreScripts(); // ignore any exit code from these PRE-scripts
 
 	//--------------------
-	var cmdArgs = copyCmdLineArgs( _CMD, /* _bInsertDoubleHyphen */ true, /* _bAddCmd2Params */ true );
+	var cmdArgs = copyCmdLineArgs( _CMD, /* _bInsertDoubleHyphen */ false, /* _bAddCmd2Params */ true );
 	// copyCmdLineArgs() is defined within process.env.ORGASUXHOME/asux-common.js
 
 	cmdArgs.splice( 0, 0, '-cp' ); // insert ./asux.js as JAVA's 1st cmdline parameter
 	cmdArgs.splice( 1, 0, CLASSPATH ); // insert CLASSPATH as JAVA's  2nd cmdline parameter
-	cmdArgs.splice( 2, 0, "-DORGASUXHOME="+process.env.ORGASUXHOME );
+	cmdArgs.splice( 2, 0, "-DORGASUXHOME="+process.env.ORGASUXHOME ); // insert Properties as JAVA's  3rd cmdline parameter
 	var ix = 3
     if ( process.env.AWSHOME ) {
 		cmdArgs.splice( ix, 0, "-DAWSHOME="+process.env.AWSHOME );
@@ -154,8 +156,16 @@ function processJavaCmd( _CMD) {
 		cmdArgs.splice( ix, 0, "-DCURRENTWORKINGDIRECTORY="+INITIAL_CWD );
 		ix ++;
 	}
-	cmdArgs.splice( ix, 0, props['CMDCLASS'] ); // insert CMDCLASS=org.ASUX.yaml.Cmd as JAVA's  3rd cmdline parameter
+	cmdArgs.splice( ix, 0, props['CMDCLASS'] ); // insert CMDCLASS=org.ASUX.yaml.Cmd as JAVA's  4th cmdline parameter
 	if (process.env.VERBOSE) console.log( `${__filename} : within /tmp:\n\tjava ` + cmdArgs.join(' ') +"\n" );
+
+	if (process.env.VERBOSE) {
+		ix++;
+		cmdArgs.splice( ix, 0, '--verbose' ); // insert --verbose as JAVA's 5th cmdline parameters
+	}
+
+	ix++;
+	cmdArgs.splice( ix, 0, _CmdFamily ); // insert 'yaml' or 'aws.sdk' ..  as JAVA's 6th cmdline parameter
 
 	const retCode = EXECUTESHELLCMD.executeSharingSTDOUT ( INITIAL_CWD, 'java', cmdArgs, true, process.env.VERBOSE, false, null );
 	process.exitCode = retCode;
@@ -313,8 +323,10 @@ function genDependencyCLASSPATH( _DependenciesFile, _bIsMavenInstalled ) {
 
 	const JARFOLDER			=	ORGASUXHOME  +'/lib';
 	const MAVENLOCALREPO	=	os.homedir() +'/.m2/repository';
-	const UBERJARFILENAME	=	"org.asux.mvn-shade-uber-jar-1.0.jar";
-	const UBERJARFILEPATH1	=	MAVENLOCALREPO +"/org/asux/mvn-shade-uber-jar/1.0/"+ (UBERJARFILENAME.replace('org.asux.', ''));
+	// const UBERJARFILENAME	=	"org.asux.mvn-shade-uber-jar-1.0.jar";
+	// const UBERJARFILEPATH1	=	MAVENLOCALREPO +"/org/asux/mvn-shade-uber-jar/1.0/"+ (UBERJARFILENAME.replace('org.asux.', ''));
+	const UBERJARFILENAME	=	"mvn-shade-uber-jar-1.0.jar";
+	const UBERJARFILEPATH1	=	MAVENLOCALREPO +"/org/asux/mvn-shade-uber-jar/1.0/"+ UBERJARFILENAME;
 	const UBERJARFILEPATH2	=	JARFOLDER +"/"+ UBERJARFILENAME;
 
 	var bAnyChanges2JARs = false; // Basically, we need to _FIGURE OUT_ whether any JAR changes triggered any MVN downloads.. so that we can help end-user make sense of what git/mvn will dump on screen.
@@ -565,7 +577,7 @@ try {
 //========================================================================
 
 function copyCmdLineArgs( _COMMAND, _bInsertDoubleHyphen, _bAddCmd2Params ) {
-	if (process.env.VERBOSE) { console.log( "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! copyCmdLineArgs( " + _COMMAND +", "+ _bInsertDoubleHyphen +" )" ); }
+	if (process.env.VERBOSE) { console.log( __filename +" copyCmdLineArgs( " + _COMMAND +", "+ _bInsertDoubleHyphen +" )" ); }
 	// In Unix shell, If there are spaces inside the variables, then "$@" retains the spaces, while "$*" does not
 	// The following lines of code are the JS-quivalent of shell's      ./cmdline/asux $@
   	// Get rid of 'node' '--verbose'(optionally) and 'asux.js'.. .. and finally the 'yaml/asux' command
@@ -581,12 +593,9 @@ function copyCmdLineArgs( _COMMAND, _bInsertDoubleHyphen, _bAddCmd2Params ) {
 	var cmdArgs = process.argv.slice( is1stCmdLineArgNodeExecutable ? 2: 1 ); // get rid of BOTH 'node' and 'asux.js'
 
 	var cmdArgs = [];
-	if (process.env.VERBOSE) {
-		cmdArgs.push( '--verbose' ); // insert --verbose as JAVA's first few cmdline parameters
-	}
 
 	for (var ix in process.argv) {
-		if (process.env.VERBOSE) { console.log( "copyCmdLineArgs( " + process.argv[ix] +" )" ); }
+		if (process.env.VERBOSE) { console.log( __filename +" copyCmdLineArgs(): argument # "+ ix +" = ["+ process.argv[ix] +"]" ); }
 		if ( process.argv[ix].match('.*node(.exe)?$') ) continue; // get rid of node.js  or  node.exe (on windows)
 			if ( ix < 2 ) continue; // For starters, Get rid of 'node' and 'asux.js'
 		if ( process.argv[ix].match('--verbose') ) continue; // get rid of node.js  or  node.exe (on windows)
@@ -596,6 +605,9 @@ function copyCmdLineArgs( _COMMAND, _bInsertDoubleHyphen, _bAddCmd2Params ) {
 		if ( process.argv[ix] != _COMMAND ) {
 			cmdArgs.push( process.argv[ix] );
 		} else {
+			// cmdArgs.push( process.argv[ix] );
+			// We're no longer relying on org.apache.commons.cli to parse Command-line.
+			// We've switched to ANTLR4 grammer-based parser
 			if ( _bInsertDoubleHyphen && _bAddCmd2Params ) { // re-insert the COMMAND again - Appropriately, as Java's Apache CLI requires a -- prefixing the command
 				cmdArgs.push( '--'+ process.argv[ix] );
 			} else {
