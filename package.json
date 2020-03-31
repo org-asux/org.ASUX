@@ -11,7 +11,7 @@
                         , "asux-update" : "bin/chkGitStatusForAllProjects.csh"
                         , "asux-test" : "bin/testAllProjects.csh --offline"
                         },
-        "dependencies": { "request": "*", "sync-request": "*", "commander": "*" },
+        "dependencies": { "commander": "2.20.0" },
         "keywords": [ "UN*X style cmdline tools for the Application-Server and Cloud era", "YAML", "read", "delete", "query", "find", "replace", "substitute", "list", "YAML processor", "YAML command-line" ],
         "repository": { "type" : "git", "url" : "https://github.com/org-asux"},
         "bugs": { "url": "https://github.com/org-asux/org-ASUX.github.io/wiki" },
