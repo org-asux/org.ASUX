@@ -1,7 +1,5 @@
 #!/bin/tcsh -f
 
-set REPO=~/.m2/repository
-
 ### STEP 1:-
 ### convert each line   <FROM> com.fasterxml.jackson.core:jackson-annotations:jar:2.9.6
 ###                     <INTO> set GROUPID=.. .. ..
@@ -19,7 +17,48 @@ set REPO=~/.m2/repository
 ### CHANGE:->    ls -la..       <FROM>  ls -la ${REPO}/${FLDR}/${ARTIFACTID}/${VERSION}/${ARTIFACTID}-${VERSION}.jar
 ###                             <TO>    cp -pi ${REPO}/${FLDR}/${ARTIFACTID}/${VERSION}/${ARTIFACTID}-${VERSION}.jar ${GROUPID}.${ARTIFACTID}.${ARTIFACTID}-${VERSION}.jar
 
-echo -n 'did you "git rm *.jar" (that is, _ALL_ files) in this LIB folder? >>'; set ANS=$<
+###============================================
+###@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+###============================================
+
+set SCRIPTDIR="$0:h"
+if ( "${SCRIPTDIR}" == "$0" ) then
+        ### TCSH Quirk:  this means '$0' is purely a simple file name with NO path-prefix (not even './')
+        set SCRIPTDIR="$cwd"
+else
+    if ( "${SCRIPTDIR}" == "." || "${SCRIPTDIR}" == "" ) then
+        set SCRIPTDIR="$cwd"
+    endif
+endif
+
+#__  echo "SCRIPTDIR=[${SCRIPTDIR}]"
+chdir ${SCRIPTDIR}/..  ### Get out of BIN subfolder
+pwd
+
+if ( ! -e lib ) then
+    echo "Unable to find the 'lib' SUB-FOLDER at ${SCRIPTDIR}"
+    exit 1
+endif
+
+set noglob
+if ( -e lib/*.jar ) then
+    echo -n 'did you "git rm *.jar" (that is, _ALL_ files) in this LIB folder? >>'; set ANS=$<
+endif
+
+chdir lib
+
+###============================================
+###@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+###============================================
+
+set REPO=${HOME}/.m2/repository
+
+###============================================
+###@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+###============================================
+
+echo ''
+echo -n 'Proceed? >>'; set ANS=$<
 
 set GROUPID=org.asux; set ARTIFACTID=common; set VERSION=1.2;          set FLDR=`echo ${GROUPID} | sed -e 's|\.|/|g'`; cp -pi ${REPO}/${FLDR}/${ARTIFACTID}/${VERSION}/${ARTIFACTID}-${VERSION}.jar ${GROUPID}.${ARTIFACTID}.${ARTIFACTID}-${VERSION}.jar
 set GROUPID=org.junit.vintage; set ARTIFACTID=junit-vintage-engine; set VERSION=5.5.2;          set FLDR=`echo ${GROUPID} | sed -e 's|\.|/|g'`; cp -pi ${REPO}/${FLDR}/${ARTIFACTID}/${VERSION}/${ARTIFACTID}-${VERSION}.jar ${GROUPID}.${ARTIFACTID}.${ARTIFACTID}-${VERSION}.jar
