@@ -28,7 +28,7 @@ EOTXT
 chdir ${ORGASUXFLDR}
 git pull
 
-//-------------------------
+###-------------------------
 foreach FLDR ( $PROJECTS )
 
 	if ( -e "${FLDR}" ) then
