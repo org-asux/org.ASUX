@@ -1,0 +1,43 @@
+{
+        "name": "org.asux",
+        "version": "1.0.0",
+        "description": "see https://github.com/org-asux/org-ASUX.github.io/wiki",
+        "license": "BSD 3-Clause License",
+        "author": "ToSarma@gmail.com",
+        "main": "asux.js",
+        "engines": {
+                "node": ">=10.2.2"
+        },
+        "bin": {
+                "asux": "asux.js"
+        },
+        "scripts": {
+                "asux-install": "./install",
+                "asux-update": "bin/chkGitStatusForAllProjects.csh",
+                "asux-test": "bin/testAllProjects.csh --offline"
+        },
+        "dependencies": {
+                "commander": "2.20.0"
+        },
+        "keywords": [
+                "UN*X style cmdline tools for the Application-Server and Cloud era",
+                "YAML",
+                "read",
+                "delete",
+                "query",
+                "find",
+                "replace",
+                "substitute",
+                "list",
+                "YAML processor",
+                "YAML command-line"
+        ],
+        "repository": {
+                "type": "git",
+                "url": "https://github.com/org-asux"
+        },
+        "bugs": {
+                "url": "https://github.com/org-asux/org-ASUX.github.io/wiki"
+        },
+        "homepage": "https://github.com/org-asux/org-ASUX.github.io/wiki"
+}
