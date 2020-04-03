@@ -275,7 +275,7 @@ function renameAndMove( _oldPath, _newPath ) {
 	if (process.env.VERBOSE) console.log( `about to RENAME ${_oldPath} to ${newFileNameInOldPath} ` );
 	fs.renameSync( _oldPath, newFileNameInOldPath  );
 
-	if (process.env.VERBOSE) console.log( `about to MOVE ${newFileNameInOldPath} to ${_DIR_orgASUXSubProject} ` );
+	if (process.env.VERBOSE) console.log( `about to MOVE ${newFileNameInOldPath} to ${_newPath} ` );
 	fs.renameSync( newFileNameInOldPath, _newPath );
 }
 
