@@ -17,6 +17,11 @@ pushd org.ASUX.pom
 mvn -f pom-TopLevelParent.xml install
 popd
 
+# ### Since 'org.ASUX.language.ANTLR4' depends on 'org.ASUX.common'
+# pushd org.ASUX.common
+# mvn clean compiler:compile jar:jar install:install 
+# popd
+
 pushd org.ASUX.language.ANTLR4
 git pull
 ./bin/clean.csh
