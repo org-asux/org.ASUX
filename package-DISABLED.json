@@ -37,7 +37,8 @@
                 "url": "https://github.com/org-asux"
         },
         "bugs": {
-                "url": "https://github.com/org-asux/org-ASUX.github.io/wiki"
+                "url": "https://github.com/org-asux/org.ASUX/issues",
+                "email": "https://groups.google.com/forum/#!forum/asuxorg"
         },
         "homepage": "https://github.com/org-asux/org-ASUX.github.io/wiki"
 }
