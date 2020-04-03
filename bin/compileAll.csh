@@ -10,6 +10,21 @@ if ( $?IGNOREERRORS ) echo .. hmmm .. ignoring any errors ({IGNOREERRORS} is set
 
 #___ mkdir -p "${ORGASUXFLDR}/AWS"
 
+\rm -rf ~/.m2/repository/org/asux
+
+###=============================================
+pushd org.ASUX.pom
+mvn -f pom-TopLevelParent.xml install
+popd
+
+pushd org.ASUX.language.ANTLR4
+git pull
+./bin/clean.csh
+./bin/compile.csh
+mvn jar:jar install:install
+popd
+
+###=============================================
 set counter=1
 foreach FLDR ( $RENAMED_PROJECTS )
 
