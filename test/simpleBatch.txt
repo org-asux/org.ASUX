@@ -10,16 +10,16 @@ setProperty	AWSCFN.HOME=${ASUX::ORGASUXHOME}/AWS/CFN
 ### Outside of this batch-file run:-
 ### aws.sdk ec2 describe-availability-zones --region us-east-2 --output json --profile XYZ
 ### useAsInput @/tmp/aws.AZs.yaml
-### yaml --read         AvailabilityZones.*.ZoneId
+### yaml read         AvailabilityZones.*.ZoneId
 
 useAsInput @${ASUX::ORGASUXHOME}/AWS/AWS-SDK/etc/offline-downloads/AWSRegions.yaml
-#______ aws.sdk --list-regions
+#______ aws.sdk list-regions
 
 //--------------------------------------------------
 foreach
 	print ${ASUX::foreach.iteration.value} \n
 	setProperty AWSRegion=${ASUX::foreach.iteration.value}
-	#______ aws.sdk --list-AZs      ${ASUX::foreach.iteration.value}
+	#______ aws.sdk list-AZs      ${ASUX::foreach.iteration.value}
 	useAsInput  @${ASUX::ORGASUXHOME}/AWS/AWS-SDK/etc/offline-downloads/AWS.AZlist-${ASUX::AWSRegion}.yaml
 	#______ print -
 	foreach

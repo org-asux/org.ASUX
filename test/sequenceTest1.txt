@@ -9,7 +9,7 @@ print -
 // foreach
 //        useAsInput !UPDATEDNANO
 //        verbose off
-//        echo yaml --insert 'info,contact,phone,[${ASUX::foreach.index}]' 'new array element' --delimiter ,
+//        echo yaml insert 'info,contact,phone,[${ASUX::foreach.index}]' 'new array element' --delimiter ,
 //        verbose off
 //        print -
 //        saveTo !UPDATEDNANO
@@ -17,7 +17,7 @@ print -
 useAsInput !UPDATEDNANO
 
 verbose off
-echo yaml --insert 'info,contact,phone,[0]' 'new array element No.1' --delimiter ,
+echo yaml insert 'info,contact,phone,[0]' 'new array element No.1' --delimiter ,
 print -
 verbose off
-echo yaml --insert 'info,contact,phone,[1]' '2nd new array element' --delimiter ,
+echo yaml insert 'info,contact,phone,[1]' '2nd new array element' --delimiter ,

@@ -11,7 +11,7 @@ print user.home = ${ASUX::user.home} \n
 print user.dir = ${ASUX::user.dir} \n
 
 useAsInput @${ASUX::ORGASUXHOME}/AWS/AWS-SDK/etc/offline-downloads/AWSRegions.yaml
-#_____ aws.sdk --list-regions
+#_____ aws.sdk list-regions
 print -
 
 //--------------------------------------------------
@@ -19,7 +19,7 @@ foreach
 	print ${ASUX::foreach.iteration.value} \n
 	setProperty AWSRegion=${ASUX::foreach.iteration.value}
 
-	#______ aws.sdk --describe-AZs      ${ASUX::foreach.iteration.value} --no-quote
+	#______ aws.sdk describe-AZs      ${ASUX::foreach.iteration.value} --no-quote
 	useAsInput  @${ASUX::ORGASUXHOME}/AWS/AWS-SDK/etc/offline-downloads/AWS.AZdetails-${ASUX::AWSRegion}.yaml
 
 	#______ ATTENTION: the above aws.sdk command's output is NOT SIMPLE KVPairs.
@@ -32,12 +32,12 @@ foreach
 		#______ print ${ASUX::foreach.iteration.value} \n
 		#______ {"State=available":"Messages=","[]":"RegionName=eu-west-2","ZoneName=eu-west-2b":"ZoneId=euw2-az3"}  
 
-		yaml --delete Messages  ### See above comments about empty ARRAY object called 'Messages'
+		yaml delete Messages  ### See above comments about empty ARRAY object called 'Messages'
 		saveTo !saveAs-${ASUX::foreach.index}
 		## print -
 
 		useAsInput !saveAs-ROOT
-		echo yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+		echo yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
 		saveTo !saveAs-ROOT
 		print -
 	end

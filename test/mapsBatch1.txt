@@ -5,14 +5,14 @@ setProperty	AWSCFN.HOME=${ASUX::ORGASUXHOME}/AWS/CFN
 
 //--------------------------------------------------
 useAsInput @${ASUX::ORGASUXHOME}/AWS/AWS-SDK/etc/offline-downloads/AWSRegions.yaml
-#_____ aws.sdk --list-regions
+#_____ aws.sdk list-regions
 
 //--------------------------------------------------
 foreach
 	print ${ASUX::foreach.iteration.value} \n
 	setProperty AWSRegion=${ASUX::foreach.iteration.value}
 
-	#______ aws.sdk --describe-AZs      ${ASUX::foreach.iteration.value} --no-quote
+	#______ aws.sdk describe-AZs      ${ASUX::foreach.iteration.value} --no-quote
 	useAsInput  @${ASUX::ORGASUXHOME}/AWS/AWS-SDK/etc/offline-downloads/AWS.AZdetails-${ASUX::AWSRegion}.yaml
 
 	### ATTENTION: the above aws.sdk command's output is NOT SIMPLE KVPairs.
@@ -25,7 +25,7 @@ foreach
 		## YAML: 'ZoneName': 'eu-north-1a' \n 'ZoneId': 'eun1-az1' \n'State': 'available' \n 'RegionName': 'eu-north-1' \n 'Messages': []
 		## JSON: {"State=available":"Messages=","[]":"RegionName=eu-west-2","ZoneName=eu-west-2b":"ZoneId=euw2-az3"}
 
-		yaml --delete Messages  ### See above comments about empty ARRAY object called 'Messages'
+		yaml delete Messages  ### See above comments about empty ARRAY object called 'Messages'
 
 		foreach
 			print ${ASUX::foreach.iteration.key} = ${ASUX::foreach.iteration.value}
@@ -33,6 +33,7 @@ foreach
 		print \n
 		print \n
 		#_______ print %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% \n
+		print -
 	end
 	print \n
 end

@@ -8,19 +8,19 @@ makeNewRoot MyRootELEMENT --single-quote
 saveTo !YAMLROOT
 
 useAsInput @inputs/nano.yaml
-yaml --insert paths,/pet,put,consumes @inputs/simpleSequence.yaml --delimiter , --no-quote
+yaml insert paths,/pet,put,consumes @inputs/simpleSequence.yaml --delimiter , --no-quote
 print -
 
 useAsInput @inputs/nano.yaml
-yaml --insert paths,/pet,put,consumes,0 @inputs/simpleSequence.yaml --delimiter , --no-quote
+yaml insert paths,/pet,put,consumes,0 @inputs/simpleSequence.yaml --delimiter , --no-quote
 print -
 
 useAsInput @inputs/nano.yaml
-yaml --insert paths,/pet,put,consumes,1 @inputs/simpleSequence.yaml --delimiter , --no-quote
+yaml insert paths,/pet,put,consumes,1 @inputs/simpleSequence.yaml --delimiter , --no-quote
 print -
 
 useAsInput @inputs/nano.yaml
-yaml --replace paths,/pet,put,consumes,0 @inputs/simpleSequence.yaml --delimiter , --no-quote
+yaml replace paths,/pet,put,consumes,0 @inputs/simpleSequence.yaml --delimiter , --no-quote
 print -
 
 
@@ -28,11 +28,11 @@ print -
 ### using SINGLE-quote to represent an empty-string as '' will fail, due to SHELL Interpretations, which WILL CONVERT the '' into just '
 
 useAsInput 'MyRootELEMENT': ""
-yaml --insert MyRootELEMENT "dlfkjhasdlfhasdfadsfafsdfasdfasdfasdfasdf"
+yaml insert MyRootELEMENT "dlfkjhasdlfhasdfadsfafsdfasdfasdfasdfasdf"
 print -
 
 useAsInput MyRootELEMENT: ""
-yaml --insert MyRootELEMENT.subElem "dlfkjhasdlfhasdfadsfafsdfasdfasdfasdfasdf"
+yaml insert MyRootELEMENT.subElem "dlfkjhasdlfhasdfadsfafsdfasdfasdfasdfasdf"
 print -
 
 //--------------------------------------------------
@@ -41,26 +41,27 @@ print -
 saveTo !AdditionalRootElement
 
 useAsInput MyRootELEMENT: ""
-echo yaml --insert MyRootELEMENT.subElem.leafElem '{State: "available", Messages: ["A","B","C"], RegionName: "eu-north-1", ZoneName: "eu-north-1c", ZoneId: "eun1-az3"}'   --no-quote
+echo yaml insert MyRootELEMENT.subElem.leafElem '{State: "available", Messages: ["A","B","C"], RegionName: "eu-north-1", ZoneName: "eu-north-1c", ZoneId: "eun1-az3"}'   --no-quote
 print -
 
 useAsInput !YAMLROOT
 saveTo !DUPLICATEROOT ### Do Not contaminate YAMLROOT with a new top-level-element called "AdditionalRootElement"
 	## Even if you do NOT saveAs !YAMLROOT.. no matter, due to Java properties using memory-references, it's contaminated by the following 2 commands.
-echo yaml --insert /  !AdditionalRootElement --no-quote
+echo yaml insert /  !AdditionalRootElement --no-quote
 print -
 
 useAsInput @inputs/1kvpair.yaml
-echo yaml --insert /  !AdditionalRootElement --double-quote
+echo yaml insert /  !AdditionalRootElement --double-quote
 print -
 
 useAsInput @inputs/simpleSequence.yaml
-echo yaml --insert /  !AdditionalRootElement --no-quote
+echo yaml insert /  !AdditionalRootElement --no-quote
 print -
 
 //--------------------------------------------------
 setProperty ?AWSCFN.HOME=${ASUX::ORGASUXHOME}/AWS/CFN
-echo yaml --insert Resources @${ASUX::AWSCFN.HOME}/AWSCFN.templates-pieces/PublicSubnet.yaml -i test/inputs/Snippet-Resources.yaml 
+useAsInput test/inputs/Snippet-Resources.yaml 
+echo yaml insert Resources @${ASUX::AWSCFN.HOME}/AWSCFN.templates-pieces/PublicSubnet.yaml
 
 //--------------------------------------------------
 useAsInput @${ASUX::ORGASUXHOME}/AWS/AWS-SDK/etc/offline-downloads/AWSRegions.yaml
@@ -77,13 +78,13 @@ foreach
 	saveTo !AZDETAILS   ### Save the contents of ${ASUX::foreach.iteration.value} into AZDETAILS
 
 	#________ makeNewRoot MyCompositeELEMENT-${ASUX::foreach.index}
-	#________ yaml --insert MyCompositeELEMENT-${ASUX::foreach.index} !AZDETAILS --delimiter , --no-quote
+	#________ yaml insert MyCompositeELEMENT-${ASUX::foreach.index} !AZDETAILS --delimiter , --no-quote
 	#________ saveTo !MyCompositeELEMENT-${ASUX::foreach.index}
 	#________ useAsInput !YAMLROOT
-	#________ yaml --insert MyRootELEMENT,MyCompositeELEMENT-${ASUX::foreach.index} !MyCompositeELEMENT-${ASUX::foreach.index} --delimiter , --no-quote
+	#________ yaml insert MyRootELEMENT,MyCompositeELEMENT-${ASUX::foreach.index} !MyCompositeELEMENT-${ASUX::foreach.index} --delimiter , --no-quote
 
 	useAsInput !YAMLROOT
-	yaml --insert MyRootELEMENT,MyCompositeELEMENT-${ASUX::foreach.index} !AZDETAILS --delimiter ,   --no-quote
+	yaml insert MyRootELEMENT,MyCompositeELEMENT-${ASUX::foreach.index} !AZDETAILS --delimiter ,   --no-quote
 	saveTo !YAMLROOT
 end
 print \n
