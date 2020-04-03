@@ -24,7 +24,7 @@ foreach FLDR ( $PROJECTS )
 			set ArtifactId=`grep '<artifactId>' pom.xml | head -1 | sed 's|.*<artifactId>\(..*\)</artifactId>.*|\1|'`
 			set Version=`grep '<version>' pom.xml | head -1 | sed 's|.*<version>\(..*\)</version>.*|\1|'`
 			set SRC="${ORGASUXMVNREPOHOME}/${ArtifactId}/${Version}/${ArtifactId}-${Version}.jar"
-			set DEST="${ORGASUXHOME}/lib/${GroupID}.${ArtifactId}-${Version}.jar"
+			set DEST="${ORGASUXHOME}/lib/${GroupID}.${ArtifactId}.${ArtifactId}-${Version}.jar"
 			ls -lad "${SRC}"
 			ls -lad "${DEST}"
 			if ( -e "${SRC}" ) mv -i "${SRC}"  "${DEST}"
