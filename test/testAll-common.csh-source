@@ -56,8 +56,8 @@ set MVNREPO=~/.m2/repository
 set UBERJARPATH=${MVNREPO}/org/asux/mvn-shade-uber-jar/1.0/mvn-shade-uber-jar-1.0.jar
 if ( ! -e ${UBERJARPATH} ) set UBERJARPATH=${JARFLDR}/org.asux.mvn-shade-uber-jar-1.0.jar
 
-set ASUXCOMMON=${MVNREPO}/org/asux/common/1.1/common-1.1.jar
-if ( ! -e ${ASUXCOMMON} ) set ASUXCOMMON=${JARFLDR}/org.asux.common-1.1.jar
+set ASUXCOMMON=${MVNREPO}/org/asux/common/1.2/common-1.2.jar
+if ( ! -e ${ASUXCOMMON} ) set ASUXCOMMON=${JARFLDR}/org.asux.common-1.2.jar
 
 set ASUXYAML=${MVNREPO}/org/asux/yaml/1.0/yaml-1.0.jar
 if ( ! -e ${ASUXYAML} ) set ASUXYAML=${JARFLDR}/org.asux.yaml-1.0.jar
