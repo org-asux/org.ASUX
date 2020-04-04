@@ -169,5 +169,14 @@ set noglob
 echo 'foreach fn ( ${OUTPUTFLDR}/* )'
 echo '       diff ./outputs/$fn:t $fn'
 echo end
-###---------------------------------
+
+##-------------------------------------------
+##@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+##-------------------------------------------
+
+echo '.. about to run the tests on Batch too ..'
+### assert: we should already chdir ${TESTSRCFLDR}
+sleep 15
+./testall-batch.csh
+
 #EoScript
