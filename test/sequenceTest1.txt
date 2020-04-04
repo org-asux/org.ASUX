@@ -1,7 +1,9 @@
 setProperty DEVROOT=/mnt/development
 setProperty DEVROOT=/Users/development
+setProperty DEVROOT=..
 
-useAsInput @${ASUX::DEVROOT}/src/org.ASUX/test/inputs/nano.yaml
+// useAsInput @${ASUX::DEVROOT}/src/org.ASUX/test/inputs/nano.yaml
+useAsInput @${ASUX::ORGASUXHOME}/test/inputs/nano.yaml
 saveTo !UPDATEDNANO
 print -
 
