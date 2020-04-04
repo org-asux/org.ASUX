@@ -32,7 +32,7 @@ yaml insert MyRootELEMENT "dlfkjhasdlfhasdfadsfafsdfasdfasdfasdfasdf"
 print -
 
 useAsInput MyRootELEMENT: ""
-yaml insert MyRootELEMENT.subElem "dlfkjhasdlfhasdfadsfafsdfasdfasdfasdfasdf"
+yaml insert --delimiter .  MyRootELEMENT.subElem "dlfkjhasdlfhasdfadsfafsdfasdfasdfasdfasdf"
 print -
 
 //--------------------------------------------------
@@ -40,8 +40,8 @@ useAsInput   '{"AdditionalRootElement": {"State": "available", "Messages": ["A",
 print -
 saveTo !AdditionalRootElement
 
-useAsInput MyRootELEMENT: ""
-echo yaml insert MyRootELEMENT.subElem.leafElem '{State: "available", Messages: ["A","B","C"], RegionName: "eu-north-1", ZoneName: "eu-north-1c", ZoneId: "eun1-az3"}'   --no-quote
+useAsInput 'MyRootELEMENT: ""'
+echo yaml --delimiter .  insert MyRootELEMENT.subElem.leafElem '{State: "available", Messages: ["A","B","C"], RegionName: "eu-north-1", ZoneName: "eu-north-1c", ZoneId: "eun1-az3"}'   --no-quote
 print -
 
 useAsInput !YAMLROOT

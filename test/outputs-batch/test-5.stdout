@@ -35,16 +35,16 @@ eu-north-1
   RegionName: eu-north-1
   Messages: [
     ]
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-north-1.0 !saveAs-0 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,eu-north-1.0 !saveAs-0 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
     ZoneId: eun1-az1
     State: available
     RegionName: eu-north-1
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-north-1.1 !saveAs-1 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,eu-north-1.1 !saveAs-1 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -56,8 +56,8 @@ MyRootELEMENT:
     ZoneId: eun1-az2
     State: available
     RegionName: eu-north-1
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-north-1.2 !saveAs-2 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,eu-north-1.2 !saveAs-2 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -93,8 +93,8 @@ ap-south-1
   RegionName: ap-south-1
   Messages: [
     ]
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-south-1.0 !saveAs-0 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,ap-south-1.0 !saveAs-0 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -116,8 +116,8 @@ MyRootELEMENT:
     ZoneId: aps1-az1
     State: available
     RegionName: ap-south-1
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-south-1.1 !saveAs-1 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,ap-south-1.1 !saveAs-1 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -144,8 +144,8 @@ MyRootELEMENT:
     ZoneId: aps1-az3
     State: available
     RegionName: ap-south-1
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-south-1.2 !saveAs-2 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,ap-south-1.2 !saveAs-2 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -196,8 +196,8 @@ eu-west-3
   RegionName: eu-west-3
   Messages: [
     ]
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-west-3.0 !saveAs-0 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,eu-west-3.0 !saveAs-0 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -234,8 +234,8 @@ MyRootELEMENT:
     ZoneId: euw3-az1
     State: available
     RegionName: eu-west-3
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-west-3.1 !saveAs-1 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,eu-west-3.1 !saveAs-1 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -277,8 +277,8 @@ MyRootELEMENT:
     ZoneId: euw3-az2
     State: available
     RegionName: eu-west-3
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-west-3.2 !saveAs-2 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,eu-west-3.2 !saveAs-2 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -344,8 +344,8 @@ eu-west-2
   RegionName: eu-west-2
   Messages: [
     ]
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-west-2.0 !saveAs-0 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,eu-west-2.0 !saveAs-0 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -397,8 +397,8 @@ MyRootELEMENT:
     ZoneId: euw2-az2
     State: available
     RegionName: eu-west-2
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-west-2.1 !saveAs-1 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,eu-west-2.1 !saveAs-1 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -455,8 +455,8 @@ MyRootELEMENT:
     ZoneId: euw2-az3
     State: available
     RegionName: eu-west-2
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-west-2.2 !saveAs-2 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,eu-west-2.2 !saveAs-2 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -537,8 +537,8 @@ eu-west-1
   RegionName: eu-west-1
   Messages: [
     ]
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-west-1.0 !saveAs-0 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,eu-west-1.0 !saveAs-0 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -605,8 +605,8 @@ MyRootELEMENT:
     ZoneId: euw1-az3
     State: available
     RegionName: eu-west-1
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-west-1.1 !saveAs-1 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,eu-west-1.1 !saveAs-1 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -678,8 +678,8 @@ MyRootELEMENT:
     ZoneId: euw1-az1
     State: available
     RegionName: eu-west-1
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-west-1.2 !saveAs-2 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,eu-west-1.2 !saveAs-2 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -775,8 +775,8 @@ ap-northeast-2
   RegionName: ap-northeast-2
   Messages: [
     ]
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-northeast-2.0 !saveAs-0 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,ap-northeast-2.0 !saveAs-0 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -858,8 +858,8 @@ MyRootELEMENT:
     ZoneId: apne2-az1
     State: available
     RegionName: ap-northeast-2
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-northeast-2.1 !saveAs-1 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,ap-northeast-2.1 !saveAs-1 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -946,8 +946,8 @@ MyRootELEMENT:
     ZoneId: apne2-az2
     State: available
     RegionName: ap-northeast-2
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-northeast-2.2 !saveAs-2 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,ap-northeast-2.2 !saveAs-2 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -1058,8 +1058,8 @@ ap-northeast-1
   RegionName: ap-northeast-1
   Messages: [
     ]
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-northeast-1.0 !saveAs-0 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,ap-northeast-1.0 !saveAs-0 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -1156,8 +1156,8 @@ MyRootELEMENT:
     ZoneId: apne1-az4
     State: available
     RegionName: ap-northeast-1
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-northeast-1.1 !saveAs-1 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,ap-northeast-1.1 !saveAs-1 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -1259,8 +1259,8 @@ MyRootELEMENT:
     ZoneId: apne1-az1
     State: available
     RegionName: ap-northeast-1
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-northeast-1.2 !saveAs-2 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,ap-northeast-1.2 !saveAs-2 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -1380,8 +1380,8 @@ sa-east-1
   RegionName: sa-east-1
   Messages: [
     ]
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,sa-east-1.0 !saveAs-0 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,sa-east-1.0 !saveAs-0 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -1493,8 +1493,8 @@ MyRootELEMENT:
     ZoneId: sae1-az1
     State: available
     RegionName: sa-east-1
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,sa-east-1.1 !saveAs-1 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,sa-east-1.1 !saveAs-1 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -1624,8 +1624,8 @@ ca-central-1
   RegionName: ca-central-1
   Messages: [
     ]
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ca-central-1.0 !saveAs-0 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,ca-central-1.0 !saveAs-0 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -1747,8 +1747,8 @@ MyRootELEMENT:
     ZoneId: cac1-az1
     State: available
     RegionName: ca-central-1
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ca-central-1.1 !saveAs-1 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,ca-central-1.1 !saveAs-1 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -1894,8 +1894,8 @@ ap-southeast-1
   RegionName: ap-southeast-1
   Messages: [
     ]
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-southeast-1.0 !saveAs-0 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,ap-southeast-1.0 !saveAs-0 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -2027,8 +2027,8 @@ MyRootELEMENT:
     ZoneId: apse1-az1
     State: available
     RegionName: ap-southeast-1
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-southeast-1.1 !saveAs-1 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,ap-southeast-1.1 !saveAs-1 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -2165,8 +2165,8 @@ MyRootELEMENT:
     ZoneId: apse1-az2
     State: available
     RegionName: ap-southeast-1
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-southeast-1.2 !saveAs-2 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,ap-southeast-1.2 !saveAs-2 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -2327,8 +2327,8 @@ ap-southeast-2
   RegionName: ap-southeast-2
   Messages: [
     ]
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-southeast-2.0 !saveAs-0 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,ap-southeast-2.0 !saveAs-0 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -2475,8 +2475,8 @@ MyRootELEMENT:
     ZoneId: apse2-az1
     State: available
     RegionName: ap-southeast-2
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-southeast-2.1 !saveAs-1 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,ap-southeast-2.1 !saveAs-1 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -2628,8 +2628,8 @@ MyRootELEMENT:
     ZoneId: apse2-az3
     State: available
     RegionName: ap-southeast-2
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,ap-southeast-2.2 !saveAs-2 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,ap-southeast-2.2 !saveAs-2 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -2805,8 +2805,8 @@ eu-central-1
   RegionName: eu-central-1
   Messages: [
     ]
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-central-1.0 !saveAs-0 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,eu-central-1.0 !saveAs-0 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -2968,8 +2968,8 @@ MyRootELEMENT:
     ZoneId: euc1-az2
     State: available
     RegionName: eu-central-1
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-central-1.1 !saveAs-1 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,eu-central-1.1 !saveAs-1 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -3136,8 +3136,8 @@ MyRootELEMENT:
     ZoneId: euc1-az3
     State: available
     RegionName: eu-central-1
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,eu-central-1.2 !saveAs-2 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,eu-central-1.2 !saveAs-2 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -3346,8 +3346,8 @@ us-east-1
   RegionName: us-east-1
   Messages: [
     ]
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-east-1.0 !saveAs-0 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,us-east-1.0 !saveAs-0 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -3524,8 +3524,8 @@ MyRootELEMENT:
     ZoneId: use1-az6
     State: available
     RegionName: us-east-1
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-east-1.1 !saveAs-1 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,us-east-1.1 !saveAs-1 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -3707,8 +3707,8 @@ MyRootELEMENT:
     ZoneId: use1-az1
     State: available
     RegionName: us-east-1
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-east-1.2 !saveAs-2 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,us-east-1.2 !saveAs-2 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -3895,8 +3895,8 @@ MyRootELEMENT:
     ZoneId: use1-az2
     State: available
     RegionName: us-east-1
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-east-1.3 !saveAs-3 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,us-east-1.3 !saveAs-3 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -4088,8 +4088,8 @@ MyRootELEMENT:
     ZoneId: use1-az4
     State: available
     RegionName: us-east-1
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-east-1.4 !saveAs-4 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,us-east-1.4 !saveAs-4 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -4286,8 +4286,8 @@ MyRootELEMENT:
     ZoneId: use1-az3
     State: available
     RegionName: us-east-1
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-east-1.5 !saveAs-5 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,us-east-1.5 !saveAs-5 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -4508,8 +4508,8 @@ us-east-2
   RegionName: us-east-2
   Messages: [
     ]
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-east-2.0 !saveAs-0 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,us-east-2.0 !saveAs-0 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -4716,8 +4716,8 @@ MyRootELEMENT:
     ZoneId: use2-az1
     State: available
     RegionName: us-east-2
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-east-2.1 !saveAs-1 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,us-east-2.1 !saveAs-1 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -4929,8 +4929,8 @@ MyRootELEMENT:
     ZoneId: use2-az2
     State: available
     RegionName: us-east-2
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-east-2.2 !saveAs-2 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,us-east-2.2 !saveAs-2 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -5160,8 +5160,8 @@ us-west-1
   RegionName: us-west-1
   Messages: [
     ]
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-west-1.0 !saveAs-0 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,us-west-1.0 !saveAs-0 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -5383,8 +5383,8 @@ MyRootELEMENT:
     ZoneId: usw1-az3
     State: available
     RegionName: us-west-1
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-west-1.1 !saveAs-1 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,us-west-1.1 !saveAs-1 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -5636,8 +5636,8 @@ us-west-2
   RegionName: us-west-2
   Messages: [
     ]
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-west-2.0 !saveAs-0 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,us-west-2.0 !saveAs-0 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -5869,8 +5869,8 @@ MyRootELEMENT:
     ZoneId: usw2-az2
     State: available
     RegionName: us-west-2
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-west-2.1 !saveAs-1 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,us-west-2.1 !saveAs-1 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -6107,8 +6107,8 @@ MyRootELEMENT:
     ZoneId: usw2-az1
     State: available
     RegionName: us-west-2
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-west-2.2 !saveAs-2 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,us-west-2.2 !saveAs-2 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a
@@ -6350,8 +6350,8 @@ MyRootELEMENT:
     ZoneId: usw2-az3
     State: available
     RegionName: us-west-2
-	Echo (As-Is): yaml --insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
-	Echo (Macros-substituted): yaml --insert MyRootELEMENT,us-west-2.3 !saveAs-3 --delimiter , --double-quote
+	Echo (As-Is): yaml insert MyRootELEMENT,${ASUX::AWSRegion}.${ASUX::foreach.index} !saveAs-${ASUX::foreach.index} --delimiter , --double-quote
+	Echo (Macros-substituted): yaml insert MyRootELEMENT,us-west-2.3 !saveAs-3 --delimiter , --double-quote
 MyRootELEMENT:
   "eu-north-1.0":
     ZoneName: eu-north-1a

@@ -86,7 +86,7 @@ MyRootELEMENT:
   "RegionName": "eu-north-1"
   "ZoneName": "eu-north-1c"
   "ZoneId": "eun1-az3"
-	Echo: yaml --insert MyRootELEMENT.subElem.leafElem '{State: "available", Messages: ["A","B","C"], RegionName: "eu-north-1", ZoneName: "eu-north-1c", ZoneId: "eun1-az3"}' --no-quote
+	Echo: yaml --delimiter . insert MyRootELEMENT.subElem.leafElem '{State: "available", Messages: ["A","B","C"], RegionName: "eu-north-1", ZoneName: "eu-north-1c", ZoneId: "eun1-az3"}' --no-quote
 MyRootELEMENT:
   subElem:
     leafElem:
@@ -98,7 +98,7 @@ MyRootELEMENT:
       RegionName: eu-north-1
       ZoneName: eu-north-1c
       ZoneId: eun1-az3
-	Echo: yaml --insert / !AdditionalRootElement --no-quote
+	Echo: yaml insert / !AdditionalRootElement --no-quote
 'MyRootELEMENT': ''
 "AdditionalRootElement":
   "State": "available"
@@ -109,7 +109,7 @@ MyRootELEMENT:
   "RegionName": "eu-north-1"
   "ZoneName": "eu-north-1c"
   "ZoneId": "eun1-az3"
-	Echo: yaml --insert / !AdditionalRootElement --double-quote
+	Echo: yaml insert / !AdditionalRootElement --double-quote
 MyRootELEMENT: "\t"
 "AdditionalRootElement":
   "State": "available"
@@ -120,7 +120,7 @@ MyRootELEMENT: "\t"
   "RegionName": "eu-north-1"
   "ZoneName": "eu-north-1c"
   "ZoneId": "eun1-az3"
-	Echo: yaml --insert / !AdditionalRootElement --no-quote
+	Echo: yaml insert / !AdditionalRootElement --no-quote
 - petId
 - integer
 - "AdditionalRootElement":
@@ -132,6 +132,6 @@ MyRootELEMENT: "\t"
     "RegionName": "eu-north-1"
     "ZoneName": "eu-north-1c"
     "ZoneId": "eun1-az3"
-	Echo (As-Is): yaml --insert Resources @${ASUX::AWSCFN.HOME}/AWSCFN.templates-pieces/PublicSubnet.yaml -i test/inputs/Snippet-Resources.yaml
-	Echo (Macros-substituted): yaml --insert Resources @/Users/Sarma/Documents/Development/src/org.ASUX/AWS/CFN/AWSCFN.templates-pieces/PublicSubnet.yaml -i test/inputs/Snippet-Resources.yaml
+	Echo (As-Is): yaml insert Resources @${ASUX::AWSCFN.HOME}/AWSCFN.templates-pieces/PublicSubnet.yaml
+	Echo (Macros-substituted): yaml insert Resources @/Users/Sarma/Documents/Development/src/org.ASUX/AWS/CFN/AWSCFN.templates-pieces/PublicSubnet.yaml
 eu-north-1 ap-south-1 eu-west-3 eu-west-2 eu-west-1 ap-northeast-2 ap-northeast-1 sa-east-1 ca-central-1 ap-southeast-1 ap-southeast-2 eu-central-1 us-east-1 us-east-2 us-west-1 us-west-2 

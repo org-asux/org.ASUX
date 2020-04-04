@@ -15,7 +15,7 @@ paths:
           description: ${ASUX::Key101}
           schema:
             $ref: ${ASUX::Key202}
-	Echo: yaml --insert 'info,contact,phone,[0]' 'new array element No.1' --delimiter ,
+	Echo: yaml insert 'info,contact,phone,[0]' 'new array element No.1' --delimiter ,
 swagger: "2.0"
 info:
   contact:
@@ -34,4 +34,4 @@ paths:
           description: ${ASUX::Key101}
           schema:
             $ref: ${ASUX::Key202}
-	Echo: yaml --insert 'info,contact,phone,[1]' '2nd new array element' --delimiter ,
+	Echo: yaml insert 'info,contact,phone,[1]' '2nd new array element' --delimiter ,
