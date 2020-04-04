@@ -142,89 +142,19 @@ asux.js ${VERBOSE} ${OFFLINE} ${YAMLLIB}  yaml  table 'paths,/pet,put,parameters
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
-##-------------------------------------------
-##@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-##-------------------------------------------
-
+###---------------------------------
 # 11
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-# echo 'MyRootELEMENT: ""' | asux.js ${YAMLLIB}  yaml   insert MyRootELEMENT.subElem.leafElem '{State: "available", Messages: [A,B,C], RegionName: "eu-north-1", ZoneName: "eu-north-1c", ZoneId: "eun1-az3"}'  --inputfile -  -o -
-echo \
-asux.js ${VERBOSE} ${OFFLINE} ${YAMLLIB}  yaml  batch @insertReplaceBatch.txt --double-quote  --inputfile /dev/null
-asux.js ${VERBOSE} ${OFFLINE} ${YAMLLIB}  yaml  batch @insertReplaceBatch.txt --double-quote  --inputfile /dev/null    \
-        -o ${OUTPFILE} >! ${OUTPFILE}.stdout
+asux.js ${VERBOSE} ${OFFLINE} ${YAMLLIB}  yaml read '**,name' --project .. --delimiter , -i test/inputs/my-petstore-micro.yaml       \
+        -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 
-# 12
-@ TESTNUM = $TESTNUM + 1
-set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
-echo $OUTPFILE
-echo \
-asux.js ${VERBOSE} ${OFFLINE} ${YAMLLIB}  yaml  batch @simpleBatch.txt --no-quote --inputfile /dev/null
-asux.js ${VERBOSE} ${OFFLINE} ${YAMLLIB}  yaml  batch @simpleBatch.txt --no-quote --inputfile /dev/null \
-        -o ${OUTPFILE} > /dev/null   ## I have print statements n this BATCH-file, that are put onto stdout.
-# echo -n "sleeping ${DELAY}s .."; sleep ${DELAY} ## waiting for output to catch up..
-diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
-
-# 13
-@ TESTNUM = $TESTNUM + 1
-set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
-echo $OUTPFILE is SKIPPED ... ...
-# asux.js ${VERBOSE} ${OFFLINE} ${YAMLLIB}  yaml  batch 'useAsInput @./inputs/AWS.AZdetails-us-east-1.json' --single-quote --inputfile /dev/null \
-#         -o ${OUTPFILE}
-# # echo -n "sleeping ${DELAY}s .."; sleep ${DELAY} ## waiting for output to catch up..
-# diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
-
-# 14
-@ TESTNUM = $TESTNUM + 1
-set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
-echo $OUTPFILE
-asux.js ${VERBOSE} ${OFFLINE} ${YAMLLIB}  yaml  batch @./mapsBatch1.txt --single-quote --inputfile /dev/null  \
-        -o ${OUTPFILE} >! ${OUTPFILE}.stdout
-# echo -n "sleeping ${DELAY}s .."; sleep ${DELAY} ## waiting for output to catch up..
-diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
-diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
-
-# 15
-@ TESTNUM = $TESTNUM + 1
-set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
-echo $OUTPFILE
-asux.js ${VERBOSE} ${OFFLINE} ${YAMLLIB}  yaml  batch @./mapsBatch2.txt --double-quote --inputfile /dev/null  \
-        -o ${OUTPFILE} >! ${OUTPFILE}.stdout
-# echo -n "sleeping ${DELAY}s .."; sleep ${DELAY} ## waiting for output to catch up..
-diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
-diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
-
-###---------------------------------
-# 16
-@ TESTNUM = $TESTNUM + 1
-set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
-echo $OUTPFILE is skipped .. ..
-# asux.js ${VERBOSE} ${OFFLINE} ${YAMLLIB}  yaml   batch 'print \n' -i /dev/null   --single-quote  \
-#         -o ${OUTPFILE} >! ${OUTPFILE}.stdout
-# diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
-# diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
-
-# 17
-@ TESTNUM = $TESTNUM + 1
-set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
-echo $OUTPFILE is skipped .. ..
-# asux.js ${VERBOSE} ${OFFLINE} ${YAMLLIB}  yaml   batch  'aws.sdk --list-regions --double-quote; print -; aws.sdk --list-AZs us-east-1 --single-quote' -i /dev/null    \
-#         -o ${OUTPFILE} >! ${OUTPFILE}.stdout
-# diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
-# diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
-
-# 18
-@ TESTNUM = $TESTNUM + 1
-set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
-echo $OUTPFILE
-asux.js ${VERBOSE} ${OFFLINE} ${YAMLLIB}  yaml   batch  @sequenceTest1.txt -i /dev/null    \
-        -o ${OUTPFILE} >! ${OUTPFILE}.stdout
-diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
-diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
+##-------------------------------------------
+##@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+##-------------------------------------------
 
 # @ TESTNUM = $TESTNUM + 1
 # set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
