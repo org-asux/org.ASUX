@@ -82,15 +82,15 @@ set OTHERASUXORGJARS=${OTHERASUXORGJARS}:${JARFLDR}/org.asux.yaml.yaml-1.0.jar
 set OTHERASUXORGJARS=${OTHERASUXORGJARS}:${JARFLDR}/org.asux.yaml.collectionsimpl.yaml.collectionsimpl-1.0.jar
 
 ###------------------------------
-set YAMLBEANSJAR=${MVNREPO}/esotericsoftware/yamlbeans/yamlbeans/1.13/yamlbeans-1.13.jar
+set YAMLBEANSJAR=${MVNREPO}/com/esotericsoftware/yamlbeans/yamlbeans/1.13/yamlbeans-1.13.jar
 if ( ! -e ${YAMLBEANSJAR} ) set YAMLBEANSJAR=${JARFLDR}/com.esotericsoftware.yamlbeans.yamlbeans-1.13.jar
 set SNAKEYAMLJAR=${MVNREPO}/org/yaml/snakeyaml/1.24/snakeyaml-1.24.jar
-if ( ! -e ${SNAKEYAMLJAR} ) set SNAKEYAMLJAR=${JARFLDR}/org.yaml.snakeyaml-1.24.jar
+if ( ! -e ${SNAKEYAMLJAR} ) set SNAKEYAMLJAR=${JARFLDR}/org.yaml.snakeyaml.snakeyaml-1.24.jar
 
-set JUNITJAR=${MVNREPO}/junit/junit/4.8.2/junit-4.8.2.jar
-if ( ! -e ${JUNITJAR} ) set JUNITJAR=${JARFLDR}/junit.junit-4.8.2.jar
+set JUNITJAR=${MVNREPO}/junit/junit/4.12/junit-4.12.jar
+if ( ! -e ${JUNITJAR} ) set JUNITJAR=${JARFLDR}/junit.junit.junit-4.12.jar
 set COMMONSCLIJAR=${MVNREPO}/commons-cli/commons-cli/1.4/commons-cli-1.4.jar
-if ( ! -e ${COMMONSCLIJAR} ) set COMMONSCLIJAR=${JARFLDR}/commons-cli.commons-cli-1.4.jar
+if ( ! -e ${COMMONSCLIJAR} ) set COMMONSCLIJAR=${JARFLDR}/commons-cli.commons-cli.commons-cli-1.4.jar
 
 ###------------------------------
 set OTHERJARS=
@@ -99,28 +99,28 @@ set OTHERJARS=${OTHERJARS}:${SNAKEYAMLJAR}
 set OTHERJARS=${OTHERJARS}:${YAMLBEANSJAR}
 
 set OTHERJARS=${OTHERJARS}:${COMMONSCLIJAR}
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/commons-beanutils.commons-beanutils-1.9.3.jar
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/commons-codec.commons-codec-1.10.jar
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/commons-collections.commons-collections-3.2.2.jar
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/commons-logging.commons-logging-1.2.jar
+set OTHERJARS=${OTHERJARS}:${JARFLDR}/commons-beanutils.commons-beanutils.commons-beanutils-1.9.3.jar
+set OTHERJARS=${OTHERJARS}:${JARFLDR}/commons-codec.commons-codec.commons-codec-1.11.jar
+set OTHERJARS=${OTHERJARS}:${JARFLDR}/commons-collections.commons-collections.commons-collections-3.2.2.jar
+set OTHERJARS=${OTHERJARS}:${JARFLDR}/commons-logging.commons-logging.commons-logging-1.1.3.jar
 
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/joda-time.joda-time-2.8.1.jar
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/org.apache.commons.commons-lang3-3.6.jar
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/org.apache.commons.commons-text-1.1.jar
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/org.apache.httpcomponents.httpclient-4.5.5.jar
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/org.apache.httpcomponents.httpcore-4.4.10.jar
+set OTHERJARS=${OTHERJARS}:${JARFLDR}/joda-time.joda-time.joda-time-2.8.1.jar
+set OTHERJARS=${OTHERJARS}:${JARFLDR}/org.apache.commons.commons-lang3.commons-lang3-3.8.1.jar
+set OTHERJARS=${OTHERJARS}:${JARFLDR}/org.apache.commons.commons-text.commons-text-1.3.jar
+set OTHERJARS=${OTHERJARS}:${JARFLDR}/org.apache.httpcomponents.httpclient.httpclient-4.5.9.jar
+set OTHERJARS=${OTHERJARS}:${JARFLDR}/org.apache.httpcomponents.httpcore.httpcore-4.4.11.jar
 
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.opencsv.opencsv-4.0.jar
+set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.opencsv.opencsv.opencsv-4.6.jar
 
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.amazonaws.aws-java-sdk-core-1.11.541.jar
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.amazonaws.aws-java-sdk-ec2-1.11.541.jar
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.amazonaws.aws-java-sdk-route53-1.11.541.jar
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.amazonaws.jmespath-java-1.11.541.jar
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.fasterxml.jackson.core.jackson-annotations-2.9.0.jar
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.fasterxml.jackson.core.jackson-annotations-2.9.6.jar
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.fasterxml.jackson.core.jackson-core-2.9.9.jar
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.fasterxml.jackson.core.jackson-databind-2.9.9.jar
-set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.fasterxml.jackson.dataformat.jackson-dataformat-cbor-2.9.6.jar
+set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.amazonaws.aws-java-sdk-core.aws-java-sdk-core-1.11.541.jar
+set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.amazonaws.aws-java-sdk-ec2.aws-java-sdk-ec2-1.11.541.jar
+set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.amazonaws.aws-java-sdk-route53.aws-java-sdk-route53-1.11.541.jar
+set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.amazonaws.jmespath-java.jmespath-java-1.11.541.jar
+set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.fasterxml.jackson.core.jackson-annotations.jackson-annotations-2.9.0.jar
+########## set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.fasterxml.jackson.core.jackson-annotations.jackson-annotations-2.9.6.jar
+set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.fasterxml.jackson.core.jackson-core.jackson-core-2.9.9.jar
+set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.fasterxml.jackson.core.jackson-databind.jackson-databind-2.9.9.jar
+set OTHERJARS=${OTHERJARS}:${JARFLDR}/com.fasterxml.jackson.dataformat.jackson-dataformat-cbor.jackson-dataformat-cbor-2.6.7.jar
 set OTHERJARS=${OTHERJARS}:${JARFLDR}/software.amazon.ion.ion-java-1.2.0.jar
 set OTHERJARS=${OTHERJARS}:${JARFLDR}/software.amazon.ion.ion-java.ion-java-1.2.0.jar
 
