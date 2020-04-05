@@ -164,6 +164,19 @@ echo '{}' | /Users/development/src/org.ASUX/asux.js yaml insert '/' "'simple str
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
+###---------------------------------
+# 13
+@ TESTNUM = $TESTNUM + 1
+set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
+echo $OUTPFILE
+
+set JSONVAL='"stringvalue"'             ### I need this, I am UNABLE to force SHELL to handle NESTED quotes.
+
+echo '[]' | /Users/development/src/org.ASUX/asux.js yaml insert '/' "'{1stKey: ${JSONVAL}, key2: ${JSONVAL}}'" --single-quote    -i -    \
+        -o ${OUTPFILE}
+diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
+
+
 ##-------------------------------------------
 ##@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##-------------------------------------------
