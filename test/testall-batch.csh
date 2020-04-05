@@ -71,17 +71,15 @@ set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
 asux.js ${VERBOSE} ${OFFLINE} ${YAMLLIB}  yaml  batch @simpleBatch.txt --no-quote --inputfile /dev/null \
         -o ${OUTPFILE} > /dev/null   ## I have print statements n this BATCH-file, that are put onto stdout.
-# echo -n "sleeping ${DELAY}s .."; sleep ${DELAY} ## waiting for output to catch up..
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
 # 3
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
-echo $OUTPFILE is SKIPPED ... ...
-# asux.js ${VERBOSE} ${OFFLINE} ${YAMLLIB}  yaml  batch 'useAsInput @./inputs/AWS.AZdetails-us-east-1.json' --single-quote --inputfile /dev/null \
-#         -o ${OUTPFILE}
-# # echo -n "sleeping ${DELAY}s .."; sleep ${DELAY} ## waiting for output to catch up..
-# diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
+echo $OUTPFILE
+asux.js ${VERBOSE} ${OFFLINE} ${YAMLLIB}  yaml  batch "'useAsInput @./inputs/AWS.AZdetails-us-east-1.json'" --single-quote --inputfile /dev/null \
+        -o ${OUTPFILE}
+diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
 # 4
 @ TESTNUM = $TESTNUM + 1
@@ -107,17 +105,17 @@ diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 # 6
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
-echo $OUTPFILE is skipped .. ..
-# asux.js ${VERBOSE} ${OFFLINE} ${YAMLLIB}  yaml   batch 'print \n' -i /dev/null   --single-quote  \
-#         -o ${OUTPFILE} >! ${OUTPFILE}.stdout
-# diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
-# diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
+echo $OUTPFILE
+asux.js ${VERBOSE} ${OFFLINE} ${YAMLLIB}  yaml   batch "'print \n'"  --single-quote  -i /dev/null   \
+        -o ${OUTPFILE} >! ${OUTPFILE}.stdout
+diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
+diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 
 # 7
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE is skipped .. ..
-# asux.js ${VERBOSE} ${OFFLINE} ${YAMLLIB}  yaml   batch  'aws.sdk --list-regions --double-quote; print -; aws.sdk --list-AZs us-east-1 --single-quote' -i /dev/null    \
+# asux.js ${VERBOSE} ${OFFLINE} ${YAMLLIB}  yaml   batch  "'aws.sdk --list-regions --double-quote; print -; aws.sdk --list-AZs us-east-1 --single-quote'" -i /dev/null    \
 #         -o ${OUTPFILE} >! ${OUTPFILE}.stdout
 # diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 # diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
@@ -131,13 +129,14 @@ asux.js ${VERBOSE} ${OFFLINE} ${YAMLLIB}  yaml   batch  @sequenceTest1.txt --no-
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 
-# @ TESTNUM = $TESTNUM + 1
-# set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
-# echo $OUTPFILE
-#     \
-        # -o ${OUTPFILE} >! ${OUTPFILE}.stdout
-# diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
-# diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
+# 9
+@ TESTNUM = $TESTNUM + 1
+set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
+echo $OUTPFILE
+asux.js yaml batch "'useAsInput [] ; print -; print before FOREACH \n ; foreach ; print INSIDE ....... \n ; end ; print end-of-loop.  Must see 4 lines only \n'" -i /dev/null \
+        -o ${OUTPFILE} >! ${OUTPFILE}.stdout
+diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
+diff ${OUTPFILE}.stdout ${TEMPLATEFLDR}/test-${TESTNUM}.stdout
 
 ###---------------------------------
 
