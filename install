@@ -188,11 +188,15 @@ npm install commander@2.20.0
 npm install chalk
 popd
 
-echo export NODE_PATH=`npm root -g` >> .bashrc
+npm root -g > /dev/null
 if [ $? -ne 0 ]; then
 	>&2 echo ' '
-	>&2 echo "npm command is Not in the path.  Catastrophic failure in install script."
+	>&2 echo "npm command is Not in the path (or other error).  Catastrophic failure in install script."
+	exit 95
 fi
+echo export NODE_PATH=`npm root -g` >> ~/.bashrc
+echo export NODE_PATH=`npm root -g` >> ~/.zshenv . ### For Zsh
+echo setenv NODE_PATH `npm root -g` >> ~/.cshrc
 
 ###-------------------
 
@@ -204,7 +208,7 @@ if [ $? -ne 0 ]; then
 	>&2 echo 'Example: sudo yum install java-1.8.0-openjdk'
 	>&2 echo 'Example: sudo yum install yum install java-1.11.0-openjdk'
 	>&2 echo ' '
-	exit 94	### <<------- <<--------
+	exit 96	### <<------- <<--------
 fi
 
 echo '[y] verified that Java8/11 runtime is in your PATH ..and can be used!'
