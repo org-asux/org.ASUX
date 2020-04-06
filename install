@@ -176,6 +176,15 @@ fi
 echo '[y] verified that your org.ASUX project is in the PATH ..and can be used in any folder!'
 sleep 1
 
+### Just in case the entire ASUX.org toolset was Not installed via "@asux.org/cli-npm" .. install the dependencies
+npm install -g commander@2.20.0
+if [ $? -ne 0 ]; then
+	>&2 echo ' '
+	>&2 echo "npm command is Not in the path.  Catastrophic failure in install script."
+fi
+npm install -g chalk
+
+
 ###-------------------
 
 >&2 command -v java > /dev/null
