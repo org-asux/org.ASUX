@@ -5,10 +5,13 @@
 ### The following line did NOT work on Windows
 # CmdPath="${BASH_SOURCE[0]}"
 
-CmdPath="$0"
-# echo $CmdPath
-SCRIPTFLDR_RELATIVE="$(dirname "$CmdPath")"
-SCRIPTFULLFLDRPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+### The following does NOT work on GNU bash, version 4.2.46(2) (AWS-EC2 default shell as of 2020)
+# CmdPath="$0"
+# # echo $CmdPath
+# SCRIPTFLDR_RELATIVE="$(dirname "$CmdPath")"
+# SCRIPTFULLFLDRPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+SCRIPTFULLFLDRPATH=~/org.ASUX
 echo "SCRIPTFULLFLDRPATH = '${SCRIPTFULLFLDRPATH}'"
 
 # set SCRIPTFLDR=$PWD
