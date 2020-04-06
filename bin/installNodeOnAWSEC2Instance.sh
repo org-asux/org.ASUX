@@ -81,7 +81,9 @@ sleep 7
 # >&2 echo ''; echo ''; echo ''
 
 export NODE_PATH=`npm root -g`
-echo export NODE_PATH=`npm root -g` >> .bashrc
+echo export NODE_PATH=`npm root -g` >> ~/.bashrc
+echo export NODE_PATH=`npm root -g` >> ~/.zshenv
+echo setenv NODE_PATH `npm root -g` >> ~/.cshrc
 
 ./install
 
