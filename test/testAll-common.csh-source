@@ -59,6 +59,9 @@ if ( ! -e ${UBERJARPATH} ) set UBERJARPATH=${JARFLDR}/mvn-shade-uber-jar-1.0.jar
 set ASUXCOMMON=${MVNREPO}/org/asux/common/1.2/common-1.2.jar
 if ( ! -e ${ASUXCOMMON} ) set ASUXCOMMON=${JARFLDR}/org.asux.common.common-1.2.jar
 
+set ASUXANTLR4=${MVNREPO}/org/asux/language.antlr4/1.0/language.antlr4-1.0.jar
+if ( ! -e ${ASUXANTLR4} ) set ASUXANTLR4=${JARFLDR}/org.asux.language.antlr4.language.antlr4-1.0.jar
+
 set ASUXYAML=${MVNREPO}/org/asux/yaml/1.1/yaml-1.1.jar
 if ( ! -e ${ASUXYAML} ) set ASUXYAML=${JARFLDR}/org.asux.yaml.yaml-1.1.jar
 
@@ -125,11 +128,11 @@ set OTHERJARS=${OTHERJARS}:${JARFLDR}/software.amazon.ion.ion-java-1.2.0.jar
 set OTHERJARS=${OTHERJARS}:${JARFLDR}/software.amazon.ion.ion-java.ion-java-1.2.0.jar
 
 if ( $?CLASSPATH ) then
-        setenv CLASSPATHCOMMON  ${CLASSPATH}:${ASUXYAML}:${ASUXCOMMON}:${COMMONSCLIJAR}:${JUNITJAR}
+        setenv CLASSPATHCOMMON  ${CLASSPATH}:${ASUXCOMMON}:${ASUXYAML}:${ASUXANTLR4}:${COMMONSCLIJAR}:${JUNITJAR}
         setenv CLASSPATHMAVENREPO ${CLASSPATH}:${OTHERJARS}
         setenv CLASSPATH ${CLASSPATH}:${UBERJARPATH}
 else
-        setenv CLASSPATHCOMMON   ${ASUXYAML}:${ASUXCOMMON}:${COMMONSCLIJAR}:${JUNITJAR}
+        setenv CLASSPATHCOMMON   ${ASUXCOMMON}:${ASUXYAML}:${ASUXANTLR4}:${COMMONSCLIJAR}:${JUNITJAR}
         setenv CLASSPATHMAVENREPO ${OTHERJARS}
         setenv CLASSPATH ${UBERJARPATH}
 endif
