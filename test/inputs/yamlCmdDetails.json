@@ -1,0 +1,17 @@
+{
+        "cmdType": "read",
+        "inputFilePath": "/tmp/i.yaml",
+        outputFilePath: '/user/me/project/newJson.json',
+        quoteType: "'",
+
+        YAMLLibrary: "SnakeYAML",
+        verbose: false,
+        showStats: false,
+        offline: false,
+
+        projectionPath: '..'
+//        ,
+//        insertFilePath: '/user/me/inputs/newJson.json',
+//        propertiesFilePath: '/user/me/properties/KVPairs.txt',
+//        batchFilePath: '/user/me/properties/ScriptWithMultipleYAMLCommands.txt'
+}
