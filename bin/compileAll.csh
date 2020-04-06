@@ -12,69 +12,6 @@ if ( $?IGNOREERRORS ) echo .. hmmm .. ignoring any errors ({IGNOREERRORS} is set
 
 \rm -rf ~/.m2/repository/org/asux
 
-###=============================================
-pushd org.ASUX.pom
-mvn -f pom-TopLevelParent.xml install
-popd
-
-# ### Since 'org.ASUX.language.ANTLR4' depends on 'org.ASUX.common'
-# pushd org.ASUX.common
-# mvn clean compiler:compile jar:jar install:install 
-# popd
-
-pushd org.ASUX.language.ANTLR4
-git pull
-./bin/clean.csh
-./bin/compile.csh
-mvn jar:jar install:install
-popd
-
-###=============================================
-set counter=1
-foreach FLDR ( $RENAMED_PROJECTS )
-
-	if ( -e "${FLDR}" ) then
-		echo -n .
-	else
-		echo "  missing ${FLDR}"
-		set ORIGNAME=$ORIG_PROJECTNAMES[$counter]
-		if (  !  -d  "${ORIGNAME}" ) then
-			echo \
-			git clone https://github.com/org-asux/${ORIGNAME}.git
-			git clone https://github.com/org-asux/${ORIGNAME}.git
-		else
-			echo "  ${ORIGNAME} already exists"
-		endif
-		mv ${ORIGNAME} $NEWNAMES[$counter]
-	endif
-
-	@ counter = $counter + 1
-end
-echo ''
-
-###============================================
-### 2nd: download projects whose FOLDERS are RETAINED as-is (as in, the folders do _NOT_ get renamed / moved)
-mkdir -p "${ORGASUXFLDR}/AWS"
-
-foreach FLDR ( $ASIS_PROJECTS )
-
-	if ( -e "${FLDR}" ) then
-		echo -n .
-	else
-		if ( "${FLDR}" == "${ORGASUXFLDR}" ) then
-			echo "skipping 'git clone ${ORGASUXFLDR}' for obvious reasons."
-			continue
-		else
-			echo "  missing ${FLDR}"
-			set PROJNAME=$FLDR:t
-			echo \
-			git clone https://github.com/org-asux/${PROJNAME}.git
-			git clone https://github.com/org-asux/${PROJNAME}.git
-		endif
-	endif
-end
-echo ''
-
 ###============================================
 
 chdir ${ORGASUXFLDR}
@@ -83,7 +20,21 @@ echo ''
 echo 'Invoking Maven <targets> for each project.. ..'
 sleep 2
 
+###=============================================
+pushd org.ASUX.pom
+mvn -f pom-TopLevelParent.xml install
+popd
+
 ###============================================
+
+### Since 'org.ASUX.language.ANTLR4' has unique compiling commands
+
+pushd org.ASUX.language.ANTLR4
+git pull
+./bin/clean.csh
+./bin/compile.csh
+mvn jar:jar install:install
+popd
 
 foreach FLDR ( $PROJECTS )
 
