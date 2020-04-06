@@ -77,6 +77,9 @@ sleep 7
 # >&2 echo "Remember to rerun "./install" again! (in the directory ${SCRIPTFULLFLDRPATH})"
 # >&2 echo ''; echo ''; echo ''
 
+export NODE_PATH=`npm root -g`
+echo export NODE_PATH=`npm root -g` >> .bashrc
+
 ./install
 
 ### EoScript
