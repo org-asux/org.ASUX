@@ -183,7 +183,16 @@ if [ $? -ne 0 ]; then
 	>&2 echo "npm command is Not in the path.  Catastrophic failure in install script."
 fi
 npm install -g chalk
+pushd ~
+npm install commander@2.20.0
+npm install chalk
+popd
 
+echo export NODE_PATH=`npm root -g` >> .bashrc
+if [ $? -ne 0 ]; then
+	>&2 echo ' '
+	>&2 echo "npm command is Not in the path.  Catastrophic failure in install script."
+fi
 
 ###-------------------
 
