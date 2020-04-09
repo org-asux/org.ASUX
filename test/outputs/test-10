@@ -1,12 +1,16 @@
 - - updatePet
   - myown_delete_api_key
   - string
+  - '#/definitions/API'
 - - updatePet
   - body
   - CustomObject
+  - '#/definitions/Pet'
 - - updatePet
   - petId
   - integer
+  - '#/definitions/ID'
 - - updatePet
   - petname
   - CustomObject
+  - '#/definitions/User'
