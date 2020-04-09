@@ -101,7 +101,7 @@ function sendArgs2SubModule( _DIR_orgASUXSubProject ) {
 	prms.splice( 0, 0, _DIR_orgASUXSubProject +'/asux.js' ); // insert ./asux.js as the 1st cmdline parameter to node.js
 	if (process.env.VERBOSE) { console.log( `${__filename} : running Node.JS with cmdline-arguments:\n` + prms.join('\n') ); }
 
-	process.exitCode = EXECUTESHELLCMD.executeSubModule(  INITIAL_CWD, 'node', prms, false, process.env.VERBOSE, false, process.env );
+	const retCode = EXECUTESHELLCMD.executeSubModule(  INITIAL_CWD, 'node', prms, false, process.env.VERBOSE, false, process.env );
 
 			// Keeping code around .. .. In case I wanted to run the submodule via .. JS require()
 			// var runOrgASUXCmdLine = require( __dirname +"/"+ subdir + "/asux.js");
@@ -114,6 +114,9 @@ function sendArgs2SubModule( _DIR_orgASUXSubProject ) {
 
 	// The Node.js process will exit on its own if there is no additional work pending in the event loop.
 	// The process.exitCode property can be set to tell the process which exit code to use when the process exits gracefully.
+
+	process.exitCode = retCode;
+	return retCode;
 
 } // end function sendArgs2CmdlineModule
 
@@ -168,7 +171,6 @@ function processJavaCmd( _CmdFamily, _CMD) {
 	cmdArgs.splice( ix, 0, _CmdFamily ); // insert 'yaml' or 'aws.sdk' ..  as JAVA's 6th cmdline parameter
 
 	const retCode = EXECUTESHELLCMD.executeSharingSTDOUT ( INITIAL_CWD, 'java', cmdArgs, true, process.env.VERBOSE, false, null );
-	process.exitCode = retCode;
 
     //--------------------
     // OLD CODE.. where this was invoking SHELL-Scripts within {AWSCFNHOME}/bin
@@ -184,15 +186,15 @@ function processJavaCmd( _CmdFamily, _CMD) {
 	//--------------------
 	if ( retCode == 0 ) {
 		if (process.env.VERBOSE) console.log( "\n"+ __filename +": Done!");
-		// process.exitCode = 0;
 	}else{
 		if (process.env.VERBOSE) console.error( '\n'+ __filename +": Failed with error-code "+ retCode +" for: java "+ cmdArgs.join(' '));
-        // console.error( '\n'+ __filename +": Failed with error-code "+ retCode +" for: "+ scriptFullPath +" "+ cmdArgs.join(' '));
-        process.exitCode = retCode;
 	}
 
 	//--------------------
 	EXECUTESHELLCMD.runPostScripts(); // ignore any exit code from these Post-scripts
+
+	process.exitCode = retCode;
+	return retCode;
 
 } // end function processJavaCmd
 
