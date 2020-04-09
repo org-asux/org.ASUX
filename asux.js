@@ -135,7 +135,8 @@ CmdLine.on('command:yaml', function () {
 	if (process.env.VERBOSE) console.log("Yeah.  processing YAML command");
 	COMMAND = 'yaml';
 	verifyInstall( false );
-	sendArgs2SubModule( DIR_orgASUXcmdline );
+	const retCode = sendArgs2SubModule( DIR_orgASUXcmdline );
+	process.exit( retCode );
 });
 
 CmdLine.on('command:aws', function () {
@@ -144,21 +145,24 @@ CmdLine.on('command:aws', function () {
 	// console.error( __filename +':\nProcessing ARGS command-line: ', CmdLine.args.join(' ') );
 	// console.error( 'Processing FULL command-line: ', process.argv.join(' ') );
 	verifyInstall( false );
-	sendArgs2SubModule( DIR_orgASUXAWS );
+	const retCode = sendArgs2SubModule( DIR_orgASUXAWS );
+	process.exit( retCode );
 });
 
 CmdLine.on('command:aws.cfn', function () {
 	if (process.env.VERBOSE) console.log("Yeah.  processing Amazon-AWS-CloudFormation command");
 	COMMAND = 'aws.cfn';
 	verifyInstall( false );
-	sendArgs2SubModule( DIR_orgASUXAWSCFN );
+	const retCode = sendArgs2SubModule( DIR_orgASUXAWSCFN );
+	process.exit( retCode );
 });
 
 CmdLine.on('command:aws.sdk', function () {
 	if (process.env.VERBOSE) console.log("Yeah.  processing Amazon-AWS-CloudFormation command");
 	COMMAND = 'aws.sdk';
 	verifyInstall( false );
-	sendArgs2SubModule( DIR_orgASUXAWSSDK );
+	const retCode = sendArgs2SubModule( DIR_orgASUXAWSSDK );
+	process.exit( retCode );
 });
 // Like the 'default' in a switch statement.. .. After all of the above "on" callbacks **FAIL** to trigger, we'll end up here.
 // If we end up here, then .. Show error about unknown command
