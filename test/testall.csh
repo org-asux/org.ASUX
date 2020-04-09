@@ -160,11 +160,11 @@ diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 @ TESTNUM = $TESTNUM + 1
 set OUTPFILE=${OUTPUTFLDR}/test-${TESTNUM}
 echo $OUTPFILE
-echo '[]' | /Users/development/src/org.ASUX/asux.js yaml insert '/' "'simple string'" --single-quote      -i -          \
+echo '[]' | asux.js yaml insert '/' "'simple string'" --single-quote      -i -          \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 ### Note: the difference between the above and below: '{}' and '[]' .. to test EMPTY MappingNode and EMPTY SequenceNode
-echo '{}' | /Users/development/src/org.ASUX/asux.js yaml insert '/' "'simple string'" --single-quote       -i -         \
+echo '{}' | asux.js yaml insert '/' "'simple string'" --single-quote       -i -         \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
@@ -176,7 +176,7 @@ echo $OUTPFILE
 
 set JSONVAL='"stringvalue"'             ### I need this, I am UNABLE to force SHELL to handle NESTED quotes.
 
-echo '[]' | /Users/development/src/org.ASUX/asux.js yaml insert '/' "'{1stKey: ${JSONVAL}, key2: ${JSONVAL}}'" --single-quote    -i -    \
+echo '[]' | asux.js yaml insert '/' "'{1stKey: ${JSONVAL}, key2: ${JSONVAL}}'" --single-quote    -i -    \
         -o ${OUTPFILE}
 diff ${OUTPFILE} ${TEMPLATEFLDR}/test-${TESTNUM}
 
