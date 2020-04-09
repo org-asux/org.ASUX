@@ -6,11 +6,13 @@ if (  !   $?ORGASUXFLDR ) then
         if ( $status == 0 ) then
                 set ORGASUXFLDR=`which asux`
                 set ORGASUXFLDR=$ORGASUXFLDR:h
-                if ( "${ORGASUXFLDR}" == "." ) set ORGASUXFLDR=$cwd
+                if ( "${ORGASUXFLDR}" == "." ) the
+                        set ORGASUXFLDR=$cwd
+                        set path=( $path "${ORGASUXFLDR}" )
+                endif
                 setenv ORGASUXFLDR "${ORGASUXFLDR}"
-                echo "ORGASUXFLDR=$ORGASUXFLDR"
         else
-                foreach FLDR ( ~/org.ASUX   ~/github/org.ASUX   ~/github.com/org.ASUX  /mnt/development/src/org.ASUX     /opt/org.ASUX  /tmp/org.ASUX  )
+                foreach FLDR ( ~/org.ASUX   ~/github/org.ASUX   ~/github.com/org.ASUX  /mnt/development/src/org.ASUX     /opt/org.ASUX     ~/.org.ASUX     /tmp/org.ASUX  )
                         set ORIGPATH=( $path )
                         if ( -x "${FLDR}/asux" ) then
                                 set ORGASUXFLDR="$FLDR"
@@ -21,6 +23,8 @@ if (  !   $?ORGASUXFLDR ) then
                 setenv ORGASUXFLDR "${ORGASUXFLDR}"
         endif
 endif
+echo "ORGASUXFLDR=$ORGASUXFLDR"
+echo $path
 
 ###------------------------------
 source ${ORGASUXFLDR}/test/testAll-common.csh-source
