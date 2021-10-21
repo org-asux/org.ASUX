@@ -266,7 +266,7 @@ function runGitPull( _PROJNAME, _DIR_orgASUXSubProject ) {
 				EXECUTESHELLCMD.executionPiped(  _DIR_orgASUXSubProject, 'git', ['pull', '--quiet'], true, process.env.VERBOSE, true, process.env );
 
 				try {
-					fs.writeFileSync( LASTRUNTIMESTAMP_FILEPATH, currTimeStamp, { mode: 0o755 });
+					fs.writeFileSync( LASTRUNTIMESTAMP_FILEPATH, currTimeStamp.toString(), { mode: 0o755 });
 				} catch (err33) { // a.k.a. if fs.writeFileSync throws err13.code === 'ENOENT' || 'EISDIR')
 					console.error( __filename +"Internal error: failed to WRITE "+ currTimeStamp +" to File @ ["+ LASTRUNTIMESTAMP_FILEPATH +"]\n"+ err33);
 				}; // try-catch of fs.readFileSync ( LASTRUNTIMESTAMP_FILEPATH .. )
