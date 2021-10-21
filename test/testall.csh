@@ -6,7 +6,7 @@ if (  !   $?ORGASUXFLDR ) then
         if ( $status == 0 ) then
                 set ORGASUXFLDR=`which asux`
                 set ORGASUXFLDR=$ORGASUXFLDR:h
-                if ( "${ORGASUXFLDR}" == "." ) the
+                if ( "${ORGASUXFLDR}" == "." ) then
                         set ORGASUXFLDR=$cwd
                         set path=( $path "${ORGASUXFLDR}" )
                 endif
